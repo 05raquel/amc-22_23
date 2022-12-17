@@ -62,12 +62,12 @@ public class DataSet implements Serializable {
 			return c;
 		}*/
 		
-		public static int Count(int var[], int val[]) {
+		/*public static int Count(int var[], int val[]) {
 			int c = 0;
 			if()
 			}
 		}
-		
+		*/
 		
 		
 		public ArrayList<int []> data() {			//NOVA
