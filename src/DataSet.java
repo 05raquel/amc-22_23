@@ -10,6 +10,7 @@ public class DataSet implements Serializable {
 	    private static final long serialVersionUID = 1L;
 	    
 		private ArrayList<int []> dataList;
+		
 		//atributo; array list de inteiros
 		//uma espécie de uma matriz
 		
@@ -56,82 +57,88 @@ public class DataSet implements Serializable {
 		return stringToIntVec;
 		}
 		
-		/*public static int Count (ArrayList<int []> dataset, int v []) {		//NOVA  variaveis 3.5 tomam os valores 0.1
-			int c=0;
-			for (int [] var : dataset) {  			
-				if (Arrays.equals (var, v)) c++;
-			}
-			return c;
-		}não é isto!!*/
-		
-		public ArrayList<int []> data() {			//NOVA
+		public ArrayList<int []> data() {
 			return dataList;
-		} 
-		// isto é preciso???????
+		}
 		
 		//COUNT
 		
 		public int Count (int var[], int val[]) { //acho que este tipo de dados está bom mas confirmar em conjunto
-			int c = 0;
-			int arr[] = new int [var.length];
-			for (int [] exemplo: dataList) {
-				//obter valores das vars no exemplo
+			// var e val têm o mesmo tamanho!!!
+			int c = 0; // contador
+			int arr[] = new int [var.length]; // cria novo array com o tamanho do número de variáveis a procurar
+			
+			for (int [] vetorObs: dataList) {
+				//obter valores das vars necessários no vetorObs
+				
 				for(int j = 0; j < var.length; j++)	{
-					arr[j]= exemplo[var[j]];   
+					arr[j]= vetorObs[var[j]];  // preencher o array com os valores do vetorObs do datalist
 				}
-				//Arrays.sort(arr);	isto não é preciso
-				//Arrays.sort(val); isto não é preciso
-				//verificar que valores no exemplo são os que nós estamos a contar
-				if (Arrays.equals(arr,val)) c++;
+
+				if (Arrays.equals(arr,val)) c++; //contar quantos vetores têm os valores val
+				//confirmar que podemos usar equals
 			}
-			// var 0 1 2 3
-			// e1: 1 2 3 3
-			// e2: 0 0 0 0
-			// e3: 4 3 2 1
-			// e4: 0 1 0 1
-			//Count([2,3], [0, 1]) 
-			
-			
 			return c;
 		}
 		
+		// var 0 1 2 3
+		// e1: 1 2 3 3
+		// e2: 0 0 0 0
+		// e3: 4 3 2 1
+		// e4: 0 1 0 1
+		//Count([2,3], [0, 1]) 
+		
+		
 		//pensar como vamos guardar todos os counts que precisamos!
-		// pode-se tentar ver todos os tamanhos das listas var e val
-		// supostamente só precisam de ter tamanho 1 ou 2
 		// vai ser usado como T.count
 		
 		//ADD
 		
-		public void Add(int v[]) {			//NOVA 
+		int [] domínios = null;
+		public void Add(int v[]) {
+			//Calcular logo o domínio das variáveis
+			// 
+			if (domínios == null) {
+				domínios = new int[v.length];
+			}
+			
 			//Adiciona um vetor ao dataset após verificar o seu tamanho (mesmo tamanho que os dados no dataset)
 			if (v.length == dataList.get(0).length) dataList.add(v);
+		
 		}
-		
-		// Aviso Prof F. Miguel Dionísio - Calcular logo o domínio das variáveis;
-		// Fazer um add personalizado. Conter:
-		/* int [] domínios = null;
-		 * if (domínios = null);
-		 * 		domínios = new int[v.length];
-		 * 		percorrer e calcular logo o máximo dos elementos para cada característica
-		 
-		 */
-		
+		//Fazer um add personalizado. Conter:
+		//percorrer e calcular logo o máximo dos elementos para cada característica
+		//como aceder aos domínios - variável global?
+			
+		/* public int domain(ArrayList<Integer> position) {
+		 		//Recebe uma amostra e um vector de posições e retorna o número de elementos possíveis desse vector de posições.
+		 		int domain = 1;
+		        for (int p : position) {
+		            domain *= domains.get(p);
+		        }
+		        return domain;
+		    }
+		*/
+			
 		// FIBER
 		
 		// confirmar o input
-		// nalgum momento vamos ter de fazer um método para calcular quantas fibras precisamos de fazer, tendo em conta a contagem de classes
+		
+		// NO CLASSIFICADOR - PARTIÇÃO! vamos ter de fazer um método para calcular quantas fibras precisamos de fazer,
+		//tendo em conta a contagem de classes
 		// criar int [] ou ArrayList<int []> para os valores das classes
 		
-		public ArrayList<int []> Fiber(int value) {
-			ArrayList <int []> fiber = new ArrayList<>();	
-			for (int [] i: dataList) {	
-				if (i[i.length -1] == value) {	
-					fiber.add(i);
+		public ArrayList<int []> Fiber(int value) { //fibra da característica value
+			ArrayList <int []> fiber = new ArrayList<int []>();	
+			int Length = dataList.get(0).length;
+			
+			for (int [] array: dataList) {	
+				if (array[Length -1] == value) {	
+					fiber.add(array);
 				}
 			}
 			return fiber;	//sai uma coisa feiosa mas útil 
 		}
-		
 		
 		//auxiliar
 		public void printBonito (ArrayList<int[]> fiber)	{
@@ -139,8 +146,6 @@ public class DataSet implements Serializable {
 				System.out.println(Arrays.toString(i));	
 			}
 		}
-	
-		
 	
 		public static void main(String[] args) {
 				DataSet d = new DataSet("bcancer.csv");
