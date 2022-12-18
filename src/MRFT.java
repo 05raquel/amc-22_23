@@ -17,7 +17,6 @@ public class MRFT {
 		super();
 		this.dataset = dataset;
 		this.tree = tree;
-		
 	}
 	
 	//PROB

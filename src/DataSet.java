@@ -10,6 +10,7 @@ public class DataSet implements Serializable {
 	    private static final long serialVersionUID = 1L;
 	    
 		private ArrayList<int []> dataList;
+		private int [] domínios = null;
 		
 		//atributo; array list de inteiros
 		//uma espécie de uma matriz
@@ -61,9 +62,13 @@ public class DataSet implements Serializable {
 			return dataList;
 		}
 		
+		public int getDataListArraySize () {
+			return dataList.get(0).length;
+		}
+		
 		//COUNT
 		
-		public int Count (int var[], int val[]) { //acho que este tipo de dados está bom mas confirmar em conjunto
+		public double Count (int var[], int val[]) { //acho que este tipo de dados está bom mas confirmar em conjunto
 			// var e val têm o mesmo tamanho!!!
 			int c = 0; // contador
 			int arr[] = new int [var.length]; // cria novo array com o tamanho do número de variáveis a procurar
@@ -78,7 +83,7 @@ public class DataSet implements Serializable {
 				if (Arrays.equals(arr,val)) c++; //contar quantos vetores têm os valores val
 				//confirmar que podemos usar equals
 			}
-			return c;
+			return (double)c;
 		}
 		
 		// var 0 1 2 3
@@ -91,21 +96,36 @@ public class DataSet implements Serializable {
 		
 		//pensar como vamos guardar todos os counts que precisamos!
 		// vai ser usado como T.count
+		// para contas
 		
 		//ADD
 		
-		int [] domínios = null;
+		
 		public void Add(int v[]) {
+			//Validar argumento
+			if (!dataList.isEmpty() && v.length != dataList.get(0).length) {
+				throw new IllegalArgumentException();
+			}
+			//Adiciona um vetor ao dataset após verificar o seu tamanho (mesmo tamanho que os dados no dataset)
+			dataList.add(v);
+			
 			//Calcular logo o domínio das variáveis
-			// 
+			// se for o primeiro vetor:
 			if (domínios == null) {
 				domínios = new int[v.length];
 			}
-			
-			//Adiciona um vetor ao dataset após verificar o seu tamanho (mesmo tamanho que os dados no dataset)
-			if (v.length == dataList.get(0).length) dataList.add(v);
-		
+			//atualizar maximos
+			for (int i=0; i<v.length; i++) {
+				if (v[i]>domínios[i]) {
+					domínios[i] = v[i];
+				}
+			}
 		}
+		
+		public int[] getDomínios() {
+			return domínios;
+		}
+		
 		//Fazer um add personalizado. Conter:
 		//percorrer e calcular logo o máximo dos elementos para cada característica
 		//como aceder aos domínios - variável global?
@@ -140,6 +160,12 @@ public class DataSet implements Serializable {
 			return fiber;	//sai uma coisa feiosa mas útil 
 		}
 		
+		
+
+		public void setDomínios(int[] domínios) {
+			this.domínios = domínios;
+		}
+
 		//auxiliar
 		public void printBonito (ArrayList<int[]> fiber)	{
 			for (int [] i: fiber)	{
