@@ -9,7 +9,8 @@ public class WeightedGraph {
 	public WeightedGraph (int size) {
 		super();
 		this.dim = size;
-		this.adjMatrix = new double [size-1][size -1]; //retiramos a classe
+		this.adjMatrix = new double [size][size]; 
+		//retiramos a classe quando chamarmos
 	}		
 	
 	// ADD
