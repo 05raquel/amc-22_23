@@ -10,13 +10,15 @@ public class DataSet implements Serializable {
 	    private static final long serialVersionUID = 1L;
 	    
 		private ArrayList<int []> dataList;
-		private int [] domínios = null;
+		private int [] domains;
 		
 		//atributo; array list de inteiros
 		//uma espécie de uma matriz
 		
 		DataSet(String csvFile)  {
 			this.dataList = new ArrayList<int []>();
+			this.domains = null;
+			if (csvFile!=null) {
 			String line;
 			BufferedReader br;
 			
@@ -35,7 +37,8 @@ public class DataSet implements Serializable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-					  
+			}
+			
 		}
 
 		@Override
@@ -111,34 +114,25 @@ public class DataSet implements Serializable {
 			
 			//Calcular logo o domínio das variáveis
 			// se for o primeiro vetor:
-			if (domínios == null) {
-				domínios = new int[v.length];
+			if (domains == null) {
+				domains = new int[v.length];
 			}
 			//atualizar maximos
 			for (int i=0; i<v.length; i++) {
-				if (v[i]>domínios[i]) {
-					domínios[i] = v[i];
+				if (v[i]>domains[i]) {
+					domains[i] = v[i];
 				}
-			}
+			} 
 		}
 		
 		public int[] getDomínios() {
-			return domínios;
+			return domains;
 		}
+	
 		
 		//Fazer um add personalizado. Conter:
 		//percorrer e calcular logo o máximo dos elementos para cada característica
 		//como aceder aos domínios - variável global?
-			
-		/* public int domain(ArrayList<Integer> position) {
-		 		//Recebe uma amostra e um vector de posições e retorna o número de elementos possíveis desse vector de posições.
-		 		int domain = 1;
-		        for (int p : position) {
-		            domain *= domains.get(p);
-		        }
-		        return domain;
-		    }
-		*/
 			
 		// FIBER
 		
@@ -148,13 +142,14 @@ public class DataSet implements Serializable {
 		//tendo em conta a contagem de classes
 		// criar int [] ou ArrayList<int []> para os valores das classes
 		
-		public ArrayList<int []> Fiber(int value) { //fibra da característica value
-			ArrayList <int []> fiber = new ArrayList<int []>();	
+		public DataSet /*ArrayList<int []>*/ Fiber(int value) { //fibra da característica value
+			//ArrayList <int []> fiber = new ArrayList<int []>();
+			DataSet fiber = new DataSet(null);
 			int Length = dataList.get(0).length;
 			
 			for (int [] array: dataList) {	
 				if (array[Length -1] == value) {	
-					fiber.add(array);
+					fiber.Add(array);
 				}
 			}
 			return fiber;	//sai uma coisa feiosa mas útil 
@@ -162,26 +157,31 @@ public class DataSet implements Serializable {
 		
 		
 
-		public void setDomínios(int[] domínios) {
+		/*public void setDomínios(int[] domínios) {
 			this.domínios = domínios;
-		}
+		}*/
 
 		//auxiliar
-		public void printBonito (ArrayList<int[]> fiber)	{
+		/*public void printBonito (ArrayList<int[]> fiber)	{
 			for (int [] i: fiber)	{
 				System.out.println(Arrays.toString(i));	
 			}
-		}
+		}*/
 	
 		public static void main(String[] args) {
 				DataSet d = new DataSet("bcancer.csv");
-				int v [] = {1,2,3,4,5,6};
+				int v [] = {0,2,3,4,5,6,7,8,9,10,11};
 				d.Add(v);
+				System.out.println(Arrays.toString(d.Fiber(0).getDomínios()));
 				System.out.println(d);
-				d.printBonito(d.Fiber(1));
-				int var [] = {10};
-				int val [] = {11};
-				System.out.println(d.Count(var, val));
+				System.out.println(d.Fiber(0));
+				System.out.println(d.Fiber(1));
+				System.out.println(d.Fiber(11));
+				//d.printBonito(d.Fiber(0));
+				
+				//int var [] = {10};
+				//int val [] = {11};
+				//System.out.println(d.Count(var, val));
 		}
 		
 }
