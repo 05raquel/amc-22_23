@@ -17,7 +17,6 @@ public class Classifier {
 		// calcular frequências com base no dataset!
 	}
 	
-	
 	//CLASSIFY
 	
 	public int Classify (int [] valoresx) { 

@@ -12,12 +12,14 @@ public class DataSet implements Serializable {
 		private ArrayList<int []> dataList;
 		private int [] domains;
 		
-		//atributo; array list de inteiros
-		//uma espécie de uma matriz
+		//atributo; array list de inteiros - uma espécie de matriz
 		
+		//construtor a partir de um ficheiro csv
 		DataSet(String csvFile)  {
+			// inicializar os atributos
 			this.dataList = new ArrayList<int []>();
-			this.domains = null;
+			this.domains = null; 
+			
 			if (csvFile!=null) {
 			String line;
 			BufferedReader br;
@@ -25,7 +27,7 @@ public class DataSet implements Serializable {
 				try {
 					br = new BufferedReader(new FileReader(csvFile));
 					while((line = br.readLine()) != null) {
-						dataList.add(convert(line));
+						this.Add(convert(line));
 					}
 						br.close();
 						
@@ -38,7 +40,6 @@ public class DataSet implements Serializable {
 					e.printStackTrace();
 				}
 			}
-			
 		}
 
 		@Override
@@ -48,10 +49,10 @@ public class DataSet implements Serializable {
 			for (int i=1; i<dataList.size();i++)
 				s+=","+Arrays.toString(dataList.get(i));
 			s+="]";
-				
 			return "Size=" + dataList.size() + " Dataset = " + s;
 		}
 		
+		// converter uma linha string num [] de inteiros
 		public static int [] convert (String line) {
 		String cvsSplitBy = ",";
 		String[] strings     = line.split(cvsSplitBy);
@@ -61,33 +62,57 @@ public class DataSet implements Serializable {
 		return stringToIntVec;
 		}
 		
+		//aceder ao dataList do dataset considerado
 		public ArrayList<int []> data() {
 			return dataList;
 		}
 		
+		//obter o tamanho dos vetores no dataSet - número de característica + classificação
 		public int getDataListArraySize () {
-			return dataList.get(0).length;
+			return domains.length;
+			//dataList.get(0).length;
+		}
+		
+		//aceder aos domínios
+		public int[] getDomains() {
+			return domains;
 		}
 		
 		//COUNT
+		// conta o número de vezes no dataset que as variáveis i e j tomam simultaneamente os valores (xi,xj) 
+		//ex: count ((i,j),(xi,xj))
 		
-		public double Count (int var[], int val[]) { //acho que este tipo de dados está bom mas confirmar em conjunto
-			// var e val têm o mesmo tamanho!!!
+		public double Count (int var[], int val[]) { 
+			if (var.length!=val.length) {
+				throw new IllegalArgumentException(); //argumentos inválidos
+			}
+			
+			// var e val têm o mesmo tamanho!
 			int c = 0; // contador
 			int arr[] = new int [var.length]; // cria novo array com o tamanho do número de variáveis a procurar
 			
 			for (int [] vetorObs: dataList) {
-				//obter valores das vars necessários no vetorObs
+				//obter valores das variáveis vars necessários no vetorObs
 				
 				for(int j = 0; j < var.length; j++)	{
 					arr[j]= vetorObs[var[j]];  // preencher o array com os valores do vetorObs do datalist
 				}
 
 				if (Arrays.equals(arr,val)) c++; //contar quantos vetores têm os valores val
-				//confirmar que podemos usar equals
 			}
 			return (double)c;
 		}
+		
+		/* Função equals - verifica se os arrays são iguais
+		public boolean equalQ (int a [], int b[]) {
+		boolean br=a.length==b.length;
+		for (int i = 0; i< b.length && br; i++) {
+			if (a[i]!=b[i]) br = false;
+		}
+		return br;
+	}
+		*/
+		
 		
 		// var 0 1 2 3
 		// e1: 1 2 3 3
@@ -96,13 +121,11 @@ public class DataSet implements Serializable {
 		// e4: 0 1 0 1
 		//Count([2,3], [0, 1]) 
 		
-		
 		//pensar como vamos guardar todos os counts que precisamos!
-		// vai ser usado como T.count
-		// para contas
+		// vai ser usado como T.count para futuras operações
+		
 		
 		//ADD
-		
 		
 		public void Add(int v[]) {
 			//Validar argumento
@@ -113,36 +136,27 @@ public class DataSet implements Serializable {
 			dataList.add(v);
 			
 			//Calcular logo o domínio das variáveis
+			
 			// se for o primeiro vetor:
 			if (domains == null) {
 				domains = new int[v.length];
 			}
-			//atualizar maximos
+			//atualizar maximos dos elementos para cada característica 
 			for (int i=0; i<v.length; i++) {
 				if (v[i]>domains[i]) {
 					domains[i] = v[i];
 				}
 			} 
 		}
-		
-		public int[] getDomínios() {
-			return domains;
-		}
-	
-		
-		//Fazer um add personalizado. Conter:
-		//percorrer e calcular logo o máximo dos elementos para cada característica
-		//como aceder aos domínios - variável global?
 			
 		// FIBER
-		
-		// confirmar o input
 		
 		// NO CLASSIFICADOR - PARTIÇÃO! vamos ter de fazer um método para calcular quantas fibras precisamos de fazer,
 		//tendo em conta a contagem de classes
 		// criar int [] ou ArrayList<int []> para os valores das classes
 		
-		public DataSet /*ArrayList<int []>*/ Fiber(int value) { //fibra da característica value
+		//retorna a fibra da característica value
+		public DataSet  Fiber(int value) { 
 			//ArrayList <int []> fiber = new ArrayList<int []>();
 			DataSet fiber = new DataSet(null);
 			int Length = dataList.get(0).length;
@@ -152,14 +166,8 @@ public class DataSet implements Serializable {
 					fiber.Add(array);
 				}
 			}
-			return fiber;	//sai uma coisa feiosa mas útil 
+			return fiber; 
 		}
-		
-		
-
-		/*public void setDomínios(int[] domínios) {
-			this.domínios = domínios;
-		}*/
 
 		//auxiliar
 		/*public void printBonito (ArrayList<int[]> fiber)	{
@@ -170,13 +178,13 @@ public class DataSet implements Serializable {
 	
 		public static void main(String[] args) {
 				DataSet d = new DataSet("bcancer.csv");
-				int v [] = {0,2,3,4,5,6,7,8,9,10,11};
-				d.Add(v);
-				System.out.println(Arrays.toString(d.Fiber(0).getDomínios()));
-				System.out.println(d);
-				System.out.println(d.Fiber(0));
-				System.out.println(d.Fiber(1));
-				System.out.println(d.Fiber(11));
+				//int v [] = {0,2,3,4,5,6,7,8,9,10,11};
+				//d.Add(v);
+				System.out.println(Arrays.toString(d.getDomains()));
+				//System.out.println(d);
+				//System.out.println(d.Fiber(0));
+				//System.out.println(d.Fiber(1));
+				//System.out.println(d.Fiber(11));
 				//d.printBonito(d.Fiber(0));
 				
 				//int var [] = {10};

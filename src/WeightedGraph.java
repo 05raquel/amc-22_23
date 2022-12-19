@@ -6,6 +6,7 @@ public class WeightedGraph {
 	private int dim;
 	private double [][] adjMatrix; 
 	
+	//CONSTRUTOR
 	public WeightedGraph (int size) {
 		super();
 		this.dim = size;
@@ -14,7 +15,7 @@ public class WeightedGraph {
 	}		
 	
 	// ADD
-	
+	//Adicionar uma aresta entre o no1 e o no2 com o valor peso
 	public void Add (int no1, int no2, double peso) {
 		adjMatrix[no1][no2]=peso;
 		adjMatrix[no2][no1]=peso;
