@@ -36,6 +36,7 @@ public class WeightedGraph {   //não direcionado
 				Graph[i][j]= adjMatrix [i][j];
 			}
 		}
+		//cópia do grafo
 		
 		LinkedList<Integer> Nodes = new LinkedList<Integer>(); //Lista dos nós (j's)
 		Nodes.add(0); // nó inicial -> 0
@@ -76,7 +77,7 @@ public class WeightedGraph {   //não direcionado
 	}
 	
 	public static void main(String[] args) {
-		DataSet d = new DataSet("bcancer.csv");
+		//DataSet d = new DataSet("bcancer.csv");
 		WeightedGraph g = new WeightedGraph(4 /*d.getDataListArraySize()*/);
 		
 		g.Add(0, 1, 8);
