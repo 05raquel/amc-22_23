@@ -1,59 +1,70 @@
 import java.util.*;
 
-public class WeightedGraph {
-	//não direcionado
+public class WeightedGraph {   //não direcionado
 	
 	private int dim;
 	private double [][] adjMatrix; 
 	
 	//CONSTRUTOR
-	public WeightedGraph (int size) {
+	public WeightedGraph (int size) {  //este size tem de ser size do domain -1 (para não incluir a classe)
 		super();
 		this.dim = size;
-		this.adjMatrix = new double [size][size]; 
-		//retiramos a classe quando chamarmos
+		this.adjMatrix = new double [size][size];
+	
 	}		
 	
 	// ADD
-	//Adicionar uma aresta entre o no1 e o no2 com o valor peso
-	public void Add (int no1, int no2, double peso) {
+	public void Add (int no1, int no2, double peso) {   //Adicionar uma aresta entre o no1 e o no2 com o valor peso
 		adjMatrix[no1][no2]=peso;
 		adjMatrix[no2][no1]=peso;
 	}
 	
-	/* MST
-	árvore de extensão de peso maximal */
+	/*public double [][] getMatrix (){
+		return adjMatrix;
+	}*/
+	
+	// MST - árvore de extensão de peso maximal 
+	
+	//  grafo.MST()
 	
 	public boolean [][] MST() {
-		boolean [][] tree = new boolean [dim][dim];
-		// nó inicial -> 0
-				
-				
-		return; 
+		boolean [][] MSTree = new boolean [dim][dim];
+		//System.out.println(Arrays.deepToString(graph));
+		double [][] Graph = new double [dim][dim];
+		for (int i=0; i<dim; i++) {
+			for (int j=0; j<dim; j++) {
+				Graph[i][j]= adjMatrix [i][j];
+			}
+		}
 		
-		//tree
+		LinkedList<Integer> Nodes = new LinkedList<Integer>(); //Lista dos nós (j's)
+		Nodes.add(0); // nó inicial -> 0
+		
+		while (Nodes.size() < dim) {
+			double [] max = {0,0,0};  // vetor max: (i, j, peso)
+			
+			for (int i : Nodes) { 
+				
+				for (int j =0; j<dim; j++) {  //ver as arestas
+				
+					if (Graph[i][j] > max[2]) {   //atualizar o max para o valor 
+						max[0] = i;
+						max[1] = j;
+						max[2] = Graph[i][j];
+					}
+				}
+			}
+			
+			Nodes.add((int)max[1]);
+			Graph[(int)max[0]][(int)max[1]] = 0;   //meter a 0 para não voltar a escolher esta 
+			Graph[(int)max[1]][(int)max[0]] = 0;   //o simétrico também
+			MSTree[(int)max[0]][(int)max[1]] = true;  //existe esta aresta na MST
+			MSTree[(int)max[1]][(int)max[0]] = true;
+		}
+		System.out.println(Nodes);
+		return MSTree; 
 		
 	}
-	
-	/*
-1 A cada nó v associa-se
-
-a) C[v] o custo máximo para v (inicializado a -∞)
-b) E[v] a aresta que com esse custo (inic. a null) 
-
-2) F inicializa-se como uma floresta com nó u e C[u]=0
-
-3) Q os vértices não incluídos em F (inic com V\{u})
-
-4) while(!Q.vaziaQ()){
-
-a) encontrar a aresta leve e={x,v} para o corte {F,Q} com x em F
-b) Q.remove(v); //F.add(v); 
-c) E[v]=e; C[v]=g.weight(e) //não é nec para proj
-d) F.addedge(e) 
-
-5) return F
-	 */
 	
 	public void printBonito2 ()	{
 		for (int i = 0; i < adjMatrix.length; i++) {
@@ -66,9 +77,24 @@ d) F.addedge(e)
 	
 	public static void main(String[] args) {
 		DataSet d = new DataSet("bcancer.csv");
-		WeightedGraph g = new WeightedGraph(d.getDataListArraySize());
-		g.Add(0, 1, 3);
+		WeightedGraph g = new WeightedGraph(4 /*d.getDataListArraySize()*/);
+		
+		g.Add(0, 1, 8);
+		g.Add(0,0,0);
+		g.Add(0,2,7);
+		g.Add(0,3,5);
+		g.Add(1,1,0);
+		g.Add(1,2,3);
+		g.Add(1,3,1);
+		g.Add(2,2,0);
+		g.Add(2,3,2);
+		g.Add(3,3,0);
+		//System.out.println(g);
 		g.printBonito2();
-		}
+		System.out.println(Arrays.deepToString(g.MST()));
+		System.out.println(Arrays.deepToString(g.MST()));
+		
+	}
+		
 	
 }

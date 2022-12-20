@@ -67,16 +67,17 @@ public class DataSet implements Serializable {
 			return dataList;
 		}
 		
-		//obter o tamanho dos vetores no dataSet - número de característica + classificação
-		public int getDataListArraySize () {
-			return domains.length;
-			//dataList.get(0).length;
-		}
-		
 		//aceder aos domínios
 		public int[] getDomains() {
 			return domains;
 		}
+		
+		//obter o tamanho dos vetores no dataSet - número de característica + classificação
+		public int getDataListArraySize () {
+			return domains.length;
+			//dataList.get(0).length;  //ainda inclui a última coluna com as classes. só retiramos essa coluna na altura de formar os grafos das fibras.
+		}                              //Aqui ainda dá jeito para identificar com -1 as diferentes classes  
+		
 		
 		//COUNT
 		// conta o número de vezes no dataset que as variáveis i e j tomam simultaneamente os valores (xi,xj) 
@@ -128,8 +129,7 @@ public class DataSet implements Serializable {
 		//ADD
 		
 		public void Add(int v[]) {
-			//Validar argumento
-			if (!dataList.isEmpty() && v.length != dataList.get(0).length) {
+			if (!dataList.isEmpty() && v.length != dataList.get(0).length) { //Validar argumento
 				throw new IllegalArgumentException();
 			}
 			//Adiciona um vetor ao dataset após verificar o seu tamanho (mesmo tamanho que os dados no dataset)
