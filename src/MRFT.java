@@ -8,7 +8,7 @@ public class MRFT {
 	private DataSet dataset;
 	private boolean [][] tree;	// usamos a MST tendo em conta o graph
 	private int [] MRFTree; // confirmar o tipo depois de ter feito o construtor
-	private double [][] potentialMatrix; // confirmar o tipo depois de ter feito o construtor
+	private double [][][][] potentialMatrix; // confirmar o tipo depois de ter feito o construtor
 	
 	//CONSTRUTOR
 	
@@ -62,6 +62,7 @@ public class MRFT {
 		
 		//atualizar a matriz de potenciais
 		
+		this.potentialMatrix = preencher(dataset, tree.length, tree.length);
 		
 		for (int a=0; a< MRFTree.length;a++) {}
 		//ArrayList< LinkedList<Integer> >[][] aa = new ArrayList<LinkedList<Integer>> [2][3];
@@ -89,6 +90,18 @@ public class MRFT {
 		}
 		return lista;
 	}
+	
+	public double [][][][] preencher (DataSet dataset, int ni, int nj){
+		double [][][][] ma = new double [ni][nj][][];
+		for (int itni = 0; itni<ni; itni++) {
+			for (int itnj =0; itnj<nj; itnj++) {
+				ma[ni][nj] = new double [dataset.getDomains()[ni]] [dataset.getDomains()[nj]];
+			}
+		}
+		return ma;
+	}
+	
+	
 	
 	//PROB
 	

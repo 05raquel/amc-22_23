@@ -1,6 +1,10 @@
 
 public class ChowLiu {
 
+	// Algoritmo Chow Liu
+	
+	//escrever aqui
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
