@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class MRFT {
@@ -7,18 +8,15 @@ public class MRFT {
 	
 	private DataSet dataset;
 	private boolean [][] tree;	// usamos a MST tendo em conta o graph
-	private int [] MRFTree; // confirmar o tipo depois de ter feito o construtor
-	private double [][][][] potentialMatrix; // confirmar o tipo depois de ter feito o construtor
+	private int [] MRFTree; 
+	private double [][][][] potentialMatrix;
 	
 	//CONSTRUTOR
 	
-	// coloca os phi ij (xi,xj) em cada aresta
-	// que podem ser vistos como uma matriz
-	// não esquecer: converter os valores inteiros do count em double's
-	
+	// coloca os phi ij (xi,xj) em cada aresta que podem ser vistos como uma matriz
 	
 	public MRFT(DataSet d, boolean [][] tree) {
-		//tendo em conta o dataset e uma árvore (a MST)
+		//tendo em conta o dataset e a MST
 		super();
 		this.dataset = d;
 		this.tree = tree;
@@ -26,67 +24,58 @@ public class MRFT {
 		int nnos = tree.length;
 		
 		boolean flag = false;
-		int [] MRFTree = new int [nnos];
-		
-		int [] arestae= new int [2]; //aresta especial - dá a direção das arestas
-		arestae[0]=0;
+		int [] MRFTree = new int [nnos]; //MRFTree array com o tamanho do nr de nós 
+		int [] arestae= new int [2];     //aresta especial - dá a direção das arestas
+		arestae[0]=0;                    //nó 0 para começar
 		int noe=0;
-		for(; noe< nnos && !flag; noe++)	{
-			if (tree[0][noe]) {
+		for(; noe< nnos && !flag; noe++){
+			if (tree[0][noe]) {            //escolher a primeira aresta que aparece como true na MST
 				flag = true;
 			}
 		}
-		arestae[1]=noe;
 		
-		// Valores iniciais da MRFTree - aresta especial e nós ligados ao 0
-		/*for (int i = 0; i< tree.length; i++)	{
-			if (tree[0][i])	{
-				MRFTree[i]=0;
-			}
-			else MRFTree[i] = -2;
-		}*/
+		arestae[1]=noe;                 //primeira aresta entre nó 0 e noe
 		
-		LinkedList<Integer> nospreenchidos = new LinkedList<Integer>();
+		LinkedList<Integer> nospreenchidos = new LinkedList<Integer>(); //LinkedList para ser dinâmico
 		
-		MRFTree[0]= -1;	
-		nospreenchidos.add(0);
-		
+		MRFTree[0]= -1;	  // o primeiro nó não tem pai logo é -1
+		nospreenchidos.add(0); //acrescenta o nó 0 à lista de nós preenchidos 
 		
 		for (int i =1; i< nnos;i++) {
-			MRFTree[i]=-2;
+			MRFTree[i]=-2;     //para as restantes entradas não iniciadas coloca-se -2
 		}
 		
-		while (faltapreencher(MRFTree)) {
-			//enquanto existirem nós sem pai - por preencher
-			for (int cp: nospreenchidos) { // cada cp (nó com pai) na lista nós preenchidos
-				for (int j=0; j< nnos; j++) {
-					if (tree[cp][j]) {
-						MRFTree[j]=cp;
-						nospreenchidos.add(j);
-					}
+		while (faltapreencher(MRFTree)) { //enquanto existirem nós sem pai - por preencher
+			
+			for (int cp=0; cp < nospreenchidos.size(); cp++) {
+			//for (int cp: nospreenchidos) {  // cada cp (nó com pai) na lista nós preenchidos
+				System.out.println(cp);
+				for (int j=1; j< nnos; j++) {
+					// nos preenchidos têm pai:  cp --> j
+					if (tree[nospreenchidos.get(cp)][j] ) {          //ver onde existe aresta entre esse nó com pai e o nó j  
+						//if (MRFTree[j]==-2) {
+							MRFTree[j]=nospreenchidos.get(cp);            //colocamos o nó com pai no local j da MRFTree
+							System.out.println(Arrays.toString(MRFTree));
+							nospreenchidos.add(j); //adiciona esse j aos nós preenchidos
+							System.out.println(nospreenchidos);
+						//}
+					} //se passar primeiro por um nó que não está ligado a um com pai, salta esse e depois volta quando preencher outros                                                                         
 				}
 			}
 		}
-		
-		//então vamos ver as arestas com esse nó e escolhemos para pai aquele no que já tiver pai 
-		//temos um problema se não encontrar um nó que já tenha um pai -> talvez fazer i++ e depois voltar atrás
+		this.MRFTree = MRFTree;  	//atualizar a matriz de potenciais
 
-		this.MRFTree = MRFTree;
+		double [][][][] matrix = inicia(dataset, nnos, nnos); 
 		
-		//atualizar a matriz de potenciais
+//nnos é o nr de nós
+// i, j, xi valores que i toma, xj valores que j toma
+// preencher as matrizes para as arestas da MRFTree 
+// MRFTree[a] = pai = i
+// a = j
 		
-		double [][][][] matrix = inicia(dataset, nnos, nnos); //número de nós 
-		// i j, xi valores que i toma, xj valores que j toma
-		
-		// preencher as matrizes para as arestas da MRFTree 
-		
-		// MRFTree[a] = pai = i, 
-		// a = j
-		
-		
-		for (int a=0; a< MRFTree.length;a++) {
+		for (int a=0; a< MRFTree.length;a++) { 
 			
-			if (MRFTree[a]==noe && a==0) {
+			if (MRFTree[a]==noe && a==0) {  //se for a primeira aresta - aresta especial
 				int [] var = {0,noe};
 				for (int xi=0; xi < d.getDomains()[a]; xi++) {
 					for (int xj=0; xj < d.getDomains()[noe]; xj++) {
@@ -113,8 +102,9 @@ public class MRFT {
 	
 	public boolean faltapreencher (int[]v) {
 		boolean falta=false;
-		for (int c=0; c<v.length && !falta; c++) {
+		for (int c=0; c<v.length && falta==false; c++) {
 			if (v[c]==-2) falta=true;}
+		
 		return falta;
 	}
 	
@@ -135,6 +125,10 @@ public class MRFT {
 			}
 		}
 		return ma;
+	}
+	
+	public int getsizeMRFTree() {
+			return MRFTree.length;
 	}
 	
 	//PROB

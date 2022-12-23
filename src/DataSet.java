@@ -78,6 +78,8 @@ public class DataSet implements Serializable {
 			return domains;
 		}
 		
+		
+		
 		//obter o tamanho dos vetores no dataSet - número de característica + classificação
 		public int getDataListArraySize () {
 			return domains.length;
@@ -182,7 +184,7 @@ public class DataSet implements Serializable {
 			}
 		}*/
 	
-		public static void main(String[] args) {
+		/*public static void main(String[] args) {
 				DataSet d = new DataSet("bcancer.csv");
 				//int v [] = {0,2,3,4,5,6,7,8,9,10,11};
 				//d.Add(v);
@@ -197,5 +199,5 @@ public class DataSet implements Serializable {
 				//int val [] = {11};
 				//System.out.println(d.Count(var, val));
 		}
-		
+		*/
 }

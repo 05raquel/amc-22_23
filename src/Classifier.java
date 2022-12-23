@@ -19,6 +19,10 @@ public class Classifier {
 	//CLASSIFY
 	
 	public int Classify (int [] valoresx) { 
+		if (valoresx.length!= arrayMRFTs[0].getsizeMRFTree()) {
+			throw new IllegalArgumentException("burro!"); //argumento inválido
+		}
+		
 		// dados valores (x1,...,xn) das variáveis
 		// P = frequência x P MC (vetor)
 		double [] probstotal = new double [frequencias.length];

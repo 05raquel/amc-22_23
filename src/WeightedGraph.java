@@ -66,7 +66,7 @@ public class WeightedGraph {   //não direcionado
 			MSTree[(int)max[0]][(int)max[1]] = true;  //existe esta aresta na MST
 			MSTree[(int)max[1]][(int)max[0]] = true;
 		}
-		System.out.println(Nodes);
+		//System.out.println(Nodes);
 		return MSTree; 
 		
 	}
@@ -80,9 +80,9 @@ public class WeightedGraph {   //não direcionado
 		}
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		//DataSet d = new DataSet("bcancer.csv");
-		WeightedGraph g = new WeightedGraph(4 /*d.getDataListArraySize()*/);
+		WeightedGraph g = new WeightedGraph(4);
 		
 		g.Add(0, 1, 8);
 		g.Add(0,0,0);
@@ -99,7 +99,7 @@ public class WeightedGraph {   //não direcionado
 		System.out.println(Arrays.deepToString(g.MST()));
 		System.out.println(Arrays.deepToString(g.MST()));
 		
-	}
+	}*/
 		
 	
 }
