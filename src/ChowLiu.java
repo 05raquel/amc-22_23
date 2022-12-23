@@ -16,8 +16,9 @@ public class ChowLiu {
 				
 				for (int xi=0; xi < d.getDomains()[i]+1; xi++) {
 					for (int xj=0; xj < d.getDomains()[j]+1; xj++) {
-						
-						infomutua+= (d.Count(null, null)) ;
+						int [] var = {i,j};
+						int [] val = {xi,xj};
+						infomutua+= (d.Count(var, val)/d.) ;
 					}
 				}
 				
