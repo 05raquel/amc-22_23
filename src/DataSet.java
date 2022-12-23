@@ -14,13 +14,18 @@ public class DataSet implements Serializable {
 		
 		//atributo; array list de inteiros - uma espécie de matriz
 		
+		DataSet(){
+			this.dataList = new ArrayList<int []>();
+			this.domains = null;
+		}
+		
+		
 		//construtor a partir de um ficheiro csv
 		DataSet(String csvFile)  {
 			// inicializar os atributos
 			this.dataList = new ArrayList<int []>();
 			this.domains = null; 
 			
-			if (csvFile!=null) {
 			String line;
 			BufferedReader br;
 			
@@ -39,8 +44,9 @@ public class DataSet implements Serializable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
 		}
+		
+		
 
 		@Override
 		public String toString() {
@@ -158,7 +164,7 @@ public class DataSet implements Serializable {
 		//retorna a fibra da característica value
 		public DataSet  Fiber(int value) { 
 			//ArrayList <int []> fiber = new ArrayList<int []>();
-			DataSet fiber = new DataSet(null);
+			DataSet fiber = new DataSet();
 			int Length = dataList.get(0).length;
 			
 			for (int [] array: dataList) {	

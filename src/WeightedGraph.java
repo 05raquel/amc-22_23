@@ -19,9 +19,13 @@ public class WeightedGraph {   //não direcionado
 		adjMatrix[no2][no1]=peso;
 	}
 	
-	/*public double [][] getMatrix (){
+	public double [][] getMatrix (){
 		return adjMatrix;
-	}*/
+	}
+	
+	public int getdim() {
+		return dim;
+	}
 	
 	// MST - árvore de extensão de peso maximal 
 	
