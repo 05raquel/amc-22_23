@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Classifier {
 
@@ -20,7 +21,7 @@ public class Classifier {
 	
 	public int Classify (int [] valoresx) { 
 		if (valoresx.length!= arrayMRFTs[0].getsizeMRFTree()) {
-			throw new IllegalArgumentException("burro!"); //argumento inválido
+			throw new IllegalArgumentException(); //argumento inválido
 		}
 		
 		// dados valores (x1,...,xn) das variáveis
@@ -29,12 +30,15 @@ public class Classifier {
 		double [] maxprob = {-1,-1}; //{classe,valor de prob)
 		for (int i=0; i < frequencias.length; i++) {
 			probstotal[i] = frequencias[i]*arrayMRFTs[i].Prob(valoresx); //i é a classe
+			System.out.println("i:" + i);
 			if (probstotal[i]> maxprob[1]) {
 				maxprob[0]=i;
 				maxprob[1]=probstotal[i];
 			}
 		}
+		System.out.println("Probs das classes"+Arrays.toString(probstotal));
 		return (int)maxprob[0];  //valor da classe mais provável
+		
 		
 	
 	}

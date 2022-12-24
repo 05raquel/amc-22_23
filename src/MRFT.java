@@ -10,8 +10,8 @@ public class MRFT {
 
 	//Markov Random Field Tree
 	
-	private DataSet dataset;
-	private boolean [][] tree;	// usamos a MST tendo em conta o graph
+	//private DataSet dataset;
+	//private boolean [][] tree;	// usamos a MST tendo em conta o graph
 	private int [] MRFTree; 
 	private double [][][][] potentialMatrix;
 	
@@ -22,8 +22,8 @@ public class MRFT {
 	public MRFT(DataSet d, boolean [][] tree) {
 		//tendo em conta o dataset e a MST
 		super();
-		this.dataset = d;
-		this.tree = tree;
+		//this.dataset = d;
+		//this.tree = tree;
 		
 		int nnos = tree.length;
 		int [] MRFTree = new int [nnos]; //MRFTree array com o tamanho do nr de nós 
@@ -97,7 +97,7 @@ public class MRFT {
 		
 		this.MRFTree = MRFTree;  	//atualizar a matriz de potenciais
 
-		double [][][][] matrix = inicia(dataset, nnos, nnos); 
+		double [][][][] matrix = inicia(d, nnos, nnos); 
 		
 //nnos é o nr de nós
 // i, j, xi valores que i toma, xj valores que j toma
@@ -107,28 +107,62 @@ public class MRFT {
 		
 		for (int a=0; a< MRFTree.length;a++) { 
 			//confirmar indices
-			if (a==0 && MRFTree[noe]==a ) {  //se for a primeira aresta - aresta especial 0--> 
-				int [] var = {0,noe};
-				for (int xi=0; xi < d.getDomains()[a]; xi++) {
-					for (int xj=0; xj < d.getDomains()[noe]; xj++) {
-						int [] val = {xi,xj};
-						matrix[0][noe][xi][xj]= (d.Count(var, val) +0.2)/(d.getDataListArraySize()) +(0.2*(d.getDomains()[0]+1)*(d.getDomains()[noe]+1)) ;
-					// domínio +1 porque o domínio é o maximo dos valores tomados - incluir o 0
-					}
-				}
-			}
-			else {
+			boolean isArestaEspecial = a==noe && MRFTree[noe]==0;
+			boolean temPai = MRFTree[a]>=0;
+			if (temPai) {
 				int [] var = {MRFTree[a],a}; 
 				int [] i = {MRFTree[a]};
-				for (int xi=0; xi < d.getDomains()[MRFTree[a]]; xi++) {
-					for (int xj=0; xj < d.getDomains()[a]; xj++) {
+				for (int xi=0; xi <= d.getDomains()[MRFTree[a]]; xi++) {
+					for (int xj=0; xj <= d.getDomains()[a]; xj++) {
 						int [] val = {xi,xj};
 						int [] ix = {xi};
-						matrix [MRFTree[a]][a][xi][xj] = (d.Count(var, val) +0.2) /(d.Count(i,ix) +(0.2*(d.getDomains()[MRFTree[a]]+1)*(d.getDomains()[a]+1)));
+						if (isArestaEspecial) {
+							matrix[0][noe][xi][xj]= 
+									(d.Count(var, val) +0.2)
+									/(d.getDataListArraySize()) 
+										+(0.2*(d.getDomains()[0]+1)
+												*(d.getDomains()[noe]+1)) ;
+						}
+						else {
+							//System.out.println("idxs: " + MRFTree[a] +", "+ a+", "+ xi +", "+ xj);
+							matrix [MRFTree[a]][a][xi][xj] = 
+									(d.Count(var, val) +0.2) 
+									/ (d.Count(i,ix) 
+											+(0.2*(d.getDomains()[MRFTree[a]]+1)
+													*(d.getDomains()[a]+1)));						
+						}
 					}
 				}
 			}
+			
+			
+//			if (isArestaEspecial) {  //se for a primeira aresta - aresta especial 0--> 
+//				int [] var = {0,noe};
+//				for (int xi=0; xi < d.getDomains()[a]; xi++) {
+//					for (int xj=0; xj < d.getDomains()[noe]; xj++) {
+//						int [] val = {xi,xj};
+//						matrix[0][noe][xi][xj]= 
+//								(d.Count(var, val) +0.2)
+//								/(d.getDataListArraySize()) 
+//									+(0.2*(d.getDomains()[0]+1)
+//											*(d.getDomains()[noe]+1)) ;
+//					// domínio +1 porque o domínio é o maximo dos valores tomados - incluir o 0
+//					}
+//				}
+//			}
+//			else {
+//				int [] var = {MRFTree[a],a}; 
+//				int [] i = {MRFTree[a]};
+//				for (int xi=0; xi < d.getDomains()[MRFTree[a]]; xi++) {
+//					for (int xj=0; xj < d.getDomains()[a]; xj++) {
+//						int [] val = {xi,xj};
+//						int [] ix = {xi};
+//						matrix [MRFTree[a]][a][xi][xj] = (d.Count(var, val) +0.2) /(d.Count(i,ix) +(0.2*(d.getDomains()[MRFTree[a]]+1)*(d.getDomains()[a]+1)));
+//					}
+//				}
+//			}
 		}
+		
 		this.potentialMatrix = matrix;
 	}
 	
@@ -146,7 +180,7 @@ public class MRFT {
 		double [][][][] ma = new double [ni][nj][][]; 
 		for (int itni = 0; itni<ni; itni++) { // itni = iterada de ni
 			for (int itnj =0; itnj<nj; itnj++) { //itnj = iterada de nj
-				ma [itni][itnj] = new double [dataset.getDomains()[itni]] [dataset.getDomains()[itnj]];
+				ma [itni][itnj] = new double [dataset.getDomains()[itni]+1] [dataset.getDomains()[itnj]+1];
 				// para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
 			}
 		}
@@ -176,8 +210,13 @@ public class MRFT {
 		// f = j
 		
 		for (int f=1; f < MRFTree.length; f++) { // começa no 1 porque o 0 não tem pai
-			prob = prob * potentialMatrix [MRFTree[f]] [f] [vetor[MRFTree[f]]][vetor[f]];
-		}
+			boolean temPai = MRFTree[f]>=0;
+			if (temPai) {
+				prob = prob * potentialMatrix [MRFTree[f]] [f] [vetor[MRFTree[f]]][vetor[f]];
+			}
+		}	
+		System.out.println("Probabilidade Mc"+prob);
 		return prob;
+		
 	}
 }

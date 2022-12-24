@@ -107,7 +107,8 @@ public class DataSet implements Serializable {
 					arr[j]= vetorObs[var[j]];  // preencher o array com os valores do vetorObs do datalist
 				}
 
-				if (Arrays.equals(arr,val)) c++; //contar quantos vetores têm os valores val
+				if (Arrays.equals(arr,val)) 
+					c++; //contar quantos vetores têm os valores val
 			}
 			return (double)c;
 		}

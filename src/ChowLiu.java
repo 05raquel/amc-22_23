@@ -1,4 +1,6 @@
 import java.lang.*;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class ChowLiu {
 
@@ -8,6 +10,7 @@ public class ChowLiu {
 		WeightedGraph graph = new WeightedGraph (d.getDataListArraySize() -1);
 		// pois não queremos a classificação
 		//int errado=0;
+		System.out.println("Doms: "+Arrays.toString(d.getDomains()));
 		
 		double m = d.data().size();
 		for (int i =0; i< graph.getdim(); i++) {
@@ -32,6 +35,9 @@ public class ChowLiu {
 						else {
 							infomutua += (d.Count(var, val)/m)*java.lang.Math.log((d.Count(var, val)*m)/(d.Count(vari, vali)*d.Count(varj, valj)));
 						}
+						//if (i==1||j==1) {
+						//	System.out.println("What's up?");
+						//}
 					}
 				}
 				
@@ -40,6 +46,7 @@ public class ChowLiu {
 			}
 		}
 		System.out.println("Grafo:\n"+graph.printBonito2());
+		System.out.println(d.getDomains()[1]);
 		return graph.MST();
 	}
 	
