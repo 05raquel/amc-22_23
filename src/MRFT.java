@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -6,7 +7,8 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class MRFT {
+public class MRFT implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	//Markov Random Field Tree
 
@@ -114,9 +116,9 @@ public class MRFT {
 						if (isArestaEspecial) {
 							matrix[0][noe][xi][xj]= 
 									(d.Count(var, val) + 0.2)
-									/(d.data().size() 
-										+(0.2*(d.getDomains()[0]+1)
-												*(d.getDomains()[noe]+1))) ;
+									/(d.data().size() //não faltam PARENTESES!
+													+(0.2*(d.getDomains()[0]+1)
+															*(d.getDomains()[noe]+1))) ;
 							// domínio +1 porque o domínio é o maximo dos valores tomados - incluir o 0
 						}
 						else {

@@ -4,7 +4,6 @@ import java.util.Arrays;
 public class Classifier implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	
 	private MRFT [] arrayMRFTs;
 	private double [] frequencias;
 	//array de MRFTs, um para cada valor da classe
