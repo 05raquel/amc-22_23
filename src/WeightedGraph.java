@@ -34,13 +34,13 @@ public class WeightedGraph {   //não direcionado
 	public boolean [][] MST() {
 		boolean [][] MSTree = new boolean [dim][dim];
 		//System.out.println(Arrays.deepToString(graph));
-		double [][] Graph = new double [dim][dim];
-		for (int i=0; i<dim; i++) {
-			for (int j=0; j<dim; j++) {
-				Graph[i][j]= adjMatrix [i][j];
-			}
-		}
-		//cópia do grafo
+//		double [][] Graph = new double [dim][dim];
+//		for (int i=0; i<dim; i++) {
+//			for (int j=0; j<dim; j++) {
+//				Graph[i][j]= adjMatrix [i][j];
+//			}
+//		}
+//		//cópia do grafo
 		
 		LinkedList<Integer> Nodes = new LinkedList<Integer>(); //Lista dos nós (j's)
 		Nodes.add(0); // nó inicial -> 0
@@ -57,18 +57,16 @@ public class WeightedGraph {   //não direcionado
 								
 				for (int j = 0; j<dim; j++) {  //ver as arestas
 				
-					if (Graph[i][j] > max && !Nodes.contains(j)) {   //atualizar o max para o valor 
+					if (adjMatrix[i][j] > max && !Nodes.contains(j)) {   //atualizar o max para o valor 
 						imax = i;
 						jmax = j;
-						max = Graph[i][j];
+						max = adjMatrix[i][j];
 						encontreiArestaParaFora = true;
 					}
 				}
 			}
 			if (encontreiArestaParaFora) {
 				Nodes.add(jmax);
-				//Graph[imax][jmax] = 0;   //meter a 0 para não voltar a escolher esta 
-				//Graph[jmax][imax] = 0;   //o simétrico também
 				MSTree[imax][jmax] = true;  //existe esta aresta na MST
 				MSTree[jmax][imax] = true;
 				System.out.println("max(i,j,w)="+imax+","+jmax+","+max);

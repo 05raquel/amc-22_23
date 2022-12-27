@@ -6,6 +6,7 @@ public class ChowLiu {
 
 	// Algoritmo Chow Liu
 	
+	
 	public static boolean [][] Chow_liu (DataSet d){
 		WeightedGraph graph = new WeightedGraph (d.getDataListArraySize() -1);
 		// pois não queremos a classificação
