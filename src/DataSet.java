@@ -11,7 +11,7 @@ public class DataSet implements Serializable {
 	    
 		private ArrayList<int []> dataList;
 		private int [] domains;
-		double [][][][] matrixc;
+		//double [][][][] matrixc;
 		
 		//atributo; array list de inteiros - uma espécie de matriz
 		
@@ -45,7 +45,7 @@ public class DataSet implements Serializable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			matrixc = iniciacount(domains.length-1, domains.length-1);
+			//matrixc = iniciacount(domains.length-1, domains.length-1);
 		}
 		
 		
@@ -99,14 +99,14 @@ public class DataSet implements Serializable {
 			}
 			
 			//guardar os counts
-			int compara = var.length;
-								
-			if (compara==1 && matrixc[var[0]][var[0]][val[0]][val[0]]!=0) {
-				return matrixc[var[0]][var[0]][val[0]][val[0]];
-			}
-			else if (compara==2 && matrixc[var[0]][var[1]][val[0]][val[1]] != 0) {
-				return matrixc[var[0]][var[1]][val[0]][val[1]];
-			}
+//			int compara = var.length;
+//								
+//			if (compara==1 && matrixc[var[0]][var[0]][1][val[0]]!=0) {
+//				return matrixc[var[0]][var[0]][1][val[0]];
+//			}
+//			else if (compara==2 && matrixc[var[0]][var[1]][val[0]][val[1]] != 0) {
+//				return matrixc[var[0]][var[1]][val[0]][val[1]];
+//			}
 		
 			int c = 0; // contador
 			int arr[] = new int [var.length]; // cria novo array com o tamanho do número de variáveis a procurar
@@ -122,11 +122,11 @@ public class DataSet implements Serializable {
 					c++; //contar quantos vetores têm os valores val
 			}
 	
-			if (compara==1) matrixc[var[0]][var[0]][val[0]][val[0]]=c;
-			else if (compara==2) {
-				matrixc[var[0]][var[1]][val[0]][val[1]]=c;
-				matrixc[var[1]][var[0]][val[1]][val[0]]=c;
-			}
+//			if (compara==1) matrixc[var[0]][var[0]][1][val[0]]=c;
+//			else if (compara==2) {
+//				matrixc[var[0]][var[1]][val[0]][val[1]]=c;
+//				matrixc[var[1]][var[0]][val[1]][val[0]]=c;
+//			}
 			return (double)c;
 		}
 		
@@ -173,7 +173,7 @@ public class DataSet implements Serializable {
 					domains[i] = v[i];
 				}
 			}
-			matrixc = iniciacount(domains.length-1, domains.length-1);
+//			matrixc = iniciacount(domains.length-1, domains.length-1);
 		}
 			
 		// FIBER
@@ -201,13 +201,13 @@ public class DataSet implements Serializable {
 			double [][][][] ma = new double [ni][nj][][]; 
 			for (int itni = 0; itni<ni; itni++) { // itni = iterada de ni
 				for (int itnj =0; itnj<nj; itnj++) { //itnj = iterada de nj
-//					if (itni==itnj) {
-//						ma [itni][itnj]= new double [1] [domains[itnj]+1];
-//					}
-//					else {
+					if (itni==itnj) {
+						ma [itni][itnj]= new double [1] [domains[itnj]+1];
+					}
+					else {
 						ma [itni][itnj] = new double [domains[itni]+1] [domains[itnj]+1];
 						// para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
-//					}
+					}
 				}
 			}
 			return ma;
