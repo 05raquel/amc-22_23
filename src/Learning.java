@@ -55,36 +55,38 @@ public class Learning {
 			e.printStackTrace();
 		}
 		
-//		APLICAÇÃO 2
-//		try {
-//			ObjectInputStream oi = new ObjectInputStream (new FileInputStream("classifier.ser"));
-//			Classifier nd = (Classifier) oi.readObject(); //ambos são Classifier
-//			oi.close();
-//			System.out.println(nd);
-		
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		int [] valoresx = {1,0,2,1,0,0,0,2,0,0}; //input recebido
+		//APLICAÇÃO 2
+		try {
+			ObjectInputStream oi = new ObjectInputStream (new FileInputStream("classifier.ser"));
+			Classifier nd = (Classifier) oi.readObject(); //ambos são Classifier
+			oi.close();
+			System.out.println(nd);
+			System.out.println(nd.Classify (valoresx));
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		System.out.println("freq = "+Arrays.toString(freq));
 		
-		Classifier classificar = new Classifier (arrayfibers, freq);
-		//int [] valoresx = {0,0,0,0,0,0,0,0,0,0};
-		//int [] valoresx = {1,0,2,3,2,1,1,0,1,1}; // classe 1
-		//int [] valoresx = {1,0,2,3,2,1,1,2,1,1}; // classe 1
-		//int [] valoresx = {1,0,2,3,2,0,1,2,1,1};
-		//int [] valoresx = {1,0,0,2,2,1,1,2,1,1};
-		int [] valoresx = {1,0,2,1,0,0,0,2,0,0};
-		//1,0,2,1,0,0,0,2,0,0,1 - teste do1
-		//0,0,1,0,0,1,1,0,0,0,0
-		//1,0,0,2,2,1,1,2,1,1,0 - este
-		//classificar.Classify (valoresx);
+//		Classifier classificar = new Classifier (arrayfibers, freq);
+//		int [] valoresx = {0,0,0,0,0,0,0,0,0,0};
+//		int [] valoresx = {1,0,2,3,2,1,1,0,1,1}; // classe 1
+//		int [] valoresx = {1,0,2,3,2,1,1,2,1,1}; // classe 1
+//		int [] valoresx = {1,0,2,3,2,0,1,2,1,1};
+//		int [] valoresx = {1,0,0,2,2,1,1,2,1,1};
+//		int [] valoresx = {1,0,2,1,0,0,0,2,0,0};
+//		1,0,2,1,0,0,0,2,0,0,1 - teste do1
+//		0,0,1,0,0,1,1,0,0,0,0
+//		1,0,0,2,2,1,1,2,1,1,0 - este
+//		classificar.Classify (valoresx);
 //		System.out.println("a");
-		System.out.println(classificar.Classify (valoresx));
+//		System.out.println(classificar.Classify (valoresx));
 		
 		long endTime   = System.nanoTime();
 		long totalTime = endTime - startTime;
