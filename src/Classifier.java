@@ -1,7 +1,10 @@
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Classifier {
-
+public class Classifier implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	
 	private MRFT [] arrayMRFTs;
 	private double [] frequencias;
 	//array de MRFTs, um para cada valor da classe
@@ -12,15 +15,15 @@ public class Classifier {
 	public Classifier(MRFT [] MRFTs, double[] valores) {
 		super();
 		this.arrayMRFTs = MRFTs;
-		this.frequencias = valores;
+		this.frequencias = valores; 
 		
-		// calcular frequências com base no dataset no algoritmo final do classificador!
+		//frequências calculadas no algoritmo final do classificador com base no dataset
 	}
 	
 	//CLASSIFY
 	
 	public int Classify (int [] valoresx) { 
-		if (valoresx.length!= arrayMRFTs[0].getsizeMRFTree()) {
+		if (valoresx.length!= arrayMRFTs[0].getsizeMRFTree()) { //vetor valoresx com o número de características correto
 			throw new IllegalArgumentException(); //argumento inválido
 		}
 		

@@ -78,8 +78,6 @@ public class DataSet implements Serializable {
 			return domains;
 		}
 		
-		
-		
 		//obter o tamanho dos vetores no dataSet - número de característica + classificação
 		public int getDataListArraySize () {
 			return domains.length;
@@ -155,7 +153,7 @@ public class DataSet implements Serializable {
 				if (v[i]>domains[i]) {
 					domains[i] = v[i];
 				}
-			} 
+			}
 		}
 			
 		// FIBER

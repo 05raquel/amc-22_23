@@ -45,45 +45,45 @@ public class WeightedGraph {   //não direcionado
 		LinkedList<Integer> Nodes = new LinkedList<Integer>(); //Lista dos nós (j's)
 		Nodes.add(0); // nó inicial -> 0
 		
-		while (Nodes.size() < dim) {
+		boolean encontreiArestaParaFora = true;
+		while (encontreiArestaParaFora) {
+		//while (Nodes.size() < dim) {
 			double max = 0;  // vetor max: (i, j, peso)
-			int imax=0;
-			int jmax=0;
+			int imax=-1;
+			int jmax=-1;
+			encontreiArestaParaFora = false;
 			
 			for (int i : Nodes) { 
+								
+				for (int j = 0; j<dim; j++) {  //ver as arestas
 				
-				LinkedList<Integer> notThis = new LinkedList<Integer>();				
-				for (int j =0; j<dim; j++) {  //ver as arestas
-				
-					if (Graph[i][j] > max && !Nodes.contains(j) && !notThis.contains(j)) {   //atualizar o max para o valor 
+					if (Graph[i][j] > max && !Nodes.contains(j)) {   //atualizar o max para o valor 
 						imax = i;
 						jmax = j;
 						max = Graph[i][j];
-					}
-					if (Nodes.contains(j) && !notThis.contains(j)) {
-						notThis.add(j);
-						j = 0;
+						encontreiArestaParaFora = true;
 					}
 				}
-				notThis.clear();
 			}
-			
-			Nodes.add(jmax);
-			Graph[imax][jmax] = 0;   //meter a 0 para não voltar a escolher esta 
-			Graph[jmax][imax] = 0;   //o simétrico também
-			MSTree[imax][jmax] = true;  //existe esta aresta na MST
-			MSTree[jmax][imax] = true;
+			if (encontreiArestaParaFora) {
+				Nodes.add(jmax);
+				//Graph[imax][jmax] = 0;   //meter a 0 para não voltar a escolher esta 
+				//Graph[jmax][imax] = 0;   //o simétrico também
+				MSTree[imax][jmax] = true;  //existe esta aresta na MST
+				MSTree[jmax][imax] = true;
+				System.out.println("max(i,j,w)="+imax+","+jmax+","+max);
+			}
 		}
 		//System.out.println(Nodes);
+		System.out.println("MST: "+Arrays.deepToString(MSTree));
 		return MSTree; 
 	}
-	
 	
 	public String printBonito2 ()	{
 		String out = "";
 		for (int i = 0; i < adjMatrix.length; i++) {
 			for (int j = 0; j < adjMatrix.length; j++) {
-				out += (adjMatrix[i][j]) + " ";
+				out += (adjMatrix[i][j]) + "  ";
 			}
 			out += "\n";
 		}
