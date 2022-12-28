@@ -1,3 +1,6 @@
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -116,7 +119,7 @@ public class MRFT implements Serializable {
 						if (isArestaEspecial) {
 							matrix[0][noe][xi][xj]= 
 									(d.Count(var, val) + 0.2)
-									/(d.data().size() //não faltam PARENTESES!
+									/(d.getDataList().size() //não faltam PARENTESES!
 													+(0.2*(d.getDomains()[0]+1)
 															*(d.getDomains()[noe]+1))) ;
 							// domínio +1 porque o domínio é o maximo dos valores tomados - incluir o 0
@@ -188,6 +191,6 @@ public class MRFT implements Serializable {
 		}	
 		System.out.println("Probabilidade Mc"+prob);
 		return prob;
-		
 	}
+
 }

@@ -1,19 +1,17 @@
 import java.lang.*;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class ChowLiu {
 
 	// Algoritmo Chow Liu
-	
-	
+
 	public static boolean [][] Chow_liu (DataSet d){
 		WeightedGraph graph = new WeightedGraph (d.getDataListArraySize() -1);
 		// pois não queremos a classificação
 		//int errado=0;
 		System.out.println("Doms: "+Arrays.toString(d.getDomains()));
 		
-		double m = d.data().size();
+		double m = d.getDataList().size();
 		for (int i = 0; i < graph.getdim(); i++) {
 			for (int j=i+1; j< graph.getdim(); j++) {
 				// não ver j,i correspondente 

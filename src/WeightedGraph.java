@@ -10,7 +10,6 @@ public class WeightedGraph {   //não direcionado
 		super();
 		this.dim = size;
 		this.adjMatrix = new double [size][size];
-	
 	}		
 	
 	// ADD
@@ -21,7 +20,7 @@ public class WeightedGraph {   //não direcionado
 	
 	public double [][] getMatrix (){
 		return adjMatrix;
-	}
+	} // Retorna uma copia da matriz que, se alterada, não afeta a "original"
 	
 	public int getdim() {
 		return dim;

@@ -1,3 +1,6 @@
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -21,7 +24,7 @@ public class Classifier implements Serializable {
 	
 	//CLASSIFY
 	
-	public int Classify (int [] valoresx) { 
+	public int Classify (int [] valoresx) {
 		if (valoresx.length!= arrayMRFTs[0].getsizeMRFTree()) { //vetor valoresx com o número de características correto
 			throw new IllegalArgumentException(); //argumento inválido
 		}
@@ -43,5 +46,14 @@ public class Classifier implements Serializable {
 		
 		
 	
+	}
+
+	public static Classifier openclf(String filename) throws IOException, ClassNotFoundException {
+		FileInputStream f = new FileInputStream(filename);
+		ObjectInputStream o = new ObjectInputStream(f);
+		Classifier classifier =  (Classifier) o.readObject();
+		o.close();
+		f.close();
+		return classifier;
 	}
 }

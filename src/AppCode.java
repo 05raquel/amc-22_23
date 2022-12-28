@@ -5,13 +5,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
 
-public class Learning {
+public class AppCode {
 	
-	public static void main(String[] args) {
+	public static void main(DataSet d, String fileName_var) {
 		long startTime = System.nanoTime();
 		
 		
-		DataSet d = new DataSet("testegrande.csv");
+//		DataSet d = new DataSet("testegrande.csv");
 		int [] doms = d.getDomains();
 		
 		int domClasses = doms[d.getDataListArraySize() -1];
@@ -30,13 +30,14 @@ public class Learning {
 			//fibers[i]= d.Fiber(i);
 			//ChowLiu.Chow_liu(d.Fiber(i));
 			System.out.println("Classe:"+i);
-			freq[i]= (double) d.Fiber(i).data().size() / (double) d.data().size();
+			DataSet fiber = d.Fiber(i);
+			freq[i]= (double) fiber.getDataList().size() / (double) d.getDataList().size();
 			// numero de elementos do fiber / numero de elementos do dataset
 			System.out.println("d");
 			
 			//System.out.println(d.Count(new int[]{0, 1}, new int[] {1,0}));
 			
-			arrayfibers[i] = new MRFT(d.Fiber(i), ChowLiu.Chow_liu(d.Fiber(i)));
+			arrayfibers[i] = new MRFT(fiber, ChowLiu.Chow_liu(d.Fiber(i)));
 			System.out.println("e");
 		}
 		
@@ -46,7 +47,7 @@ public class Learning {
 		System.out.println(classificador);
 		
 		try { //escrever objetos no ficheiro
-			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("classifier.ser"));
+			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName_var));
 			os.writeObject(classificador);
 			os.close();
 			
@@ -56,6 +57,7 @@ public class Learning {
 		}
 		
 		int [] valoresx = {1,0,2,1,0,0,0,2,0,0}; //input recebido
+
 		//APLICAÇÃO 2
 		try {
 			ObjectInputStream oi = new ObjectInputStream (new FileInputStream("classifier.ser"));
