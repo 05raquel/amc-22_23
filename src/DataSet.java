@@ -93,30 +93,35 @@ public class DataSet implements Serializable {
             // var e val têm o mesmo tamanho!
         }
         //guardar os counts
-//			int compara = var.length;
-//								
-//			if (compara==1 && matrixc[var[0]][var[0]][1][val[0]]!=0) {
-//				return matrixc[var[0]][var[0]][1][val[0]];
-//			}
-//			else if (compara==2 && matrixc[var[0]][var[1]][val[0]][val[1]] != 0) {
-//				return matrixc[var[0]][var[1]][val[0]][val[1]];
-//			}
-        double c = 0; // contador
-        int arr[] = new int[var.length]; // cria novo array com o tamanho do número de variáveis a procurar
-        for (int[] vetorObs : dataList) {
-            //obter valores das variáveis vars necessários no vetorObs
-            for (int j = 0; j < var.length; j++) {
-                arr[j] = vetorObs[var[j]];  // preencher o array com os valores do vetorObs do datalist
-            }
-            if (Arrays.equals(arr, val))
-                c++; //contar quantos vetores têm os valores val
-        }
-//			if (compara==1) matrixc[var[0]][var[0]][1][val[0]]=c;
-//			else if (compara==2) {
-//				matrixc[var[0]][var[1]][val[0]][val[1]]=c;
-//				matrixc[var[1]][var[0]][val[1]][val[0]]=c;
-//			}
+//		int compara = var.length;
+//			
+//		if (compara==1){
+//        	int valor1 = matrixc[var[0]][var[0]][1][val[0]];
+//        	if (valor1!=0) return valor1;
+//		}
+        
+//		else if (compara==2) 
+//        	int valor2 = matrixc[var[0]][var[1]][val[0]][val[1]];
+//        	if (valor2 != 0) return valor2;
+//		}
+        else {
+	        double c = 0; // contador
+	        int arr[] = new int[var.length]; // cria novo array com o tamanho do número de variáveis a procurar
+	        for (int[] vetorObs : dataList) {
+	            //obter valores das variáveis vars necessários no vetorObs
+	            for (int j = 0; j < var.length; j++) {
+	                arr[j] = vetorObs[var[j]];  // preencher o array com os valores do vetorObs do datalist
+	            }
+	            if (Arrays.equals(arr, val))
+	                c++; //contar quantos vetores têm os valores val
+	        }
+	//		if (compara==1) matrixc[var[0]][var[0]][1][val[0]]=c;
+	//		else if (compara==2) {
+	//				matrixc[var[0]][var[1]][val[0]][val[1]]=c;
+	//				matrixc[var[1]][var[0]][val[1]][val[0]]=c;
+	//		}
         return c;
+        }
     }
 		
 		/* Função equals - verifica se os arrays são iguais

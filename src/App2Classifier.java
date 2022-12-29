@@ -38,10 +38,10 @@ public class App2Classifier {
     private File file;
     private JButton back;
     private JLabel Names;
-    private JTextArea Title;
+    private JLabel Title;
     private JLabel ISTLogo1;
     //private JLabel ISTLogo2;
-    private JTextArea AMC;
+    private JLabel AMC;
     private JButton classify;
     private JTextField variaveis;
     private JLabel nrvariaveis;
@@ -67,7 +67,7 @@ public class App2Classifier {
         frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(Color.white);
-        frame.setTitle("Markov Random Field Learning App");
+        frame.setTitle("Markov Random Field Classifier App");
         frame.setResizable(false);
         
         ISTLogo1 = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/ISTLogo.png"))));
@@ -86,15 +86,13 @@ public class App2Classifier {
 	    Select.setBounds(221, 287, 268, 51);
 	    frame.getContentPane().add(Select);
 	    
-	    Title = new JTextArea();
+	    Title = new JLabel("Markov Random Field Classifier App");
 	    Title.setFont(new Font("Tahoma", Font.PLAIN, 26));
-	    Title.setText("Markov Random Field Classifier App");
 	    Title.setBounds(148, 186, 423, 36);
 	    frame.getContentPane().add(Title);
 	    
-        AMC = new JTextArea();
+        AMC = new JLabel("AMC 2022/2023");
         AMC.setFont(new Font("Tahoma", Font.PLAIN, 13));
-        AMC.setText("AMC 2022/2023");
         AMC.setBounds(305, 225, 109, 22);
         frame.getContentPane().add(AMC);
         
@@ -227,6 +225,17 @@ public class App2Classifier {
             int[] x = textftoarray(variaveis);
             int classe = classifier.Classify(x);
             System.out.println(classe);
+//            Mostrar probstotal - normalizado
+//            double soma=0;
+//            for (int i=0; i<frequencias.length; i++) {
+//            	soma+= probstotal[i];
+//            }
+//            double [] probfinal = new double [frequencias.length];
+//            for (int i=0; i<frequencias.length; i++) {
+//            	probfinal[i]= probstotal[i]/soma;
+//            }
+//            imprimir probfinal - label
+//            Imprimir maxprob[0] - resposta final - label
         });
       
 	}

@@ -31,7 +31,7 @@ public class MRFT implements Serializable {
 		//(MRFTree: índice do pai de cada nó)
 		
 		boolean flag = false;
-		//int [] arestae= new int [2];     //aresta especial - dá a direção das arestas
+		//int [] arestae = new int [2];     //aresta especial - dá a direção das arestas
 		//arestae[0]=0;                    //nó 0 para começar
 		int b=1;
 		for(; b < nnos && !flag; b++){
@@ -41,6 +41,7 @@ public class MRFT implements Serializable {
 			}
 		}
 		int noe=b; //nó especial
+		
 		// aresta especial é do 0 para o noe - dá a direção das outras arestas
 		//System.out.println("noe:"+noe);
 		
@@ -48,7 +49,7 @@ public class MRFT implements Serializable {
 		nospreenchidos.add(0); //acrescenta o nó 0 à lista de nós preenchidos 
 		
 		MRFTree[0]= -1;	  // o primeiro nó não tem pai logo é -1
-		for (int i =1; i< nnos;i++) {
+		for (int i = 1; i < nnos; i++) {
 			MRFTree[i]=-2;     //para as restantes entradas não iniciadas coloca-se -2
 		}
 		
@@ -56,9 +57,10 @@ public class MRFT implements Serializable {
 		// começar num nó
 		// visitar os filhos (tirando os já visitados anteriormente)
 		// repetir para cada filho
-		Set<Integer> visitados = new TreeSet<>();
+		Set<Integer> visitados = new TreeSet<>(); 
 		Queue<Integer> fila = new LinkedList<>();
 		fila.add(0);
+		
 		while (!fila.isEmpty()) {
 			int curr = fila.remove();
 			if (!visitados.contains(curr)) { 
@@ -99,11 +101,11 @@ public class MRFT implements Serializable {
 
 		double [][][][] matrix = inicia(d, nnos, nnos); 
 		
-//nnos é o nr de nós
-// i, j, xi valores que i toma, xj valores que j toma
-// preencher as matrizes para as arestas da MRFTree 
-// MRFTree[a] = pai = i
-// a = j
+		//nnos é o nr de nós
+		// i, j, xi valores que i toma, xj valores que j toma
+		// preencher as matrizes para as arestas da MRFTree 
+		// MRFTree[a] = pai = i
+		// a = j
 		
 		for (int a=0; a < MRFTree.length;a++) { 
 			

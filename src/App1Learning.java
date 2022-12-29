@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -43,11 +42,11 @@ public class App1Learning {
     private File file;
     private JButton back;
     private JLabel Names;
-    private JTextArea Title;
+    private JLabel Title;
     private JButton Save;
     private JLabel ISTLogo1;
    // private JLabel ISTLogo2;
-    private JTextArea AMC;
+    private JLabel AMC;
     private JLabel fileNameLabel;
     private JLabel sample_len;
     private JTextField fileName;
@@ -84,15 +83,13 @@ public class App1Learning {
 	    Select.setBounds(221, 287, 268, 51);
 	    frame.getContentPane().add(Select);
 	    
-	    Title = new JTextArea();
+	    Title = new JLabel("Markov Random Field Learning App");
 	    Title.setFont(new Font("Tahoma", Font.PLAIN, 26));
-	    Title.setText("Markov Random Field Learning App");
 	    Title.setBounds(148, 186, 423, 36);
 	    frame.getContentPane().add(Title);
 	    
-        AMC = new JTextArea();
+	    AMC = new JLabel("AMC 2022/2023");
         AMC.setFont(new Font("Tahoma", Font.PLAIN, 13));
-        AMC.setText("AMC 2022/2023");
         AMC.setBounds(305, 225, 109, 22);
         frame.getContentPane().add(AMC);
         
@@ -153,7 +150,9 @@ public class App1Learning {
         Save.setForeground(new Color(0, 0, 0));
         Save.setOpaque(false);
         Save.setVisible(false);
-        Save.setBounds(290, 366, 137, 36);
+        Save.setBounds(268, 366, 170, 36);
+        //290
+        //137
         frame.getContentPane().add(Save);
         
       //Window 3

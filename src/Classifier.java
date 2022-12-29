@@ -31,6 +31,7 @@ public class Classifier implements Serializable {
 		
 		// dados valores (x1,...,xn) das variáveis
 		// P = frequência x P MC (vetor)
+		
 		double [] probstotal = new double [frequencias.length];
 		double [] maxprob = {-1,-1}; //{classe,valor de prob)
 		for (int i=0; i < frequencias.length; i++) {
@@ -43,9 +44,6 @@ public class Classifier implements Serializable {
 		}
 		System.out.println("Probs das classes"+Arrays.toString(probstotal));
 		return (int)maxprob[0];  //valor da classe mais provável
-		
-		
-	
 	}
 
 	public static Classifier openclf(String filename) throws IOException, ClassNotFoundException {
