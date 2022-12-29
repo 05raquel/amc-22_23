@@ -20,6 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 
+
+
 public class App1Learning {
 	
 	
@@ -112,7 +114,7 @@ public class App1Learning {
         frame.getContentPane().add(ISTLogo2);
         */
         
-        fileNameLabel = new JLabel("MRFs File's Name:");
+        fileNameLabel = new JLabel("Classifier File's Name:");
         fileNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         fileNameLabel.setBounds(128, 271, 210, 20);
         frame.getContentPane().add(fileNameLabel);
@@ -146,7 +148,7 @@ public class App1Learning {
 	    back.setBounds(10, 10, 36, 36);
 	    frame.getContentPane().add(back);
 	   
-	    Save = new JButton("Save MRF file");
+	    Save = new JButton("Save Classifier file");
         Save.setFont(new Font("Tahoma", Font.PLAIN, 16));
         Save.setForeground(new Color(0, 0, 0));
         Save.setOpaque(false);
@@ -216,7 +218,7 @@ public class App1Learning {
                 file = fc.getSelectedFile();
                 try {
                     d = new DataSet(""+file);
-                    fileName_var = file.getName().substring(0,file.getName().indexOf("."))+".mrf";
+                    fileName_var = file.getName().substring(0,file.getName().indexOf("."))+".clf";
                     change12();
                 } catch (Exception e1) {
                     error_label.setText("The dataset could not be imported");
@@ -227,7 +229,7 @@ public class App1Learning {
         back.addActionListener(e -> {  //ao clicar no botão de retroceder vai fazer isto
             int goback = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?\nAll data will be lost", "", JOptionPane.YES_NO_OPTION);
             if(goback == JOptionPane.YES_OPTION){
-                 d = new DataSet(); change21();  // mudar para a janela inicial
+            	d = new DataSet(); change21();  // mudar para a janela inicial //
             }
         });
         
@@ -236,14 +238,15 @@ public class App1Learning {
             // Learning Code
 
             fileName_var = fileName.getText();
-            int [] doms = d.getDomains();
-            int domClasses = doms[d.getDataListArraySize() -1];
-            double [] freq = new double [domClasses + 1];
+            int [] doms = d.getDomains(); //array com o max de cada caracteristica
+            int domClasses = doms[d.getDataListArraySize() -1]; //nr de classes = a isto + 1
+            double [] freq = new double [domClasses + 1]; //array com as diferentes classes, depois preenchemos com freq
             MRFT [] arrayfibers = new MRFT [domClasses + 1];
+            
             for (int i=0; i <= domClasses; i++) {
                 DataSet fiber = d.Fiber(i);
                 freq[i]= (double) fiber.getDataList().size() / (double) d.getDataList().size();
-                arrayfibers[i] = new MRFT(fiber, ChowLiu.Chow_liu(d.Fiber(i)));
+                arrayfibers[i] = new MRFT(fiber, ChowLiu.Chow_liu(fiber));
             }
 
             Classifier classificador = new Classifier(arrayfibers, freq);

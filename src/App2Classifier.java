@@ -44,6 +44,9 @@ public class App2Classifier {
     private JTextArea AMC;
     private JButton classify;
     private JTextField variaveis;
+    private JLabel nrvariaveis;
+    private JTextArea txtrVariables;
+    
     
     private JLabel error_label;
     //private JLabel DONEpic;
@@ -85,7 +88,7 @@ public class App2Classifier {
 	    
 	    Title = new JTextArea();
 	    Title.setFont(new Font("Tahoma", Font.PLAIN, 26));
-	    Title.setText("Markov Random Field Learning App");
+	    Title.setText("Markov Random Field Classifier App");
 	    Title.setBounds(148, 186, 423, 36);
 	    frame.getContentPane().add(Title);
 	    
@@ -131,40 +134,48 @@ public class App2Classifier {
         variaveis.setFont(new Font("Tahoma", Font.PLAIN, 16));
         variaveis.setHorizontalAlignment(SwingConstants.CENTER);
         variaveis.setVisible(false);
-        variaveis.setBounds(29, 316, 227, 36);
+        variaveis.setBounds(29, 316, 260, 36);
         frame.getContentPane().add(variaveis);
-        variaveis.setColumns(10);
         
-        JTextArea txtrVariables = new JTextArea();
-        txtrVariables.setText("Variables:");
-        txtrVariables.setBounds(33, 294, 190, 22);
+        
+        txtrVariables = new JTextArea();
+        txtrVariables.setText("Variables (var1, var2, ..., var n):");
+        txtrVariables.setBounds(29, 294, 285, 22);
         frame.getContentPane().add(txtrVariables);
-        variaveis.setVisible(false);
+        txtrVariables.setVisible(false);
 
-        JLabel nrvariaveis = new JLabel("");
+        nrvariaveis = new JLabel("");
         nrvariaveis.setHorizontalAlignment(SwingConstants.CENTER);
         nrvariaveis.setBounds(366, 318, 230, 20);
         frame.getContentPane().add(nrvariaveis);
         nrvariaveis.setVisible(false);
+        
+        
 	}
 
-
-	
-	
 	private void change12() {
+		error_label.setText("");
+		error_label.setVisible(false);
         Select.setVisible(false);
         variaveis.setVisible(true);
-        error_label.setText("");
+        nrvariaveis.setVisible(true);
+        txtrVariables.setVisible(true);
         back.setVisible(true);
         classify.setVisible(true);
+        nrvariaveis.setText("Number of variables: "); //+ (d.getDataListArraySize() - 1)
+        nrvariaveis.setVisible(true);
         
     }
 	
     private void change21() {
         variaveis.setVisible(false);
+        nrvariaveis.setVisible(false);
+        txtrVariables.setVisible(false);
         Select.setVisible(true);
         error_label.setText("");
         back.setVisible(false);
+        classify.setVisible(false);
+        
 
         
     }
@@ -196,15 +207,16 @@ public class App2Classifier {
                 file = fc.getSelectedFile();
                 try {
                     classifier = Classifier.openclf(file.getName());
+                    error_label.setText("");
                     change12();
                 } catch (Exception e1) {
-                    error_label.setText("Could not import MRF array");
+                    error_label.setText("Could not import Classifier file");
                 }
             }
         });
   
         back.addActionListener(e -> {
-            int b = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?\nThe Bayesian Network will be lost", "", JOptionPane.YES_NO_OPTION);
+            int b = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?\nThe data will be lost", "", JOptionPane.YES_NO_OPTION);
             if(b == JOptionPane.YES_OPTION){
                 classifier = null;
                 change21();
