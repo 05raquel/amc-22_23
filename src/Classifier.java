@@ -21,6 +21,10 @@ public class Classifier implements Serializable {
 		
 		//frequências calculadas no algoritmo final do classificador com base no dataset
 	}
+	 
+	public MRFT[] getMRFTs () {
+		return arrayMRFTs;
+	}
 	
 	//CLASSIFY
 	
@@ -54,4 +58,18 @@ public class Classifier implements Serializable {
 		f.close();
 		return classifier;
 	}
+	
+//	 Mostrar probstotal - normalizado
+	 
+//	public static NormProb  ()
+//	double soma=0;
+//		for (int i=0; i<frequencias.length; i++) {
+//			soma+= probstotal[i];
+//		}
+//		double [] probfinal = new double [frequencias.length];
+//			for (int i=0; i<frequencias.length; i++) {
+//   	probfinal[i]= probstotal[i]/soma;
+//   }
+//   imprimir probfinal - label
+//   Imprimir maxprob[0] - resposta final - label
 }

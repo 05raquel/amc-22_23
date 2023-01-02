@@ -40,18 +40,15 @@ public class App2Classifier {
     private JLabel Names;
     private JLabel Title;
     private JLabel ISTLogo1;
-    //private JLabel ISTLogo2;
     private JLabel AMC;
     private JButton classify;
     private JTextField variaveis;
     private JLabel nrvariaveis;
     private JTextArea txtrVariables;
-    
-    
     private JLabel error_label;
-    //private JLabel DONEpic;
-    
-    private DataSet d;
+    private JLabel classefinal;
+    private JLabel predictedClass;
+ 
     private Classifier classifier;
     
     private final JFileChooser fc = new JFileChooser();
@@ -74,7 +71,7 @@ public class App2Classifier {
         ISTLogo1.setBounds(261, 0, 183, 203);
         frame.getContentPane().add(ISTLogo1);
         
-        Names = new JLabel("Ana Alfaiate 102903 | Catarina Freitas 102630 | Letícia Sousa 102578 | Raquel Coelho 102881");
+        Names = new JLabel("Ana Alfaiate 102903 | Catarina Freitas 102076 | Letícia Sousa 102578 | Raquel Coelho 102881");
         Names.setBounds(99, 437, 552, 16);
         Names.setFont(new Font("Tahoma", Font.PLAIN, 13));
         frame.getContentPane().add(Names);
@@ -138,16 +135,31 @@ public class App2Classifier {
         
         txtrVariables = new JTextArea();
         txtrVariables.setText("Variables (var1, var2, ..., var n):");
-        txtrVariables.setBounds(29, 294, 285, 22);
+        txtrVariables.setBounds(32, 294, 285, 22);
         frame.getContentPane().add(txtrVariables);
         txtrVariables.setVisible(false);
 
         nrvariaveis = new JLabel("");
-        nrvariaveis.setHorizontalAlignment(SwingConstants.CENTER);
-        nrvariaveis.setBounds(366, 318, 230, 20);
+        nrvariaveis.setHorizontalAlignment(SwingConstants.LEFT);
+        nrvariaveis.setBounds(29, 262, 230, 20);
         frame.getContentPane().add(nrvariaveis);
         nrvariaveis.setVisible(false);
         
+        //Window 3 
+        
+        predictedClass = new JLabel("");
+        predictedClass.setHorizontalAlignment(SwingConstants.CENTER);
+        predictedClass.setBounds(404, 284, 142, 20);
+        frame.getContentPane().add(predictedClass);
+        predictedClass.setVisible(false);
+        
+        classefinal = new JLabel("");
+        classefinal.setForeground(new Color(0, 157, 224));
+        classefinal.setFont(new Font("Tahoma", Font.BOLD, 65));
+        classefinal.setHorizontalAlignment(SwingConstants.CENTER);
+        classefinal.setBounds(438, 300, 79, 84);
+        frame.getContentPane().add(classefinal);
+        classefinal.setVisible(false);
         
 	}
 
@@ -160,10 +172,10 @@ public class App2Classifier {
         txtrVariables.setVisible(true);
         back.setVisible(true);
         classify.setVisible(true);
-        nrvariaveis.setText("Number of variables: "); //+ (d.getDataListArraySize() - 1)
         nrvariaveis.setVisible(true);
         
     }
+
 	
     private void change21() {
         variaveis.setVisible(false);
@@ -206,6 +218,7 @@ public class App2Classifier {
                 try {
                     classifier = Classifier.openclf(file.getName());
                     error_label.setText("");
+                    nrvariaveis.setText("Number of variables(n): "+ classifier.getMRFTs()[0].getnvar()); 
                     change12();
                 } catch (Exception e1) {
                     error_label.setText("Could not import Classifier file");
@@ -223,8 +236,22 @@ public class App2Classifier {
 
         classify.addActionListener(e -> {
             int[] x = textftoarray(variaveis);
-            int classe = classifier.Classify(x);
-            System.out.println(classe);
+            try {
+            	error_label.setVisible(false);
+            	predictedClass.setText("Predicted class: ");
+                predictedClass.setVisible(true);
+                classefinal.setText(""+classifier.Classify(x));
+                classefinal.setVisible(true);
+               
+           
+            } catch (Exception e1) {
+                error_label.setText("Could not classify");
+                error_label.setVisible(true);
+                classefinal.setVisible(false);
+                
+            }
+            
+
 //            Mostrar probstotal - normalizado
 //            double soma=0;
 //            for (int i=0; i<frequencias.length; i++) {

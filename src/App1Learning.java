@@ -71,7 +71,7 @@ public class App1Learning {
         ISTLogo1.setBounds(261, 0, 183, 203);
         frame.getContentPane().add(ISTLogo1);
         
-        Names = new JLabel("Ana Alfaiate 102903 | Catarina Freitas 102630 | Letícia Sousa 102578 | Raquel Coelho 102881");
+        Names = new JLabel("Ana Alfaiate 102903 | Catarina Freitas 102076 | Letícia Sousa 102578 | Raquel Coelho 102881");
         Names.setBounds(99, 437, 552, 16);
         Names.setFont(new Font("Tahoma", Font.PLAIN, 13));
         frame.getContentPane().add(Names);
@@ -158,8 +158,8 @@ public class App1Learning {
       //Window 3
         //TODO: texto com DONE e com um emoji qualquer :)
         
-        DONEpic = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/ISTLogo.png"))));
-        DONEpic.setBounds(261, 50, 183, 203);
+        DONEpic = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/DonePic.png"))));
+        DONEpic.setBounds(230, 20, 300, 400);
         frame.getContentPane().add(DONEpic);
         DONEpic.setVisible(false);
         
@@ -189,7 +189,9 @@ public class App1Learning {
         Save.setVisible(false);
         DONEpic.setVisible(true);
         Title.setVisible(false);
+        nrvariaveis.setVisible(false);
         AMC.setVisible(false);
+        error_label.setVisible(false);
         ISTLogo1.setVisible(false); //TODO: mudar a imagem para o tal emoji
     }
 	

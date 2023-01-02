@@ -17,6 +17,7 @@ public class MRFT implements Serializable {
 
 	private int [] MRFTree; 
 	private double [][][][] potentialMatrix;
+	private int nvar;
 	
 	//CONSTRUTOR
 	
@@ -25,6 +26,8 @@ public class MRFT implements Serializable {
 	public MRFT(DataSet d, boolean [][] tree) {
 		//tendo em conta o dataset e a MST
 		super();
+		
+		nvar = d.getDataListArraySize() -1;
 		
 		int nnos = tree.length;
 		int [] MRFTree = new int [nnos]; //MRFTree array com o tamanho do nr de nós 
@@ -149,6 +152,12 @@ public class MRFT implements Serializable {
 //		
 //		return falta;
 //	}
+	
+	
+	public int getnvar() {
+		return nvar;
+	}
+	
 	
 	/** inicia a potentialMatrix com as dimensões corretas de acordo com os domínios das características */
 	public double [][][][] inicia (DataSet dataset, int ni, int nj){

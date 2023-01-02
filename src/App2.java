@@ -29,19 +29,19 @@ public class App2 {
     //private JLabel ISTLogo2;
     private JLabel AMC;
     private JButton classify;
-    private JLabel nrvariables;
+    private JTextField variaveis;
+    private JLabel nrvariaveis;
     private JTextArea txtrVariables;
+    private JLabel classefinal;
+    private JLabel predictedClass;
     
     
     private JLabel error_label;
-    //private JLabel DONEpic;
-    
-    private DataSet d;
+
     private Classifier classifier;
     
     private final JFileChooser fc = new JFileChooser();
     private final File path = new File(new File(".").getCanonicalPath());
-    private JTextField textField;
 
     
     private void components(JFrame frame) {  //função que cria todos os compponentes de design
@@ -101,7 +101,7 @@ public class App2 {
             frame.getContentPane().add(ISTLogo2);
             */
             
-    		back = new JButton(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/BackButton.png"))));
+            back = new JButton(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/BackButton.png"))));
     	    back.setBorder(null);
     	    back.setVisible(false);
     	    back.setBounds(10, 10, 36, 36);
@@ -111,40 +111,60 @@ public class App2 {
             classify.setOpaque(false);
             classify.setBorder(new LineBorder(Color.white));
             classify.setFont(new Font("Tahoma", Font.PLAIN, 20));
-            classify.setBounds(90, 348, 122, 40);
+            classify.setBounds(90, 362, 122, 40);
             frame.getContentPane().add(classify);
             classify.setVisible(false);
             classify.setForeground(new Color(0, 0, 0));
+
+            variaveis = new JTextField();
+            variaveis.setFont(new Font("Tahoma", Font.PLAIN, 16));
+            variaveis.setHorizontalAlignment(SwingConstants.CENTER);
+            variaveis.setVisible(false);
+            variaveis.setBounds(29, 316, 260, 36);
+            frame.getContentPane().add(variaveis);
+            
             
             txtrVariables = new JTextArea();
             txtrVariables.setText("Variables (var1, var2, ..., var n):");
-            txtrVariables.setBounds(26, 278, 285, 22);
+            txtrVariables.setBounds(32, 294, 285, 22);
             frame.getContentPane().add(txtrVariables);
             txtrVariables.setVisible(false);
-            
-            textField = new JTextField();
-            textField.setBounds(26, 304, 285, 29);
-            frame.getContentPane().add(textField);
-            textField.setColumns(10);
-            textField.setVisible(false);
-            
-            
-            nrvariables = new JLabel("New label");
-            nrvariables.setBounds(378, 282, 237, 16);
-            frame.getContentPane().add(nrvariables);
-            nrvariables.setVisible(false);
 
-          
+            nrvariaveis = new JLabel("");
+            nrvariaveis.setHorizontalAlignment(SwingConstants.LEFT);
+            nrvariaveis.setBounds(29, 262, 230, 20);
+            frame.getContentPane().add(nrvariaveis);
+            nrvariaveis.setVisible(false);
+
+            //Window 3 
+            
+            predictedClass = new JLabel("");
+            predictedClass.setHorizontalAlignment(SwingConstants.CENTER);
+            predictedClass.setBounds(454, 294, 142, 20);
+            frame.getContentPane().add(predictedClass);
+            predictedClass.setVisible(false);
+            
+            classefinal = new JLabel("");
+            classefinal.setForeground(new Color(0, 157, 224));
+            classefinal.setFont(new Font("Tahoma", Font.BOLD, 65));
+            classefinal.setHorizontalAlignment(SwingConstants.CENTER);
+            classefinal.setBounds(488, 318, 79, 84);
+            frame.getContentPane().add(classefinal);
+            classefinal.setVisible(false);
+      
     	}
     private void change12() {
+    	error_label.setText("");
+		error_label.setVisible(false);
         Select.setVisible(false);
-        error_label.setText("");
+        variaveis.setVisible(true);
+        nrvariaveis.setVisible(true);
+        txtrVariables.setVisible(true);
         back.setVisible(true);
         classify.setVisible(true);
-        nrvariables.setText("Number of variables: "+(d.getDataListArraySize() -1));
-        nrvariables.setVisible(true);
-        txtrVariables.setVisible(true);
-        textField.setVisible(true);
+        nrvariaveis.setText("Number of variables: "); //+ (d.getDataListArraySize() - 1)
+        nrvariaveis.setVisible(true);
+        
         
     }
 	
@@ -155,7 +175,7 @@ public class App2 {
         classify.setVisible(false);
         
 
-        
+       
     }
 
     private int[] textftoarray(JTextField text) {
@@ -225,9 +245,16 @@ public class App2 {
         });
 
         classify.addActionListener(e -> {
-            int[] x = textftoarray(textField);
-            int classe = classifier.Classify(x);
-            System.out.println(classe);
+            int[] x = textftoarray(variaveis);
+            try {
+            	predictedClass.setText("Predicted class: ");
+                predictedClass.setVisible(true);
+                classefinal.setText(""+classifier.Classify(x));
+                classefinal.setVisible(true);
+            	//System.out.println(classe);
+            } catch (Exception e1) {
+                error_label.setText("Could not classify");
+            }
          // Mostrar probstotal - normalizado
 //          double soma=0;
 //          for (int i=0; i<frequencias.length; i++) {
