@@ -26,6 +26,10 @@ public class Classifier implements Serializable {
 		return arrayMRFTs;
 	}
 	
+	public double[] getfreqs() {
+		return frequencias;
+	}
+	
 	//CLASSIFY
 	
 	//TODO usar as duas funções

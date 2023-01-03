@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 import javax.swing.ImageIcon;
@@ -48,6 +49,7 @@ public class App2Classifier {
     private JLabel error_label;
     private JLabel classefinal;
     private JLabel predictedClass;
+    private JTextArea normprobs;
  
     private Classifier classifier;
     
@@ -149,7 +151,7 @@ public class App2Classifier {
         
         predictedClass = new JLabel("");
         predictedClass.setHorizontalAlignment(SwingConstants.CENTER);
-        predictedClass.setBounds(404, 284, 142, 20);
+        predictedClass.setBounds(370, 284, 142, 20);
         frame.getContentPane().add(predictedClass);
         predictedClass.setVisible(false);
         
@@ -157,9 +159,16 @@ public class App2Classifier {
         classefinal.setForeground(new Color(0, 157, 224));
         classefinal.setFont(new Font("Tahoma", Font.BOLD, 65));
         classefinal.setHorizontalAlignment(SwingConstants.CENTER);
-        classefinal.setBounds(438, 300, 79, 84);
+        classefinal.setBounds(398, 300, 79, 84);
         frame.getContentPane().add(classefinal);
         classefinal.setVisible(false);
+        
+        normprobs = new JTextArea("");
+        normprobs.setForeground(new Color(0, 0, 0));
+        normprobs.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        normprobs.setBounds(495, 340, 160, 104);
+        frame.getContentPane().add(normprobs);
+        normprobs.setVisible(false);
         
 	}
 
@@ -185,6 +194,11 @@ public class App2Classifier {
         error_label.setText("");
         back.setVisible(false);
         classify.setVisible(false);
+        nrvariaveis.setVisible(false);
+        predictedClass.setVisible(false);
+        classefinal.setVisible(false);
+        normprobs.setText("");
+    	normprobs.setVisible(false);
         
 
         
@@ -198,7 +212,8 @@ public class App2Classifier {
             try {
                 intValues[i] = Integer.parseInt(strValues[i]);
             } catch (NumberFormatException nfe) {
-                error_label.setText("Use only integers as variables >:(");
+                error_label.setText("Please use integers as variables ");
+                error_label.setVisible(true);
             }
         }
         return intValues;
@@ -220,6 +235,7 @@ public class App2Classifier {
                     error_label.setText("");
                     nrvariaveis.setText("Number of variables(n): "+ classifier.getMRFTs()[0].getnvar()); 
                     change12();
+                    
                 } catch (Exception e1) {
                     error_label.setText("Could not import Classifier file");
                 }
@@ -234,15 +250,25 @@ public class App2Classifier {
             }
         });
 
+        DecimalFormat d = new DecimalFormat("#.####");
+        
         classify.addActionListener(e -> {
             int[] x = textftoarray(variaveis);
+        
             try {
+            	normprobs.setText("");
             	error_label.setVisible(false);
             	predictedClass.setText("Predicted class: ");
                 predictedClass.setVisible(true);
-                classefinal.setText(""+classifier.Classify(x));
+                classefinal.setText(""+classifier.Classify(x).getBestClass());
                 classefinal.setVisible(true);
+                
+                for (int i = 0; i<classifier.getfreqs().length; i++) {         	
+                	normprobs.setText(normprobs.getText()+"\n Prob (C=" + i+ ") :" + d.format(Classifier.NormProb(classifier.Classify(x).getProbstotal())[i]*100)+"%");
+                	normprobs.setVisible(true);
+                }
                
+                	
            
             } catch (Exception e1) {
                 error_label.setText("Could not classify");
