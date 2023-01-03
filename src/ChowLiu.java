@@ -43,7 +43,7 @@ public class ChowLiu {
 		
 		System.out.println("Grafo:\n"+graph.printBonito2());
 		System.out.println(d.getDomains()[1]);
-		return graph.MST();
+		return graph.MST()/*.getMSTree()*/;
 	}
 	
 }

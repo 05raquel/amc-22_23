@@ -30,7 +30,7 @@ public class WeightedGraph {   //não direcionado
 	
 	//  grafo.MST()
 	
-	public boolean [][] MST() {
+	public boolean [][] /*gr_mst*/ MST() {
 		boolean [][] MSTree = new boolean [dim][dim];
 		//System.out.println(Arrays.deepToString(graph));
 //		double [][] Graph = new double [dim][dim];
@@ -42,7 +42,21 @@ public class WeightedGraph {   //não direcionado
 //		//cópia do grafo
 		
 		LinkedList<Integer> Nodes = new LinkedList<Integer>(); //Lista dos nós (j's)
-		Nodes.add(0); // nó inicial -> 0
+		
+		int nnos = adjMatrix.length;
+		int z=0;
+//		boolean flaginit= false;
+//		for (; z< nnos && !flaginit; z++) {
+//			for (int c=0; c<nnos && !flaginit; c++) {
+//				if (adjMatrix[z][c] !=0) {
+//					flaginit=true;
+//					z=z-1;
+//				}
+//			}
+//		}
+//		int init=z;
+		
+		Nodes.add(z); // nó inicial -> 0
 		
 		boolean encontreiArestaParaFora = true;
 		while (encontreiArestaParaFora) {
@@ -73,7 +87,22 @@ public class WeightedGraph {   //não direcionado
 		}
 		//System.out.println(Nodes);
 		System.out.println("MST: "+Arrays.deepToString(MSTree));
-		return MSTree; 
+		return MSTree/*new gr_mst(init,MSTree)*/; 
+	}
+	
+	public static class gr_mst {
+		boolean [][] MSTree;
+		int init;
+		public gr_mst(int init, boolean [][] MSTree) {
+			this.MSTree = MSTree;
+			this.init = init;
+		}
+		public boolean [][] getMSTree() {
+			return MSTree;
+		}
+		public int getInit() {
+			return init;
+		}
 	}
 	
 	public String printBonito2 ()	{

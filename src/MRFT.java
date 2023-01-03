@@ -36,7 +36,11 @@ public class MRFT implements Serializable {
 		boolean flag = false;
 		//int [] arestae = new int [2];     //aresta especial - dá a direção das arestas
 		//arestae[0]=0;                    //nó 0 para começar
-		int b=1;
+		
+		//tentar aceder para não fazer de novo
+		//int init=z;
+		
+		int b=0;
 		for(; b < nnos && !flag; b++){
 			if (tree[0][b]) {     //escolher a primeira aresta (que parte do 0) existente na MST (=true)
 				flag = true;
