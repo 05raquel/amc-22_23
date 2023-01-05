@@ -62,7 +62,7 @@ public class MRFT implements Serializable {
 		//System.out.println("noe:"+noe);
 		
 		LinkedList<Integer> nospreenchidos = new LinkedList<Integer>(); //LinkedList para ser dinâmico (nós que têm pai)
-		nospreenchidos.add(0); //acrescenta o nó 0 à lista de nós preenchidos 
+		nospreenchidos.add(init); //acrescenta o nó 0 à lista de nós preenchidos 
 		  
 		for (int i = 1; i < nnos; i++) {
 			if (i==init) {
