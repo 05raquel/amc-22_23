@@ -274,7 +274,7 @@ public class App2Classifier {
                 scroll.setVisible(true);
                 
                 for (int i = 0; i<classifier.getfreqs().length; i++) {         	
-                	normprobs.setText(normprobs.getText()+"\n Prob (C=" + i+ ") :" + d.format(Classifier.NormProb(classifier.Classify(x).getProbstotal())[i]*100)+"%");
+                	normprobs.setText(normprobs.getText()+"\n Prob (C=" + i+ "): " + d.format(Classifier.NormProb(classifier.Classify(x).getProbstotal())[i]*100)+"%");
                 	normprobs.setVisible(true);
                 }
                
@@ -287,19 +287,6 @@ public class App2Classifier {
                 e1.printStackTrace();
                 
             }
-            
-
-//            Mostrar probstotal - normalizado
-//            double soma=0;
-//            for (int i=0; i<frequencias.length; i++) {
-//            	soma+= probstotal[i];
-//            }
-//            double [] probfinal = new double [frequencias.length];
-//            for (int i=0; i<frequencias.length; i++) {
-//            	probfinal[i]= probstotal[i]/soma;
-//            }
-//            imprimir probfinal - label
-//            Imprimir maxprob[0] - resposta final - label
         });
       
 	}

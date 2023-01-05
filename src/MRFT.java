@@ -19,7 +19,7 @@ public class MRFT implements Serializable {
 	private double [][][][] potentialMatrix;
 	private int nvar;
 	
-	//CONSTRUTOR
+	//CONSTRUTOR de MRFT
 	
 	// coloca os phi ij (xi,xj) em cada aresta que podem ser vistos como uma matriz
 	
@@ -37,7 +37,7 @@ public class MRFT implements Serializable {
 		//int [] arestae = new int [2];     //aresta especial - dá a direção das arestas
 		//arestae[0]=0;                    //nó 0 para começar
 		
-		//tentar aceder para não fazer de novo
+		//tentar aceder para não fazer de novo - informação da MST
 		boolean flaginit= false;
 		int z=0;
 		for (; z< nnos && !flaginit; z++) {
@@ -52,7 +52,7 @@ public class MRFT implements Serializable {
 		boolean flag = false;
 		int b=0;
 		for(; b < nnos && !flag; b++){
-			if (tree[init][b]) {     //escolher a primeira aresta (que parte do 0) existente na MST (=true)
+			if (tree[init][b]) {     //escolher a primeira aresta (que parte do init) existente na MST (=true)
 				flag = true;
 				b=b-1;
 			}
@@ -63,7 +63,7 @@ public class MRFT implements Serializable {
 		//System.out.println("noe:"+noe);
 		
 		LinkedList<Integer> nospreenchidos = new LinkedList<Integer>(); //LinkedList para ser dinâmico (nós que têm pai)
-		nospreenchidos.add(init); //acrescenta o nó 0 à lista de nós preenchidos 
+		nospreenchidos.add(init); //acrescenta o nó init à lista de nós preenchidos 
 		  
 		for (int i = 0; i < nnos; i++) {
 			if (i==init) {
@@ -83,13 +83,13 @@ public class MRFT implements Serializable {
 		fila.add(init);
 		
 		while (!fila.isEmpty()) {
-			int curr = fila.remove();
-			if (!visitados.contains(curr)) { 
-				List<Integer> vizinhos = offspring(tree, curr);
-				for (int vizinho : vizinhos) {
+			int curr = fila.remove(); // fazer coisas com o atual
+			if (!visitados.contains(curr)) { //se ainda não tivermos executado esse atual
+				List<Integer> vizinhos = offspring(tree, curr); // lista de descendentes do nó atual
+				for (int vizinho : vizinhos) { 
 					if (!nospreenchidos.contains(vizinho)) {
-						nospreenchidos.add(vizinho);
 						MRFTree[vizinho] = curr;
+						nospreenchidos.add(vizinho);
 					}
 				}
 				visitados.add(curr);
@@ -99,7 +99,7 @@ public class MRFT implements Serializable {
 		}
 		System.out.println("MRF Tree: "+ Arrays.toString(MRFTree));
 		
-		
+		//inútil
 //		while (faltapreencher(MRFTree)) { //enquanto existirem nós sem pai - por preencher
 //			
 //			for (int cp=0; cp < nospreenchidos.size(); cp++) {
@@ -162,7 +162,7 @@ public class MRFT implements Serializable {
 		System.out.println("potential matrix: "+Arrays.deepToString(matrix));
 	}
 	
-	
+	//inútil
 //	/** Se a MRFTree passada ainda tem nós sem pai */
 //	public boolean faltapreencher (int[]v) {
 //		boolean falta=false;
@@ -194,7 +194,7 @@ public class MRFT implements Serializable {
 	public List<Integer> offspring(boolean[][] tree2, int no) {
 		List<Integer> offs = new ArrayList<>();
 		for (int i=0; i<tree2.length; i++) {
-			if (tree2[no][i]) offs.add(i);
+			if (tree2[no][i]) offs.add(i); //aresta do nó para o i
 		}
 		return offs;
 	}

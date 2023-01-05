@@ -37,7 +37,7 @@ public class AppCode {
 			
 			//System.out.println(d.Count(new int[]{0, 1}, new int[] {1,0}));
 			
-			arrayfibers[i] = new MRFT(fiber, ChowLiu.Chow_liu(d.Fiber(i)));
+			arrayfibers[i] = new MRFT(fiber, ChowLiu.Chow_liu(d.Fiber(i)),doms);
 			System.out.println("e");
 		}
 		

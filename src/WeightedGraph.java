@@ -13,7 +13,8 @@ public class WeightedGraph {   //não direcionado
 	}		
 	
 	// ADD
-	public void Add (int no1, int no2, double peso) {   //Adicionar uma aresta entre o no1 e o no2 com o valor peso
+	/** Adiciona uma aresta entre o no1 e o no2 com o valor peso */
+	public void Add (int no1, int no2, double peso) {   
 		adjMatrix[no1][no2]=peso;
 		adjMatrix[no2][no1]=peso;
 	}
@@ -26,10 +27,11 @@ public class WeightedGraph {   //não direcionado
 		return dim;
 	}
 	
-	// MST - árvore de extensão de peso maximal 
 	
-	//  grafo.MST()
 	
+	//grafo.MST()
+	
+	/** MST - árvore de extensão de peso maximal  */
 	public boolean [][] /*gr_mst*/ MST() {
 		boolean [][] MSTree = new boolean [dim][dim];
 		//System.out.println(Arrays.deepToString(graph));
@@ -56,7 +58,7 @@ public class WeightedGraph {   //não direcionado
 		}
 		int init=z;
 		
-		Nodes.add(init); // nó inicial -> init
+		Nodes.add(init); // nó inicial: init
 		
 		boolean encontreiArestaParaFora = true;
 		while (encontreiArestaParaFora) {
@@ -71,6 +73,8 @@ public class WeightedGraph {   //não direcionado
 				for (int j = 0; j<dim; j++) {  //ver as arestas
 				
 					if (adjMatrix[i][j] > max && !Nodes.contains(j)) {   //atualizar o max para o valor 
+						// Nodes não contem para não criar ciclos
+						//Adicionar a aresta máxima naquele momento
 						imax = i;
 						jmax = j;
 						max = adjMatrix[i][j];
@@ -90,20 +94,21 @@ public class WeightedGraph {   //não direcionado
 		return MSTree/*new gr_mst(init,MSTree)*/; 
 	}
 	
-	public static class gr_mst {
-		boolean [][] MSTree;
-		int init;
-		public gr_mst(int init, boolean [][] MSTree) {
-			this.MSTree = MSTree;
-			this.init = init;
-		}
-		public boolean [][] getMSTree() {
-			return MSTree;
-		}
-		public int getInit() {
-			return init;
-		}
-	}
+	//Ignorar?!
+//	public static class gr_mst {
+//		boolean [][] MSTree;
+//		int init;
+//		public gr_mst(int init, boolean [][] MSTree) {
+//			this.MSTree = MSTree;
+//			this.init = init;
+//		}
+//		public boolean [][] getMSTree() {
+//			return MSTree;
+//		}
+//		public int getInit() {
+//			return init;
+//		}
+//	}
 	
 	public String printBonito2 ()	{
 		String out = "";

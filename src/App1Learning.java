@@ -174,7 +174,7 @@ public class App1Learning {
         fileName.setVisible(true);
         sample_len.setText("Sample length: "+d.getDataList().size());  //TODO: verificar que função meter para ver o tamanho
         sample_len.setVisible(true);
-        nrvariaveis.setText("Number of variables: "+(d.getDataListArraySize() -1)); //TODO: verificat função
+        nrvariaveis.setText("Number of variables: "+(d.getDataListArraySize() -1)); //TODO: verificar função
         nrvariaveis.setVisible(true);
         Save.setVisible(true);
     }

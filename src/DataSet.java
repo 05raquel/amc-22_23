@@ -13,14 +13,14 @@ public class DataSet implements Serializable {
     private int[] domains;
     //double [][][][] matrixc;
 
-    //atributo; array list de inteiros - uma espécie de matriz
+    //atributo array list de inteiros - lista de vetores dinâmica
 
     public DataSet() {
         this.dataList = new ArrayList<int[]>();
         this.domains = null;
     }
 
-    //construtor a partir de um ficheiro csv
+    /**Construtor de DataSet a partir de um ficheiro csv*/
     public DataSet(String csvFile) {
         // inicializar os atributos
         this.dataList = new ArrayList<int[]>();
@@ -57,7 +57,7 @@ public class DataSet implements Serializable {
         return "Size=" + dataList.size() + " Dataset = " + s;
     }
 
-    // converter uma linha string num [] de inteiros
+    /** Converte uma linha String do csv num array de inteiros*/
     public static int[] convert(String line) {
         String cvsSplitBy = ",";
         String[] strings = line.split(cvsSplitBy);
@@ -67,15 +67,15 @@ public class DataSet implements Serializable {
         return stringToIntVec;
     }
 
-    //aceder ao dataList do dataset considerado
+    /** Acede ao dataList do Dataset considerado*/
     public ArrayList<int[]> getDataList() { return dataList; }
 
-    //aceder aos domínios
+    /** Acede aos domínios das variáveis do Dataset */
     public int[] getDomains() {
         return domains;
     }
 
-    //obter o tamanho dos vetores no dataSet - número de característica + classificação
+    /**obtém o tamanho dos vetores no DataSet - número de características + classificação */
     public int getDataListArraySize() {
         return domains.length;
         //dataList.get(0).length;  //ainda inclui a última coluna com as classes. só retiramos essa coluna na altura de formar os grafos das fibras.
@@ -134,7 +134,6 @@ public class DataSet implements Serializable {
 	}
 		*/
 
-
     // var 0 1 2 3
     // e1: 1 2 3 3
     // e2: 0 0 0 0
@@ -142,12 +141,11 @@ public class DataSet implements Serializable {
     // e4: 0 1 0 1
     //Count([2,3], [0, 1])
 
-    //pensar como vamos guardar todos os counts que precisamos!
     // vai ser usado como T.count para futuras operações
 
 
     //ADD
-
+    /** Adiciona um vetor ao DataSet, se este tiver o tamanho correto*/
     public void Add(int v[]) {
         if (!dataList.isEmpty() && v.length != dataList.get(0).length) { //Validar argumento
             throw new IllegalArgumentException();
@@ -170,13 +168,14 @@ public class DataSet implements Serializable {
 //			matrixc = iniciacount(domains.length-1, domains.length-1);
     }
 
+    
     // FIBER
 
     // NO CLASSIFICADOR - PARTIÇÃO! vamos ter de fazer um método para calcular quantas fibras precisamos de fazer,
     //tendo em conta a contagem de classes
     // criar int [] ou ArrayList<int []> para os valores das classes
 
-    //retorna a fibra da característica value
+    /** Retorna a fibra da característica value */
     public DataSet Fiber(int value) {
         //ArrayList <int []> fiber = new ArrayList<int []>();
         DataSet fiber = new DataSet();

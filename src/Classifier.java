@@ -102,7 +102,7 @@ public class Classifier implements Serializable {
 		}
 	}
 	
-	
+	/** Abrir o ficheiro clf e devolver o objeto classifier correspondente*/
 	public static Classifier openclf(String filename) throws IOException, ClassNotFoundException {
 		FileInputStream f = new FileInputStream(filename);
 		ObjectInputStream o = new ObjectInputStream(f);
@@ -124,6 +124,4 @@ public class Classifier implements Serializable {
 			}
 		return probfinal;
 	}
-//   imprimir probfinal - label
-//   Imprimir maxprob[0] - resposta final - label
 }

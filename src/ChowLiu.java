@@ -7,7 +7,7 @@ public class ChowLiu {
 	public static boolean [][] Chow_liu (DataSet d){
 		WeightedGraph graph = new WeightedGraph (d.getDataListArraySize() -1);
 		//pois não queremos a classificação
-		//int errado=0;
+		
 		System.out.println("Doms: "+Arrays.toString(d.getDomains()));
 		
 		double m = d.getDataList().size();
@@ -27,12 +27,13 @@ public class ChowLiu {
 						int [] vali = {xi};
 						int [] valj= {xj};
 						
-						if (d.Count(var, val) == 0) {
+						double count2 = d.Count(var, val);
+						if (count2 == 0) {
 							// no caso 0 * log(0) = 0; infomutua continua igual
 								infomutua += 0;
 							}
 						else {
-							infomutua += (d.Count(var, val)/m)*java.lang.Math.log((d.Count(var, val)*m)/(d.Count(vari, vali)*d.Count(varj, valj)));
+							infomutua += (count2 /m)*java.lang.Math.log((count2 *m)/(d.Count(vari, vali)*d.Count(varj, valj)));
 						}
 
 //						if ((d.Count(var, val)/m) != 0 || ((d.Count(var, val)*m)/(d.Count(vari, vali)*d.Count(varj, valj))) !=0) {
