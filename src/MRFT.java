@@ -23,7 +23,7 @@ public class MRFT implements Serializable {
 	
 	// coloca os phi ij (xi,xj) em cada aresta que podem ser vistos como uma matriz
 	
-	public MRFT(DataSet d, boolean [][] tree) {
+	public MRFT(DataSet d, boolean [][] tree, int [] domains) {
 		//tendo em conta o dataset e a MST
 		super();
 		
@@ -47,6 +47,7 @@ public class MRFT implements Serializable {
 			}
 		}
 		int init=z;
+		System.out.println("init: " + init);
 		
 		boolean flag = false;
 		int b=0;
@@ -64,7 +65,7 @@ public class MRFT implements Serializable {
 		LinkedList<Integer> nospreenchidos = new LinkedList<Integer>(); //LinkedList para ser dinâmico (nós que têm pai)
 		nospreenchidos.add(init); //acrescenta o nó 0 à lista de nós preenchidos 
 		  
-		for (int i = 1; i < nnos; i++) {
+		for (int i = 0; i < nnos; i++) {
 			if (i==init) {
 				MRFTree[i]=-1;     // o primeiro nó (init) não tem pai logo é -1
 			}
@@ -119,7 +120,7 @@ public class MRFT implements Serializable {
 		
 		this.MRFTree = MRFTree;  	//atualizar a matriz de potenciais
 
-		double [][][][] matrix = inicia(d, nnos, nnos); 
+		double [][][][] matrix = inicia(domains, nnos, nnos); 
 		
 		//nnos é o nr de nós
 		// i, j, xi valores que i toma, xj valores que j toma
@@ -158,6 +159,7 @@ public class MRFT implements Serializable {
 			}
 		}
 		this.potentialMatrix = matrix;
+		System.out.println("potential matrix: "+Arrays.deepToString(matrix));
 	}
 	
 	
@@ -177,11 +179,11 @@ public class MRFT implements Serializable {
 	
 	
 	/** inicia a potentialMatrix com as dimensões corretas de acordo com os domínios das características */
-	public double [][][][] inicia (DataSet dataset, int ni, int nj){
+	public double [][][][] inicia (int [] domains, int ni, int nj){
 		double [][][][] ma = new double [ni][nj][][]; 
 		for (int itni = 0; itni<ni; itni++) { // itni = iterada de ni
 			for (int itnj =0; itnj<nj; itnj++) { //itnj = iterada de nj
-				ma [itni][itnj] = new double [dataset.getDomains()[itni]+1] [dataset.getDomains()[itnj]+1];
+				ma [itni][itnj] = new double [domains[itni]+1] [domains[itnj]+1];
 				// para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
 			}
 		}
@@ -192,7 +194,7 @@ public class MRFT implements Serializable {
 	public List<Integer> offspring(boolean[][] tree2, int no) {
 		List<Integer> offs = new ArrayList<>();
 		for (int i=0; i<tree2.length; i++) {
-			if (tree2[no][i])offs.add(i);
+			if (tree2[no][i]) offs.add(i);
 		}
 		return offs;
 	}
@@ -210,10 +212,13 @@ public class MRFT implements Serializable {
 		
 		// MRFTree[j] = pai de j = i
 		// aresta i --> j 
-		
-		for (int j=1; j < MRFTree.length; j++) { // começa no 1 porque o 0 não tem pai
+		//System.out.println("Lenght: "+MRFTree.length);
+		for (int j=0; j < MRFTree.length; j++) { // começa no 1 porque o 0 não tem pai
+			//System.out.println("j: "+j);
 			boolean temPai = MRFTree[j]>=0;
+			//System.out.println("j: "+j);
 			if (temPai) {
+				//System.out.println("potential matrix: " + potentialMatrix [MRFTree[j]] [j] [vetor[MRFTree[j]]][vetor[j]]);
 				prob = prob * potentialMatrix [MRFTree[j]] [j] [vetor[MRFTree[j]]][vetor[j]];
 			}
 		}	

@@ -248,7 +248,7 @@ public class App1Learning {
             for (int i=0; i <= domClasses; i++) {
                 DataSet fiber = d.Fiber(i);
                 freq[i]= (double) fiber.getDataList().size() / (double) d.getDataList().size();
-                arrayfibers[i] = new MRFT(fiber, ChowLiu.Chow_liu(fiber));
+                arrayfibers[i] = new MRFT(fiber, ChowLiu.Chow_liu(fiber), doms);
             }
 
             Classifier classificador = new Classifier(arrayfibers, freq);

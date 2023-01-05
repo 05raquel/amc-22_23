@@ -18,6 +18,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -50,6 +51,7 @@ public class App2Classifier {
     private JLabel classefinal;
     private JLabel predictedClass;
     private JTextArea normprobs;
+    private JScrollPane scroll;
  
     private Classifier classifier;
     
@@ -159,16 +161,22 @@ public class App2Classifier {
         classefinal.setForeground(new Color(0, 157, 224));
         classefinal.setFont(new Font("Tahoma", Font.BOLD, 65));
         classefinal.setHorizontalAlignment(SwingConstants.CENTER);
-        classefinal.setBounds(398, 300, 79, 84);
+        classefinal.setBounds(398, 300, 85, 84);
         frame.getContentPane().add(classefinal);
         classefinal.setVisible(false);
         
         normprobs = new JTextArea("");
         normprobs.setForeground(new Color(0, 0, 0));
         normprobs.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        normprobs.setBounds(495, 340, 160, 104);
+        normprobs.setBounds(507, 320, 180, 94);
         frame.getContentPane().add(normprobs);
         normprobs.setVisible(false);
+        
+        scroll = new JScrollPane(normprobs);
+		scroll.setBounds(507, 320, 180, 94);
+		frame.getContentPane().add(scroll);
+		scroll.setVisible(false);
+		
         
 	}
 
@@ -199,6 +207,7 @@ public class App2Classifier {
         classefinal.setVisible(false);
         normprobs.setText("");
     	normprobs.setVisible(false);
+    	scroll.setVisible(false);
         
 
         
@@ -262,6 +271,7 @@ public class App2Classifier {
                 predictedClass.setVisible(true);
                 classefinal.setText(""+classifier.Classify(x).getBestClass());
                 classefinal.setVisible(true);
+                scroll.setVisible(true);
                 
                 for (int i = 0; i<classifier.getfreqs().length; i++) {         	
                 	normprobs.setText(normprobs.getText()+"\n Prob (C=" + i+ ") :" + d.format(Classifier.NormProb(classifier.Classify(x).getProbstotal())[i]*100)+"%");
@@ -274,6 +284,7 @@ public class App2Classifier {
                 error_label.setText("Could not classify");
                 error_label.setVisible(true);
                 classefinal.setVisible(false);
+                e1.printStackTrace();
                 
             }
             
