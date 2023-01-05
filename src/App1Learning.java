@@ -241,6 +241,7 @@ public class App1Learning {
             fileName_var = fileName.getText();
             int [] doms = d.getDomains(); //array com o max de cada caracteristica
             int domClasses = doms[d.getDataListArraySize() -1]; //nr de classes = a isto + 1
+            System.out.println("Domínio total: "+doms);
             double [] freq = new double [domClasses + 1]; //array com as diferentes classes, depois preenchemos com freq
             MRFT [] arrayfibers = new MRFT [domClasses + 1];
             

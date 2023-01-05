@@ -77,7 +77,7 @@ public class Classifier implements Serializable {
 		double [] maxprob = {-1,-1}; //{classe,valor de prob)
 		for (int i=0; i < frequencias.length; i++) {
 			probstotal[i] = frequencias[i]*arrayMRFTs[i].Prob(valoresx); //i é a classe
-			System.out.println("i:" + i);
+			System.out.println("classe:" + i);
 			if (probstotal[i]> maxprob[1]) {
 				maxprob[0]=i;
 				maxprob[1]=probstotal[i];

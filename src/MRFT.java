@@ -79,7 +79,7 @@ public class MRFT implements Serializable {
 		// repetir para cada filho
 		Set<Integer> visitados = new TreeSet<>(); 
 		Queue<Integer> fila = new LinkedList<>();
-		fila.add(0);
+		fila.add(init);
 		
 		while (!fila.isEmpty()) {
 			int curr = fila.remove();
@@ -129,7 +129,7 @@ public class MRFT implements Serializable {
 		
 		for (int a=0; a < MRFTree.length;a++) { 
 			
-			boolean isArestaEspecial = (a==noe && MRFTree[a]==0);
+			boolean isArestaEspecial = (a==noe && MRFTree[a]==init);
 			boolean temPai = MRFTree[a]>=0;
 			if (temPai) {
 				int [] var = {MRFTree[a],a}; 
@@ -139,10 +139,10 @@ public class MRFT implements Serializable {
 						int [] val = {xi,xj};
 						int [] ix = {xi};
 						if (isArestaEspecial) {
-							matrix[0][noe][xi][xj]= 
+							matrix[init][noe][xi][xj]= 
 									(d.Count(var, val) + 0.2)
 									/(d.getDataList().size() //não faltam PARENTESES!
-													+(0.2*(d.getDomains()[0]+1)
+													+(0.2*(d.getDomains()[init]+1)
 															*(d.getDomains()[noe]+1))) ;
 							// domínio +1 porque o domínio é o maximo dos valores tomados - incluir o 0
 						}
@@ -217,7 +217,7 @@ public class MRFT implements Serializable {
 				prob = prob * potentialMatrix [MRFTree[j]] [j] [vetor[MRFTree[j]]][vetor[j]];
 			}
 		}	
-		System.out.println("Probabilidade Mc"+prob);
+		System.out.println("Probabilidade Mc "+prob);
 		return prob;
 	}
 
