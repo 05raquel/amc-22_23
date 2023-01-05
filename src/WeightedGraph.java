@@ -45,18 +45,18 @@ public class WeightedGraph {   //não direcionado
 		
 		int nnos = adjMatrix.length;
 		int z=0;
-//		boolean flaginit= false;
-//		for (; z< nnos && !flaginit; z++) {
-//			for (int c=0; c<nnos && !flaginit; c++) {
-//				if (adjMatrix[z][c] !=0) {
-//					flaginit=true;
-//					z=z-1;
-//				}
-//			}
-//		}
-//		int init=z;
+		boolean flaginit= false;
+		for (; z< nnos && !flaginit; z++) {
+			for (int c=0; c<nnos && !flaginit; c++) {
+				if (adjMatrix[z][c] !=0) {
+					flaginit=true;
+					z=z-1;
+				}
+			}
+		}
+		int init=z;
 		
-		Nodes.add(z); // nó inicial -> 0
+		Nodes.add(init); // nó inicial -> init
 		
 		boolean encontreiArestaParaFora = true;
 		while (encontreiArestaParaFora) {
@@ -82,7 +82,7 @@ public class WeightedGraph {   //não direcionado
 				Nodes.add(jmax);
 				MSTree[imax][jmax] = true;  //existe esta aresta na MST
 				MSTree[jmax][imax] = true;
-				System.out.println("max(i,j,w)="+imax+","+jmax+","+max);
+				//System.out.println("max(i,j,w)="+imax+","+jmax+","+max);
 			}
 		}
 		//System.out.println(Nodes);

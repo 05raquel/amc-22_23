@@ -26,13 +26,24 @@ public class ChowLiu {
 						int [] val = {xi,xj};
 						int [] vali = {xi};
 						int [] valj= {xj};
-
-						if ((d.Count(var, val)/m) != 0 || ((d.Count(var, val)*m)/(d.Count(vari, vali)*d.Count(varj, valj))) !=0) {
-						// no caso 0 * log(0) = 0; infomutua continua igual
-							infomutua += (d.Count(var, val)/m)
-									*java.lang.Math.log((d.Count(var, val)*m)
-														/(d.Count(vari, vali)*d.Count(varj, valj)));
+						
+						if (d.Count(var, val) == 0) {
+							// no caso 0 * log(0) = 0; infomutua continua igual
+								infomutua += 0;
+							}
+						else {
+							infomutua += (d.Count(var, val)/m)*java.lang.Math.log((d.Count(var, val)*m)/(d.Count(vari, vali)*d.Count(varj, valj)));
 						}
+
+//						if ((d.Count(var, val)/m) != 0 || ((d.Count(var, val)*m)/(d.Count(vari, vali)*d.Count(varj, valj))) !=0) {
+//						// no caso 0 * log(0) = 0; infomutua continua igual
+//							infomutua += (d.Count(var, val)/m)
+//									*java.lang.Math.log((d.Count(var, val)*m)
+//														/(d.Count(vari, vali)*d.Count(varj, valj)));
+//						}
+//						else { // no caso 0 * log(0) = 0; infomutua continua igual
+//							infomutua += 0;
+//						}
 					}
 				}
 				
@@ -42,7 +53,7 @@ public class ChowLiu {
 		}
 		
 		System.out.println("Grafo:\n"+graph.printBonito2());
-		System.out.println(d.getDomains()[1]);
+		//System.out.println(d.getDomains()[1]);
 		return graph.MST()/*.getMSTree()*/;
 	}
 	

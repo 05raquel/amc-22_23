@@ -33,31 +33,44 @@ public class MRFT implements Serializable {
 		int [] MRFTree = new int [nnos]; //MRFTree array com o tamanho do nr de nós 
 		//(MRFTree: índice do pai de cada nó)
 		
-		boolean flag = false;
+		
 		//int [] arestae = new int [2];     //aresta especial - dá a direção das arestas
 		//arestae[0]=0;                    //nó 0 para começar
 		
 		//tentar aceder para não fazer de novo
-		//int init=z;
+		boolean flaginit= false;
+		int z=0;
+		for (; z< nnos && !flaginit; z++) {
+			if (d.getDomains()[z] !=0) {
+				flaginit=true;
+				z=z-1;
+			}
+		}
+		int init=z;
 		
+		boolean flag = false;
 		int b=0;
 		for(; b < nnos && !flag; b++){
-			if (tree[0][b]) {     //escolher a primeira aresta (que parte do 0) existente na MST (=true)
+			if (tree[init][b]) {     //escolher a primeira aresta (que parte do 0) existente na MST (=true)
 				flag = true;
 				b=b-1;
 			}
 		}
 		int noe=b; //nó especial
 		
-		// aresta especial é do 0 para o noe - dá a direção das outras arestas
+		// aresta especial é do init para o noe - dá a direção das outras arestas
 		//System.out.println("noe:"+noe);
 		
 		LinkedList<Integer> nospreenchidos = new LinkedList<Integer>(); //LinkedList para ser dinâmico (nós que têm pai)
 		nospreenchidos.add(0); //acrescenta o nó 0 à lista de nós preenchidos 
-		
-		MRFTree[0]= -1;	  // o primeiro nó não tem pai logo é -1
+		  
 		for (int i = 1; i < nnos; i++) {
-			MRFTree[i]=-2;     //para as restantes entradas não iniciadas coloca-se -2
+			if (i==init) {
+				MRFTree[i]=-1;     // o primeiro nó (init) não tem pai logo é -1
+			}
+			else {
+				MRFTree[i]=-2;     //para as restantes entradas não iniciadas coloca-se -2
+			}
 		}
 		
 		//bfs
@@ -83,7 +96,7 @@ public class MRFT implements Serializable {
 				
 			}
 		}
-		System.out.println(Arrays.toString(MRFTree));
+		System.out.println("MRF Tree: "+ Arrays.toString(MRFTree));
 		
 		
 //		while (faltapreencher(MRFTree)) { //enquanto existirem nós sem pai - por preencher
