@@ -44,7 +44,7 @@ public class DataSet implements Serializable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        matrixc = iniciacount(domains.length-1, domains.length-1);
+//        matrixc = iniciacount(domains.length-1, domains.length-1);
     }
 
     @Override
@@ -97,12 +97,12 @@ public class DataSet implements Serializable {
 			
 		if (compara==1){
         	double valor1 = matrixc[var[0]][var[0]][0][val[0]];
-        	if (valor1!=0) return valor1;
+        	if (valor1 >=0) return valor1;
 		}
         
 		else if (compara==2) {
         	double valor2 = matrixc[var[0]][var[1]][val[0]][val[1]];
-        	if (valor2 != 0) return valor2;
+        	if (valor2 >= 0) return valor2;
 		}
         
         double c = 0; // contador
@@ -149,13 +149,13 @@ public class DataSet implements Serializable {
         if (domains == null) {
             domains = new int[v.length];
         }
+        
         //atualizar maximos dos elementos para cada característica
         for (int i = 0; i < v.length; i++) {
             if (v[i] > domains[i]) {
                 domains[i] = v[i];
             }
         }
-			matrixc = iniciacount(domains.length-1, domains.length-1);
     }
 
     
@@ -175,6 +175,7 @@ public class DataSet implements Serializable {
                 fiber.Add(array);
             }
         }
+        fiber.matrixc = iniciacount(domains.length-1, domains.length-1);
         return fiber;
     }
 
@@ -186,10 +187,20 @@ public class DataSet implements Serializable {
         for (int itni = 0; itni < ni; itni++) { // itni = iterada de ni
             for (int itnj = 0; itnj < nj; itnj++) { //itnj = iterada de nj
                 if (itni == itnj) {
+                	 // para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
                     ma[itni][itnj] = new double[1][domains[itnj] + 1];
+                    for (int it=0; it < domains[itnj] + 1; it++) {
+                    	ma [itni][itnj][0][it]=-1;
+                    }
                 } else {
                     ma[itni][itnj] = new double[domains[itni] + 1][domains[itnj] + 1];
-                    // para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
+                    for (int i=0; i < domains[itni] + 1; i++) {
+                    	for (int j=0; j < domains[itnj] + 1; j++) {
+                    		ma [itni] [itnj] [i] [j]=-1;
+                    	}
+                    }
+                    
+                   
                 }
             }
         }

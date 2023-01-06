@@ -182,8 +182,10 @@ public class MRFT implements Serializable {
 	public double [][][][] inicia (int [] domains, int ni, int nj){
 		double [][][][] ma = new double [ni][nj][][]; 
 		for (int itni = 0; itni<ni; itni++) { // itni = iterada de ni
-			for (int itnj =0; itnj<nj; itnj++) { //itnj = iterada de nj
+			for (int itnj =itni+1; itnj<nj; itnj++) { //itnj = iterada de nj
+				// a diagonal não tem significado - só há potenciais de arestas
 				ma [itni][itnj] = new double [domains[itni]+1] [domains[itnj]+1];
+				ma [itnj][itni] = new double [domains[itnj]+1] [domains[itni]+1];
 				// para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
 			}
 		}
