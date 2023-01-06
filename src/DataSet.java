@@ -11,7 +11,7 @@ public class DataSet implements Serializable {
 
     private ArrayList<int[]> dataList;
     private int[] domains;
-    //double [][][][] matrixc;
+    double [][][][] matrixc;
 
     //atributo array list de inteiros - lista de vetores dinâmica
 
@@ -44,7 +44,7 @@ public class DataSet implements Serializable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        //matrixc = iniciacount(domains.length-1, domains.length-1);
+        matrixc = iniciacount(domains.length-1, domains.length-1);
     }
 
     @Override
@@ -86,42 +86,41 @@ public class DataSet implements Serializable {
     // conta o número de vezes no dataset que as variáveis i e j tomam simultaneamente os valores (xi,xj)
     //ex: count ((i,j),(xi,xj))
 
-    //double [][][][] matrixc = iniciacount(domains.length-1, domains.length-1);
+
     public double Count(int var[], int val[]) {
         if (var.length != val.length) {
             throw new IllegalArgumentException(); //argumentos inválidos
             // var e val têm o mesmo tamanho!
         }
         //guardar os counts
-//		int compara = var.length;
-//			
-//		if (compara==1){
-//        	int valor1 = matrixc[var[0]][var[0]][1][val[0]];
-//        	if (valor1!=0) return valor1;
-//		}
+		int compara = var.length;
+			
+		if (compara==1){
+        	double valor1 = matrixc[var[0]][var[0]][0][val[0]];
+        	if (valor1!=0) return valor1;
+		}
         
-//		else if (compara==2) 
-//        	int valor2 = matrixc[var[0]][var[1]][val[0]][val[1]];
-//        	if (valor2 != 0) return valor2;
-//		}
-        else {
-	        double c = 0; // contador
-	        int arr[] = new int[var.length]; // cria novo array com o tamanho do número de variáveis a procurar
-	        for (int[] vetorObs : dataList) {
-	            //obter valores das variáveis vars necessários no vetorObs
-	            for (int j = 0; j < var.length; j++) {
-	                arr[j] = vetorObs[var[j]];  // preencher o array com os valores do vetorObs do datalist
-	            }
-	            if (Arrays.equals(arr, val))
-	                c++; //contar quantos vetores têm os valores val
-	        }
-	//		if (compara==1) matrixc[var[0]][var[0]][1][val[0]]=c;
-	//		else if (compara==2) {
-	//				matrixc[var[0]][var[1]][val[0]][val[1]]=c;
-	//				matrixc[var[1]][var[0]][val[1]][val[0]]=c;
-	//		}
-        return c;
+		else if (compara==2) {
+        	double valor2 = matrixc[var[0]][var[1]][val[0]][val[1]];
+        	if (valor2 != 0) return valor2;
+		}
+        
+        double c = 0; // contador
+        int arr[] = new int[var.length]; // cria novo array com o tamanho do número de variáveis a procurar
+        for (int[] vetorObs : dataList) {
+            //obter valores das variáveis vars necessários no vetorObs
+            for (int j = 0; j < var.length; j++) {
+                arr[j] = vetorObs[var[j]];  // preencher o array com os valores do vetorObs do datalist
+            }
+            if (Arrays.equals(arr, val))
+                c++; //contar quantos vetores têm os valores val
         }
+		if (compara==1) matrixc[var[0]][var[0]][0][val[0]]=c;
+		else if (compara==2) {
+				matrixc[var[0]][var[1]][val[0]][val[1]]=c;
+				matrixc[var[1]][var[0]][val[1]][val[0]]=c;
+		}
+		return c;
     }
 		
 		/* Função equals - verifica se os arrays são iguais
@@ -132,16 +131,7 @@ public class DataSet implements Serializable {
 		}
 		return br;
 	}
-		*/
-
-    // var 0 1 2 3
-    // e1: 1 2 3 3
-    // e2: 0 0 0 0
-    // e3: 4 3 2 1
-    // e4: 0 1 0 1
-    //Count([2,3], [0, 1])
-
-    // vai ser usado como T.count para futuras operações
+	
 
 
     //ADD
@@ -165,14 +155,13 @@ public class DataSet implements Serializable {
                 domains[i] = v[i];
             }
         }
-//			matrixc = iniciacount(domains.length-1, domains.length-1);
+			matrixc = iniciacount(domains.length-1, domains.length-1);
     }
 
     
     // FIBER
 
-    // NO CLASSIFICADOR - PARTIÇÃO! vamos ter de fazer um método para calcular quantas fibras precisamos de fazer,
-    //tendo em conta a contagem de classes
+
     // criar int [] ou ArrayList<int []> para os valores das classes
 
     /** Retorna a fibra da característica value */

@@ -237,7 +237,7 @@ public class App1Learning {
         Save.addActionListener(e -> {
 
             // Learning Code
-
+        	long startTime = System.nanoTime();
             fileName_var = fileName.getText();
             int [] doms = d.getDomains(); //array com o max de cada caracteristica
             int domClasses = doms[d.getDataListArraySize() -1]; //nr de classes = a isto + 1
@@ -264,6 +264,9 @@ public class App1Learning {
 
             //
         	change23();
+        	long endTime   = System.nanoTime();
+    		long totalTime = endTime - startTime;
+    		System.out.println(totalTime);
 
         });
 	}
