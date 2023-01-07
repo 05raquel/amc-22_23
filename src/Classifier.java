@@ -88,6 +88,7 @@ public class Classifier implements Serializable {
 	}
 	
 	public static final class Res {
+		// final - não pode ser alterado assim que é definido
 		final double [] probstotal;
 		final int bestClass;
 		public Res(int bestClass, double[] probstotal) {

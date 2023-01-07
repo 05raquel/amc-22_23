@@ -40,15 +40,18 @@ public class MRFT implements Serializable {
 		boolean flaginit= false;
 		int z=0;
 		for (; z< nnos && !flaginit; z++) {
+			
 			for (int a=z+1; a<nnos && !flaginit; a++) {
 				if (tree[z][a]) { //se existir pelo menos uma aresta
 					flaginit=true;
 					z=z-1;
 				}
 			}
+			
 		}
 		int init=z; // então, encontrou-se o nó init - dependente!
 		System.out.println("init: " + init);
+		
 		
 		boolean flag = false;
 		int b=0;

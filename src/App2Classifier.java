@@ -267,17 +267,17 @@ public class App2Classifier {
             int[] x = textftoarray(variaveis);
         
             try {
-            	//Res classification = classifier.Classify(x);
+            	Classifier.Res classification = classifier.Classify(x);
             	normprobs.setText("");
             	error_label.setVisible(false);
             	predictedClass.setText("Predicted class: ");
                 predictedClass.setVisible(true);
-                classefinal.setText(""+classifier.Classify(x).getBestClass());
+                classefinal.setText(""+classification.getBestClass());
                 classefinal.setVisible(true);
                 scroll.setVisible(true);
                 
                 for (int i = 0; i<classifier.getfreqs().length; i++) {         	
-                	normprobs.setText(normprobs.getText()+"\n Prob (C=" + i+ "): " + d.format(Classifier.NormProb(classifier.Classify(x).getProbstotal())[i]*100)+"%");
+                	normprobs.setText(normprobs.getText()+"\n Prob (C=" + i+ "): " + d.format(Classifier.NormProb(classification.getProbstotal())[i]*100)+"%");
                 	normprobs.setVisible(true);
                 }
                

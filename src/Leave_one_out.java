@@ -11,8 +11,9 @@ import java.util.List;
 public class Leave_one_out {
 
    public static void main (String[] args) {
-	   String Samples = "./thyroid.csv";
+	   String Samples = "./letter.csv";
 	   
+	   long startTime = System.nanoTime();
 
 	   DataSet sample = new DataSet(Samples);
 	   ArrayList<int[]> dataset = sample.getDataList();
@@ -60,6 +61,10 @@ public class Leave_one_out {
        }
        System.out.println("certos: "+certos);
        System.out.println("certos%: "+((double)certos/(double)aaaa)*100);
+       long endTime   = System.nanoTime();
+	   long totalTime = endTime - startTime;
+	   System.out.println(totalTime);
+
 //       System.out.println("classificações: "+classificações);
 //       System.out.println(classificações.size());
        System.out.println(sample.getDataList().size());
