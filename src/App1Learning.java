@@ -67,7 +67,9 @@ public class App1Learning {
         frame.setTitle("Markov Random Field Learning App");
         frame.setResizable(false);
         
+//        ISTLogo1 = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./ISTLogo.png"))));
         ISTLogo1 = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/ISTLogo.png"))));
+        
         ISTLogo1.setBounds(261, 0, 183, 203);
         frame.getContentPane().add(ISTLogo1);
         
@@ -139,8 +141,10 @@ public class App1Learning {
         frame.getContentPane().add(nrvariaveis);
         nrvariaveis.setVisible(false);
         
+//		back = new JButton(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./BackButton.png"))));
 		back = new JButton(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/BackButton.png"))));
-	    back.setBorder(null);
+	    
+		back.setBorder(null);
 	    back.setVisible(false);
 	    back.setBounds(10, 10, 36, 36);
 	    frame.getContentPane().add(back);
@@ -151,14 +155,15 @@ public class App1Learning {
         Save.setOpaque(false);
         Save.setVisible(false);
         Save.setBounds(268, 366, 170, 36);
-        //290
-        //137
+        //290 137
         frame.getContentPane().add(Save);
         
       //Window 3
-        //TODO: texto com DONE e com um emoji qualquer :)
+      //TODO: texto com DONE e com um emoji qualquer :)
         
+//        DONEpic = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./DonePic.png"))));
         DONEpic = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/DonePic.png"))));
+        
         DONEpic.setBounds(230, 20, 300, 400);
         frame.getContentPane().add(DONEpic);
         DONEpic.setVisible(false);
@@ -172,9 +177,10 @@ public class App1Learning {
         fileNameLabel.setVisible(true);
         fileName.setText(fileName_var);
         fileName.setVisible(true);
-        sample_len.setText("Sample length: "+d.getDataList().size());  //TODO: verificar que função meter para ver o tamanho
+        // criar a variável d.Samplelength() fora de botões (ações)? e usar/ aceder 2x
+        sample_len.setText("Sample length: "+d.Samplelength()); //mais abstrato d.getDataList().size());  
         sample_len.setVisible(true);
-        nrvariaveis.setText("Number of variables: "+(d.getDataListArraySize() -1)); //TODO: verificar função
+        nrvariaveis.setText("Number of variables: "+ d.NrVariables()); //(d.getDataListArraySize() -1));
         nrvariaveis.setVisible(true);
         Save.setVisible(true);
     }
@@ -230,7 +236,7 @@ public class App1Learning {
         back.addActionListener(e -> {  //ao clicar no botão de retroceder vai fazer isto
             int goback = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?\nAll data will be lost", "", JOptionPane.YES_NO_OPTION);
             if(goback == JOptionPane.YES_OPTION){
-            	d = new DataSet(); change21();  // mudar para a janela inicial //
+            	d = new DataSet(); change21();  // mudar para a janela inicial
             }
         });
         
@@ -240,6 +246,9 @@ public class App1Learning {
         	long startTime = System.nanoTime();
             fileName_var = fileName.getText();
             int [] doms = d.getDomains(); //array com o max de cada caracteristica
+            
+            // rever a abstração desta parte!!!!!!!
+            
             int domClasses = doms[d.getDataListArraySize() -1]; //nr de classes = a isto + 1
             System.out.println("Domínio total: "+doms);
             double [] freq = new double [domClasses + 1]; //array com as diferentes classes, depois preenchemos com freq
@@ -247,7 +256,8 @@ public class App1Learning {
             
             for (int i=0; i <= domClasses; i++) {
                 DataSet fiber = d.Fiber(i);
-                freq[i]= (double) fiber.getDataList().size() / (double) d.getDataList().size();
+                //Alteração: d.Samplelength()); //mais abstrato d.getDataList().size());
+                freq[i]= (double) fiber.Samplelength() / (double) d.Samplelength();
                 arrayfibers[i] = new MRFT(fiber, ChowLiu.Chow_liu(fiber), doms);
             }
 

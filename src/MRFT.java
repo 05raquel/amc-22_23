@@ -26,27 +26,28 @@ public class MRFT implements Serializable {
 	public MRFT(DataSet d, boolean [][] tree, int [] domains) {
 		//tendo em conta o dataset e a MST
 		super();
-		
+	
 		nvar = d.getDataListArraySize() -1;
 		
 		int nnos = tree.length;
 		int [] MRFTree = new int [nnos]; //MRFTree array com o tamanho do nr de nós 
 		//(MRFTree: índice do pai de cada nó)
 		
-		
 		//int [] arestae = new int [2];     //aresta especial - dá a direção das arestas
 		//arestae[0]=0;                    //nó 0 para começar
 		
-		//tentar aceder para não fazer de novo - informação da MST
+		//Utilizando a informação da MST, define-se o nó init - não pode ser independente
 		boolean flaginit= false;
 		int z=0;
 		for (; z< nnos && !flaginit; z++) {
-			if (d.getDomains()[z] !=0) {
-				flaginit=true;
-				z=z-1;
+			for (int a=z+1; a<nnos && !flaginit; a++) {
+				if (tree[z][a]) { //se existir pelo menos uma aresta
+					flaginit=true;
+					z=z-1;
+				}
 			}
 		}
-		int init=z;
+		int init=z; // então, encontrou-se o nó init - dependente!
 		System.out.println("init: " + init);
 		
 		boolean flag = false;
@@ -94,7 +95,6 @@ public class MRFT implements Serializable {
 				}
 				visitados.add(curr);
 				fila.addAll(vizinhos);
-				
 			}
 		}
 		System.out.println("MRF Tree: "+ Arrays.toString(MRFTree));

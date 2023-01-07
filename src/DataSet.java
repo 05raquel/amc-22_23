@@ -20,7 +20,7 @@ public class DataSet implements Serializable {
         this.domains = null;
     }
 
-    /**Construtor de DataSet a partir de um ficheiro csv*/
+    /** Construtor de DataSet a partir de um ficheiro csv*/
     public DataSet(String csvFile) {
         // inicializar os atributos
         this.dataList = new ArrayList<int[]>();
@@ -70,6 +70,11 @@ public class DataSet implements Serializable {
     /** Acede ao dataList do Dataset considerado*/
     public ArrayList<int[]> getDataList() { return dataList; }
 
+    /** Retorna o tamanho do Dataset (número de vetores)*/
+    public int Samplelength () {
+    	return dataList.size();  
+    }
+    
     /** Acede aos domínios das variáveis do Dataset */
     public int[] getDomains() {
         return domains;
@@ -81,12 +86,18 @@ public class DataSet implements Serializable {
         //dataList.get(0).length;  //ainda inclui a última coluna com as classes. só retiramos essa coluna na altura de formar os grafos das fibras.
     }                              //Aqui ainda dá jeito para identificar com -1 as diferentes classes
 
+    /** Retorna o número de variáveis (características) do Dataset considerado*/
+    public int NrVariables() {
+    	return getDataListArraySize() -1;
+    }
 
     //COUNT
-    // conta o número de vezes no dataset que as variáveis i e j tomam simultaneamente os valores (xi,xj)
+    
     //ex: count ((i,j),(xi,xj))
 
-
+    /** Count ((i,j),(xi,xj)) -
+     * Conta o número de vezes no dataset que as variáveis i e j tomam simultaneamente os valores (xi,xj)
+     */
     public double Count(int var[], int val[]) {
         if (var.length != val.length) {
             throw new IllegalArgumentException(); //argumentos inválidos

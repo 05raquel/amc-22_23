@@ -24,6 +24,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+//import Classifier.Res;
+
 
 
 public class App2Classifier {
@@ -265,6 +267,7 @@ public class App2Classifier {
             int[] x = textftoarray(variaveis);
         
             try {
+            	//Res classification = classifier.Classify(x);
             	normprobs.setText("");
             	error_label.setVisible(false);
             	predictedClass.setText("Predicted class: ");

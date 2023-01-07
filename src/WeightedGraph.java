@@ -49,7 +49,7 @@ public class WeightedGraph {   //não direcionado
 		int z=0;
 		boolean flaginit= false;
 		for (; z< nnos && !flaginit; z++) {
-			for (int c=0; c<nnos && !flaginit; c++) {
+			for (int c=z+1; c<nnos && !flaginit; c++) {
 				if (adjMatrix[z][c] !=0) {
 					flaginit=true;
 					z=z-1;
