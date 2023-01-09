@@ -15,7 +15,7 @@ public class ChowLiu {
 			
 			for (int j=i+1; j< graph.getdim(); j++) {
 				// não ver j,i correspondente 
-				// j e i são sempre diferentes
+				// j e i são sempre diferentes - a diagonal não tem significado
 				
 				double infomutua = 0;
 				int [] var = {i,j};
@@ -37,7 +37,7 @@ public class ChowLiu {
 						}
 					}
 				}
-				
+				//pesar a aresta entre i e j 
 				graph.Add(i, j, infomutua);
 				
 			}

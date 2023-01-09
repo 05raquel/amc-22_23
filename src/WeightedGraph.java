@@ -27,21 +27,11 @@ public class WeightedGraph {   //não direcionado
 		return dim;
 	}
 	
-	
-	
 	//grafo.MST()
 	
 	/** MST - árvore de extensão de peso maximal  */
 	public boolean [][] MST() {
 		boolean [][] MSTree = new boolean [dim][dim];
-		//System.out.println(Arrays.deepToString(graph));
-//		double [][] Graph = new double [dim][dim];
-//		for (int i=0; i<dim; i++) {
-//			for (int j=0; j<dim; j++) {
-//				Graph[i][j]= adjMatrix [i][j];
-//			}
-//		}
-//		//cópia do grafo
 		
 		LinkedList<Integer> Nodes = new LinkedList<Integer>(); //Lista dos nós (j's)
 		
@@ -103,28 +93,6 @@ public class WeightedGraph {   //não direcionado
 			out += "\n";
 		}
 		return out;
-	}
-	
-	/*public static void main(String[] args) {
-		//DataSet d = new DataSet("bcancer.csv");
-		WeightedGraph g = new WeightedGraph(4);
-		
-		g.Add(0, 1, 8);
-		g.Add(0,0,0);
-		g.Add(0,2,7);
-		g.Add(0,3,5);
-		g.Add(1,1,0);
-		g.Add(1,2,3);
-		g.Add(1,3,1);
-		g.Add(2,2,0);
-		g.Add(2,3,2);
-		g.Add(3,3,0);
-		//System.out.println(g);
-		g.printBonito2();
-		System.out.println(Arrays.deepToString(g.MST()));
-		System.out.println(Arrays.deepToString(g.MST()));
-		
-	}*/
-		
+	}		
 	
 }

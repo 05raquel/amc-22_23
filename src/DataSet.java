@@ -76,7 +76,7 @@ public class DataSet implements Serializable {
     	return dataList.size();  
     }
     
-    /** Acede aos domínios das variáveis do Dataset */
+    /** Retorna o conjunto dos domínios das variáveis do Dataset */
     public int[] getDomains() {
         return domains;
     }
@@ -187,7 +187,8 @@ public class DataSet implements Serializable {
     public double[][][][] iniciacount(int ni, int nj) {
         double[][][][] ma = new double[ni][nj][][];
         for (int itni = 0; itni < ni; itni++) { // itni = iterada de ni
-            for (int itnj = 0; itnj < nj; itnj++) { //itnj = iterada de nj
+            for (int itnj = itni; itnj < nj; itnj++) { //itnj = iterada de nj
+            	//itnj=0
                 if (itni == itnj) {
                 	 // para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
                     ma[itni][itnj] = new double[1][domains[itnj] + 1];
@@ -196,10 +197,11 @@ public class DataSet implements Serializable {
                     }
                 } else {
                     ma[itni][itnj] = new double[domains[itni] + 1][domains[itnj] + 1];
+                    ma[itnj][itni] = new double[domains[itnj] + 1][domains[itni] + 1];
                     for (int i=0; i < domains[itni] + 1; i++) {
                     	for (int j=0; j < domains[itnj] + 1; j++) {
                     		ma [itni] [itnj] [i] [j]=-1;
-                    		//confirmar se pode ser 
+                    		ma [itnj] [itni] [j] [i]=-1;
                     	}
                     }
                 }

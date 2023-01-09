@@ -17,57 +17,34 @@ public class Classifier implements Serializable {
 		super();
 		this.arrayMRFTs = MRFTs;
 		this.frequencias = valores; 
-		
 		//frequências calculadas no algoritmo final do classificador com base no dataset
 	}
 	
-	
+	/** Retorna o conjunto das MRFTs de todas as classes*/
 	public MRFT[] getMRFTs () {
 		return arrayMRFTs;
 	}
 	
-	/** */
+	/** Retorna o conjunto das frequências*/
 	public double[] getfreqs() {
 		return frequencias;
 	}
 	
+	/** Retorna o número de classes*/
+	public int getNrClasses() {
+		return frequencias.length;
+	}
+	
+	/** Retorna o número de variáveis (características)*/
+	public int getNrVariables() {
+		return  arrayMRFTs[0].getnvar();
+	}
+	
 	//CLASSIFY
-	
-	//TODO usar as duas funções
-	public double [] Classify_parcial (int [] valoresx) {
-		if (valoresx.length!= arrayMRFTs[0].getsizeMRFTree()) { //vetor valoresx com o número de características correto
-			throw new IllegalArgumentException(); //argumento inválido
-		}
 		
-		// dados valores (x1,...,xn) das variáveis
-		// P = frequência x P MC (vetor)
-		
-		double [] probstotal = new double [frequencias.length];
-		for (int i=0; i < frequencias.length; i++) {
-			probstotal[i] = frequencias[i]*arrayMRFTs[i].Prob(valoresx); //i é a classe
-			System.out.println("i:" + i);
-		}
-		System.out.println("Probs das classes"+Arrays.toString(probstotal));
-		return probstotal;  //valor da classe mais provável
-	}
-	
-	public int Classifybest (double [] probstotal) {
-		// dados valores (x1,...,xn) das variáveis
-		// P = frequência x P MC (vetor)
-		double [] maxprob = {-1,-1}; //{classe,valor de prob)
-		for (int i=0; i < probstotal.length; i++) {
-			if (probstotal[i]> maxprob[1]) {
-				maxprob[0]=i;
-				maxprob[1]=probstotal[i];
-			}
-		}
-		return (int)maxprob[0];  //valor da classe mais provável
-	}
-	
-	
 	/** A função retorna um objeto com a classe mais provável e um array com a probabilidade de cada classe */
 	public Res Classify (int [] valoresx) {
-		if (valoresx.length!= arrayMRFTs[0].getsizeMRFTree()) { //vetor valoresx com o número de características correto
+		if (valoresx.length!= arrayMRFTs[0].getnvar()) { //vetor valoresx com o número de características correto
 			throw new IllegalArgumentException(); //argumento inválido
 		}
 		
@@ -88,6 +65,7 @@ public class Classifier implements Serializable {
 		return new Res((int)maxprob[0], probstotal);  //valor da classe mais provável
 	}
 	
+	/**Classe Resultados*/
 	public static final class Res {
 		// final - não pode ser alterado assim que é definido
 		final double [] probstotal;
@@ -96,9 +74,12 @@ public class Classifier implements Serializable {
 			this.probstotal = probstotal;
 			this.bestClass = bestClass;
 		}
+		/**Retorna o conjunto das probabilidades das classes*/
 		public double[] getProbstotal() {
 			return probstotal;
 		}
+				
+		/** Retorna a classe mais provável*/
 		public int getBestClass() {
 			return bestClass;
 		}

@@ -197,6 +197,7 @@ public class App2Classifier {
 
 	
     private void change21() {
+    	variaveis.setText("");
         variaveis.setVisible(false);
         nrvariaveis.setVisible(false);
         txtrVariables.setVisible(false);
@@ -244,7 +245,8 @@ public class App2Classifier {
                 try {
                     classifier = Classifier.openclf(file.getName());
                     error_label.setText("");
-                    nrvariaveis.setText("Number of variables(n): "+ classifier.getMRFTs()[0].getnvar()); 
+                    nrvariaveis.setText("Number of variables(n): "+ classifier.getNrVariables());
+                    		//getMRFTs()[0].getnvar()); 
                     change12();
                     
                 } catch (Exception e1) {
@@ -267,6 +269,7 @@ public class App2Classifier {
             int[] x = textftoarray(variaveis);
         
             try {
+            	long startTime = System.nanoTime();
             	Classifier.Res classification = classifier.Classify(x);
             	normprobs.setText("");
             	error_label.setVisible(false);
@@ -276,13 +279,15 @@ public class App2Classifier {
                 classefinal.setVisible(true);
                 scroll.setVisible(true);
                 
-                for (int i = 0; i < classifier.getfreqs().length; i++) {         	
+                for (int i = 0; i < classifier.getNrClasses(); i++) {         	
                 	normprobs.setText(normprobs.getText()+"\n Prob (C=" + i+ "): " + d.format(Classifier.NormProb(classification.getProbstotal())[i]*100)+" %");
                 	normprobs.setVisible(true);
                 }
+                long endTime   = System.nanoTime();
+        		long totalTime = endTime - startTime;
+        		System.out.println(totalTime);
+
                
-                	
-           
             } catch (Exception e1) {
                 error_label.setText("Could not classify");
                 error_label.setVisible(true);

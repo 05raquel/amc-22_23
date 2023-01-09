@@ -46,22 +46,10 @@ public class MRFT implements Serializable {
 			}
 		}
 		//init // então, encontrou-se o nó init - dependente!
-		//noe
+		//noe - nó especial
 		System.out.println("init: " + init); 
 		//System.out.println("noe: "+noe);
-		
-		
-//		boolean flag = false;
-//		int b=init;
-//		for(; b < nnos && !flag; b++){
-//			if (tree[init][b]) {     //escolher a primeira aresta (que parte do init) existente na MST (=true)
-//				flag = true;
-//				b=b-1;
-//			}
-//		}
-//		int noe=b; //nó especial
-//		System.out.println("noee: " + noe);
-		
+			
 		// aresta especial é do init para o noe - dá a direção das outras arestas
 		
 		LinkedList<Integer> nospreenchidos = new LinkedList<Integer>(); //LinkedList para ser dinâmico (nós que têm pai)
