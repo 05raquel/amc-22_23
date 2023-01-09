@@ -68,7 +68,8 @@ public class App1Learning {
         frame.setResizable(false);
         
 //        ISTLogo1 = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./ISTLogo.png"))));
-        ISTLogo1 = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/ISTLogo.png"))));
+        ISTLogo1 = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("Resources/ISTLogo.png"))));
+    	//App1Learning.class.getClassLoader().getResource("./Resources/ISTLogo.png");
         
         ISTLogo1.setBounds(261, 0, 183, 203);
         frame.getContentPane().add(ISTLogo1);
@@ -142,7 +143,7 @@ public class App1Learning {
         nrvariaveis.setVisible(false);
         
 //		back = new JButton(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./BackButton.png"))));
-		back = new JButton(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/BackButton.png"))));
+		back = new JButton(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("Resources/BackButton.png"))));
 	    
 		back.setBorder(null);
 	    back.setVisible(false);
@@ -162,7 +163,7 @@ public class App1Learning {
       //TODO: texto com DONE e com um emoji qualquer :)
         
 //        DONEpic = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./DonePic.png"))));
-        DONEpic = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/DonePic.png"))));
+        DONEpic = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("Resources/DonePic.png"))));
         
         DONEpic.setBounds(230, 20, 300, 400);
         frame.getContentPane().add(DONEpic);
@@ -256,7 +257,6 @@ public class App1Learning {
             
             for (int i=0; i <= domClasses; i++) {
                 DataSet fiber = d.Fiber(i);
-                //Alteração: d.Samplelength()); //mais abstrato d.getDataList().size());
                 freq[i]= (double) fiber.Samplelength() / (double) d.Samplelength();
                 arrayfibers[i] = new MRFT(fiber, ChowLiu.Chow_liu(fiber), doms);
             }

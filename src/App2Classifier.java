@@ -73,7 +73,7 @@ public class App2Classifier {
         frame.setTitle("Markov Random Field Classifier App");
         frame.setResizable(false);
         
-        ISTLogo1 = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/ISTLogo.png"))));
+        ISTLogo1 = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("Resources/ISTLogo.png"))));
         ISTLogo1.setBounds(261, 0, 183, 203);
         frame.getContentPane().add(ISTLogo1);
         
@@ -116,7 +116,7 @@ public class App2Classifier {
         frame.getContentPane().add(ISTLogo2);
         */
         
-		back = new JButton(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/BackButton.png"))));
+		back = new JButton(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("Resources/BackButton.png"))));
 	    back.setBorder(null);
 	    back.setVisible(false);
 	    back.setBounds(10, 10, 36, 36);
@@ -276,8 +276,8 @@ public class App2Classifier {
                 classefinal.setVisible(true);
                 scroll.setVisible(true);
                 
-                for (int i = 0; i<classifier.getfreqs().length; i++) {         	
-                	normprobs.setText(normprobs.getText()+"\n Prob (C=" + i+ "): " + d.format(Classifier.NormProb(classification.getProbstotal())[i]*100)+"%");
+                for (int i = 0; i < classifier.getfreqs().length; i++) {         	
+                	normprobs.setText(normprobs.getText()+"\n Prob (C=" + i+ "): " + d.format(Classifier.NormProb(classification.getProbstotal())[i]*100)+" %");
                 	normprobs.setVisible(true);
                 }
                

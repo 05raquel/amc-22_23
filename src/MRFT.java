@@ -25,29 +25,24 @@ public class MRFT implements Serializable {
 	
 	public MRFT(DataSet d, boolean [][] tree, int [] domains) {
 		//tendo em conta o dataset e a MST
-		super();
-	
+		super();	
 		nvar = d.getDataListArraySize() -1;
 		
 		int nnos = tree.length;
 		int [] MRFTree = new int [nnos]; //MRFTree array com o tamanho do nr de nós 
 		//(MRFTree: índice do pai de cada nó)
 		
-		//int [] arestae = new int [2];     //aresta especial - dá a direção das arestas
-		//arestae[0]=0;                    //nó 0 para começar
-		
 		//Utilizando a informação da MST, define-se o nó init - não pode ser independente
 		boolean flaginit= false;
 		int z=0;
 		for (; z< nnos && !flaginit; z++) {
-			
 			for (int a=z+1; a<nnos && !flaginit; a++) {
 				if (tree[z][a]) { //se existir pelo menos uma aresta
 					flaginit=true;
 					z=z-1;
+					//a=a-1;
 				}
 			}
-			
 		}
 		int init=z; // então, encontrou-se o nó init - dependente!
 		System.out.println("init: " + init);
@@ -102,37 +97,16 @@ public class MRFT implements Serializable {
 		}
 		System.out.println("MRF Tree: "+ Arrays.toString(MRFTree));
 		
-		//inútil
-//		while (faltapreencher(MRFTree)) { //enquanto existirem nós sem pai - por preencher
-//			
-//			for (int cp=0; cp < nospreenchidos.size(); cp++) {
-//			//for (int cp: nospreenchidos) {  // cada cp (nó com pai) na lista nós preenchidos
-//				System.out.println("cp="+cp);
-//				for (int j=1; j< nnos; j++) {
-//					// nos preenchidos têm pai:  cp --> j
-//					if (tree[nospreenchidos.get(cp)][j] /*&& MRFTree[j]==-2*/ ) {          //ver onde existe aresta entre esse nó com pai e o nó j  
-//							MRFTree[j]=nospreenchidos.get(cp);            //colocamos o nó com pai no local j da MRFTree
-//							System.out.println("MRFT="+Arrays.toString(MRFTree));
-//							if (!nospreenchidos.contains(j)) nospreenchidos.add(j); //adiciona esse j aos nós preenchidos
-//							System.out.println("NósPreen="+nospreenchidos);
-//					} //se passar primeiro por um nó que não está ligado a um com pai, salta esse e depois volta quando preencher outros                                                                         
-//				}
-//			}
-//		}
-//		System.out.println(Arrays.toString(MRFTree));
-		
 		this.MRFTree = MRFTree;  	//atualizar a matriz de potenciais
 
 		double [][][][] matrix = inicia(domains, nnos, nnos); 
 		
-		//nnos é o nr de nós
 		// i, j, xi valores que i toma, xj valores que j toma
 		// preencher as matrizes para as arestas da MRFTree 
 		// MRFTree[a] = pai = i
 		// a = j
 		
 		for (int a=0; a < MRFTree.length;a++) { 
-			
 			boolean isArestaEspecial = (a==noe && MRFTree[a]==init);
 			boolean temPai = MRFTree[a]>=0;
 			if (temPai) {
@@ -148,7 +122,7 @@ public class MRFT implements Serializable {
 									/(d.getDataList().size() //não faltam PARENTESES!
 													+(0.2*(d.getDomains()[init]+1)
 															*(d.getDomains()[noe]+1))) ;
-							// domínio +1 porque o domínio é o maximo dos valores tomados - incluir o 0
+							// domínio +1 porque o domínio é o maximo dos valores tomados - incluir o 0!
 						}
 						else {
 							//System.out.println("idxs: " + MRFTree[a] +", "+ a+", "+ xi +", "+ xj);
@@ -165,22 +139,11 @@ public class MRFT implements Serializable {
 		System.out.println("potential matrix: "+Arrays.deepToString(matrix));
 	}
 	
-	//inútil
-//	/** Se a MRFTree passada ainda tem nós sem pai */
-//	public boolean faltapreencher (int[]v) {
-//		boolean falta=false;
-//		for (int c=0; c<v.length && falta==false; c++) {
-//			if (v[c]==-2) falta=true;}
-//		
-//		return falta;
-//	}
-	
-	
+	/** Devolve o número de variáveis do Dataset - características*/
 	public int getnvar() {
 		return nvar;
 	}
-	
-	
+
 	/** inicia a potentialMatrix com as dimensões corretas de acordo com os domínios das características */
 	public double [][][][] inicia (int [] domains, int ni, int nj){
 		double [][][][] ma = new double [ni][nj][][]; 

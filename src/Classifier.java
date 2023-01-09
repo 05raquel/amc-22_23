@@ -13,7 +13,6 @@ public class Classifier implements Serializable {
 	// array com as frequencias das classes -> Pr (C=c)
 	
 	//CONSTRUTOR
-	
 	public Classifier(MRFT [] MRFTs, double[] valores) {
 		super();
 		this.arrayMRFTs = MRFTs;
@@ -21,11 +20,13 @@ public class Classifier implements Serializable {
 		
 		//frequências calculadas no algoritmo final do classificador com base no dataset
 	}
-	 
+	
+	
 	public MRFT[] getMRFTs () {
 		return arrayMRFTs;
 	}
 	
+	/** */
 	public double[] getfreqs() {
 		return frequencias;
 	}

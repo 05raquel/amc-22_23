@@ -11,7 +11,7 @@ import java.util.List;
 public class Leave_one_out {
 
    public static void main (String[] args) {
-	   String Samples = "./letter.csv";
+	   String Samples = "./soybean-large.csv";
 	   
 	   long startTime = System.nanoTime();
 

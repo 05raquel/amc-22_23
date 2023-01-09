@@ -44,7 +44,8 @@ public class DataSet implements Serializable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-//        matrixc = iniciacount(domains.length-1, domains.length-1);
+        
+        // não fazer matrixcount para o dataset todo mas só para cada fibra!
     }
 
     @Override
@@ -83,8 +84,9 @@ public class DataSet implements Serializable {
     /**obtém o tamanho dos vetores no DataSet - número de características + classificação */
     public int getDataListArraySize() {
         return domains.length;
-        //dataList.get(0).length;  //ainda inclui a última coluna com as classes. só retiramos essa coluna na altura de formar os grafos das fibras.
-    }                              //Aqui ainda dá jeito para identificar com -1 as diferentes classes
+    }
+       //ainda inclui a última coluna com as classes. só retiramos essa coluna na altura de formar os grafos das fibras.
+       //Aqui ainda dá jeito para identificar com -1 as diferentes classes
 
     /** Retorna o número de variáveis (características) do Dataset considerado*/
     public int NrVariables() {
@@ -92,8 +94,6 @@ public class DataSet implements Serializable {
     }
 
     //COUNT
-    
-    //ex: count ((i,j),(xi,xj))
 
     /** Count ((i,j),(xi,xj)) -
      * Conta o número de vezes no dataset que as variáveis i e j tomam simultaneamente os valores (xi,xj)
@@ -133,17 +133,6 @@ public class DataSet implements Serializable {
 		}
 		return c;
     }
-		
-		/* Função equals - verifica se os arrays são iguais
-		public boolean equalQ (int a [], int b[]) {
-		boolean br=a.length==b.length;
-		for (int i = 0; i< b.length && br; i++) {
-			if (a[i]!=b[i]) br = false;
-		}
-		return br;
-	}
-	
-
 
     //ADD
     /** Adiciona um vetor ao DataSet, se este tiver o tamanho correto*/
@@ -172,7 +161,6 @@ public class DataSet implements Serializable {
     
     // FIBER
 
-
     // criar int [] ou ArrayList<int []> para os valores das classes
 
     /** Retorna a fibra da característica value */
@@ -184,6 +172,7 @@ public class DataSet implements Serializable {
         for (int[] array : dataList) {
             if (array[Length - 1] == value) {
                 fiber.Add(array);
+                
             }
         }
         fiber.matrixc = iniciacount(domains.length-1, domains.length-1);
@@ -208,37 +197,14 @@ public class DataSet implements Serializable {
                     for (int i=0; i < domains[itni] + 1; i++) {
                     	for (int j=0; j < domains[itnj] + 1; j++) {
                     		ma [itni] [itnj] [i] [j]=-1;
+                    		//confirmar se pode ser 
                     	}
                     }
-                    
-                   
                 }
             }
         }
         return ma;
     }
-
-    //auxiliar
-		/*public void printBonito (ArrayList<int[]> fiber)	{
-			for (int [] i: fiber)	{
-				System.out.println(Arrays.toString(i));	
-			}
-		}*/
-	
-		/*public static void main(String[] args) {
-				DataSet d = new DataSet("bcancer.csv");
-				//int v [] = {0,2,3,4,5,6,7,8,9,10,11};
-				//d.Add(v);
-				System.out.println(Arrays.toString(d.getDomains()));
-				//System.out.println(d);
-				//System.out.println(d.Fiber(0));
-				//System.out.println(d.Fiber(1));
-				//System.out.println(d.Fiber(11));
-				//d.printBonito(d.Fiber(0));
-				
-				//int var [] = {10};
-				//int val [] = {11};
-				//System.out.println(d.Count(var, val));
-		}
-		*/
+    
+    
 }
