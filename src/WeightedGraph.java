@@ -32,7 +32,7 @@ public class WeightedGraph {   //não direcionado
 	//grafo.MST()
 	
 	/** MST - árvore de extensão de peso maximal  */
-	public boolean [][] /*gr_mst*/ MST() {
+	public boolean [][] MST() {
 		boolean [][] MSTree = new boolean [dim][dim];
 		//System.out.println(Arrays.deepToString(graph));
 //		double [][] Graph = new double [dim][dim];
@@ -62,7 +62,7 @@ public class WeightedGraph {   //não direcionado
 		
 		boolean encontreiArestaParaFora = true;
 		while (encontreiArestaParaFora) {
-		//while (Nodes.size() < dim) {
+		
 			double max = 0;  // vetor max: (i, j, peso)
 			int imax=-1;
 			int jmax=-1;
@@ -91,24 +91,8 @@ public class WeightedGraph {   //não direcionado
 		}
 		//System.out.println(Nodes);
 		System.out.println("MST: "+Arrays.deepToString(MSTree));
-		return MSTree/*new gr_mst(init,MSTree)*/; 
+		return MSTree; 
 	}
-	
-	//Ignorar?!
-//	public static class gr_mst {
-//		boolean [][] MSTree;
-//		int init;
-//		public gr_mst(int init, boolean [][] MSTree) {
-//			this.MSTree = MSTree;
-//			this.init = init;
-//		}
-//		public boolean [][] getMSTree() {
-//			return MSTree;
-//		}
-//		public int getInit() {
-//			return init;
-//		}
-//	}
 	
 	public String printBonito2 ()	{
 		String out = "";

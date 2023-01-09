@@ -36,6 +36,7 @@ public class App1Learning {
     
     private DataSet d;
     private String fileName_var;
+    private int samplelength;
     
 	private JFrame frame;
     private JButton Select;
@@ -45,7 +46,7 @@ public class App1Learning {
     private JLabel Title;
     private JButton Save;
     private JLabel ISTLogo1;
-   // private JLabel ISTLogo2;
+
     private JLabel AMC;
     private JLabel fileNameLabel;
     private JLabel sample_len;
@@ -53,8 +54,9 @@ public class App1Learning {
     private JLabel nrvariaveis;
     private JLabel error_label;
     private JLabel DONEpic;
+    private JLabel savedfilepath;
     
-    
+
 	private void components(JFrame frame) {  //função que cria todos os compponentes de design
 		
 	//Window 1	
@@ -67,10 +69,8 @@ public class App1Learning {
         frame.setTitle("Markov Random Field Learning App");
         frame.setResizable(false);
         
-//        ISTLogo1 = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./ISTLogo.png"))));
         ISTLogo1 = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("Resources/ISTLogo.png"))));
-    	//App1Learning.class.getClassLoader().getResource("./Resources/ISTLogo.png");
-        
+	    	
         ISTLogo1.setBounds(261, 0, 183, 203);
         frame.getContentPane().add(ISTLogo1);
         
@@ -107,13 +107,7 @@ public class App1Learning {
 	
 	    
 	//Window 2
-	    
-        /*
-        ISTLogo2 = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/ISTLogo.png"))));
-        ISTLogo2.setBounds(590, 10, 161, 141);
-        frame.getContentPane().add(ISTLogo2);
-        */
-        
+	           
         fileNameLabel = new JLabel("Classifier File's Name:");
         fileNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         fileNameLabel.setBounds(128, 271, 210, 20);
@@ -142,8 +136,7 @@ public class App1Learning {
         frame.getContentPane().add(nrvariaveis);
         nrvariaveis.setVisible(false);
         
-//		back = new JButton(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./BackButton.png"))));
-		back = new JButton(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("Resources/BackButton.png"))));
+        back = new JButton(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("Resources/BackButton.png"))));
 	    
 		back.setBorder(null);
 	    back.setVisible(false);
@@ -160,14 +153,18 @@ public class App1Learning {
         frame.getContentPane().add(Save);
         
       //Window 3
-      //TODO: texto com DONE e com um emoji qualquer :)
         
-//        DONEpic = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./DonePic.png"))));
         DONEpic = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("Resources/DonePic.png"))));
         
         DONEpic.setBounds(230, 20, 300, 400);
         frame.getContentPane().add(DONEpic);
         DONEpic.setVisible(false);
+        
+        savedfilepath = new JLabel("");
+        savedfilepath.setBounds(150, 2, 500, 20);
+        savedfilepath.setHorizontalAlignment(SwingConstants.CENTER);
+        frame.getContentPane().add(savedfilepath);
+        savedfilepath.setVisible(false);
         
 	}
 	
@@ -178,10 +175,11 @@ public class App1Learning {
         fileNameLabel.setVisible(true);
         fileName.setText(fileName_var);
         fileName.setVisible(true);
-        // criar a variável d.Samplelength() fora de botões (ações)? e usar/ aceder 2x
-        sample_len.setText("Sample length: "+d.Samplelength()); //mais abstrato d.getDataList().size());  
+        sample_len.setText("Sample length: "+ samplelength);
+        //mais abstrato d.getDataList().size()); 
         sample_len.setVisible(true);
-        nrvariaveis.setText("Number of variables: "+ d.NrVariables()); //(d.getDataListArraySize() -1));
+        nrvariaveis.setText("Number of variables: " + d.NrVariables() );
+        //(d.getDataListArraySize() -1)) - NrVariables()
         nrvariaveis.setVisible(true);
         Save.setVisible(true);
     }
@@ -200,6 +198,8 @@ public class App1Learning {
         AMC.setVisible(false);
         error_label.setVisible(false);
         ISTLogo1.setVisible(false); //TODO: mudar a imagem para o tal emoji
+        savedfilepath.setText("File '"+fileName_var+"' saved in "+ path);
+        savedfilepath.setVisible(true);
     }
 	
     private void change21() {
@@ -227,6 +227,7 @@ public class App1Learning {
                 try {
                     d = new DataSet(""+file);
                     fileName_var = file.getName().substring(0,file.getName().indexOf("."))+".clf";
+                    samplelength = d.Samplelength();
                     change12();
                 } catch (Exception e1) {
                     error_label.setText("The dataset could not be imported");
@@ -246,18 +247,15 @@ public class App1Learning {
             // Learning Code
         	long startTime = System.nanoTime();
             fileName_var = fileName.getText();
-            int [] doms = d.getDomains(); //array com o max de cada caracteristica
-            
-            // rever a abstração desta parte!!!!!!!
-            
-            int domClasses = doms[d.getDataListArraySize() -1]; //nr de classes = a isto + 1
+            int [] doms = d.getDomains(); //array com o max de cada caracteristica            
+            int domClasses = d.getClassDomain(); //nr de classes = domClasses + 1
             System.out.println("Domínio total: "+doms);
             double [] freq = new double [domClasses + 1]; //array com as diferentes classes, depois preenchemos com freq
             MRFT [] arrayfibers = new MRFT [domClasses + 1];
             
             for (int i=0; i <= domClasses; i++) {
                 DataSet fiber = d.Fiber(i);
-                freq[i]= (double) fiber.Samplelength() / (double) d.Samplelength();
+                freq[i]= (double) fiber.Samplelength() / (double) samplelength;
                 arrayfibers[i] = new MRFT(fiber, ChowLiu.Chow_liu(fiber), doms);
             }
 

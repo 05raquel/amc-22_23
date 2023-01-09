@@ -11,7 +11,7 @@ import java.util.List;
 public class Leave_one_out {
 
    public static void main (String[] args) {
-	   String Samples = "./soybean-large.csv";
+	   String Samples = "./diabetes.csv";
 	   
 	   long startTime = System.nanoTime();
 
@@ -29,7 +29,7 @@ public class Leave_one_out {
        
        // Iterate over the samples
        for (int i = 0; i < dataset.size(); i++) {
-    	   System.out.println("\n\n############## "+i+" ##############\\n\\n");
+    	   System.out.println("\n\n############## "+i+" ############## \n\n");
     	   tamanho.add(dataset.size());
            // Create a training set by removing i-t sample
            int [] test = sample.getDataList().get(i);

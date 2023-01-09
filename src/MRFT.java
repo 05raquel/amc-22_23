@@ -34,32 +34,35 @@ public class MRFT implements Serializable {
 		
 		//Utilizando a informação da MST, define-se o nó init - não pode ser independente
 		boolean flaginit= false;
-		int z=0;
-		for (; z< nnos && !flaginit; z++) {
-			for (int a=z+1; a<nnos && !flaginit; a++) {
-				if (tree[z][a]) { //se existir pelo menos uma aresta
+		int init=0; int noe=0;
+		for (; init< nnos && !flaginit; init++) {
+			noe=init+1;
+			for (; noe<nnos && !flaginit; noe++) {
+				if (tree[init][noe]) { //se existir pelo menos uma aresta
 					flaginit=true;
-					z=z-1;
-					//a=a-1;
+					init=init-1;
+					noe=noe-1;
 				}
 			}
 		}
-		int init=z; // então, encontrou-se o nó init - dependente!
-		System.out.println("init: " + init);
+		//init // então, encontrou-se o nó init - dependente!
+		//noe
+		System.out.println("init: " + init); 
+		//System.out.println("noe: "+noe);
 		
 		
-		boolean flag = false;
-		int b=0;
-		for(; b < nnos && !flag; b++){
-			if (tree[init][b]) {     //escolher a primeira aresta (que parte do init) existente na MST (=true)
-				flag = true;
-				b=b-1;
-			}
-		}
-		int noe=b; //nó especial
+//		boolean flag = false;
+//		int b=init;
+//		for(; b < nnos && !flag; b++){
+//			if (tree[init][b]) {     //escolher a primeira aresta (que parte do init) existente na MST (=true)
+//				flag = true;
+//				b=b-1;
+//			}
+//		}
+//		int noe=b; //nó especial
+//		System.out.println("noee: " + noe);
 		
 		// aresta especial é do init para o noe - dá a direção das outras arestas
-		//System.out.println("noe:"+noe);
 		
 		LinkedList<Integer> nospreenchidos = new LinkedList<Integer>(); //LinkedList para ser dinâmico (nós que têm pai)
 		nospreenchidos.add(init); //acrescenta o nó init à lista de nós preenchidos 
@@ -180,7 +183,7 @@ public class MRFT implements Serializable {
 		
 		// MRFTree[j] = pai de j = i
 		// aresta i --> j 
-		//System.out.println("Lenght: "+MRFTree.length);
+		//System.out.println("Length: "+MRFTree.length);
 		for (int j=0; j < MRFTree.length; j++) { // começa no 1 porque o 0 não tem pai
 			//System.out.println("j: "+j);
 			boolean temPai = MRFTree[j]>=0;
@@ -193,5 +196,6 @@ public class MRFT implements Serializable {
 		System.out.println("Probabilidade Mc "+prob);
 		return prob;
 	}
-
+	
+	
 }

@@ -93,6 +93,9 @@ public class DataSet implements Serializable {
     	return getDataListArraySize() -1;
     }
 
+    public int getClassDomain() {
+    	return domains[domains.length-1];
+    }
     //COUNT
 
     /** Count ((i,j),(xi,xj)) -
@@ -123,9 +126,9 @@ public class DataSet implements Serializable {
             for (int j = 0; j < var.length; j++) {
                 arr[j] = vetorObs[var[j]];  // preencher o array com os valores do vetorObs do datalist
             }
-            if (Arrays.equals(arr, val))
-                c++; //contar quantos vetores têm os valores val
+            if (Arrays.equals(arr, val)) c++; //contar quantos vetores têm os valores val
         }
+        
 		if (compara==1) matrixc[var[0]][var[0]][0][val[0]]=c;
 		else if (compara==2) {
 				matrixc[var[0]][var[1]][val[0]][val[1]]=c;
@@ -171,8 +174,7 @@ public class DataSet implements Serializable {
 
         for (int[] array : dataList) {
             if (array[Length - 1] == value) {
-                fiber.Add(array);
-                
+                fiber.Add(array); 
             }
         }
         fiber.matrixc = iniciacount(domains.length-1, domains.length-1);
@@ -180,7 +182,7 @@ public class DataSet implements Serializable {
     }
 
     /**
-     * inicia a potentialMatrix com as dimensões corretas de acordo com os domínios das características
+     * inicia a MatrixCount com as dimensões corretas de acordo com os domínios das características
      */
     public double[][][][] iniciacount(int ni, int nj) {
         double[][][][] ma = new double[ni][nj][][];
