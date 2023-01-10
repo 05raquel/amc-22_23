@@ -69,7 +69,9 @@ public class DataSet implements Serializable {
     }
 
     /** Acede ao dataList do Dataset considerado*/
-    public ArrayList<int[]> getDataList() { return dataList; }
+    public ArrayList<int[]> getDataList() { 
+    	return dataList; 
+    }
 
     /** Retorna o tamanho do Dataset (número de vetores)*/
     public int Samplelength () {
@@ -79,6 +81,11 @@ public class DataSet implements Serializable {
     /** Retorna o conjunto dos domínios das variáveis do Dataset */
     public int[] getDomains() {
         return domains;
+    }
+    
+    /** Retorna o domínio da variável i */
+    public int getDomain(int i) {
+        return domains[i];
     }
 
     /**obtém o tamanho dos vetores no DataSet - número de características + classificação */
@@ -111,7 +118,7 @@ public class DataSet implements Serializable {
 			
 		if (compara==1){
         	double valor1 = matrixc[var[0]][var[0]][0][val[0]];
-        	if (valor1 >=0) return valor1;
+        	if (valor1 >= 0) return valor1;
 		}
         
 		else if (compara==2) {
@@ -155,13 +162,12 @@ public class DataSet implements Serializable {
         
         //atualizar maximos dos elementos para cada característica
         for (int i = 0; i < v.length; i++) {
-            if (v[i] > domains[i]) {
-                domains[i] = v[i];
+            if (v[i] >= domains[i]) { //alterei
+                domains[i] = v[i]+1; //alterei // +1 para incluir o 0! - Domínio = nr de valores distintos tomados
             }
         }
     }
 
-    
     // FIBER
 
     // criar int [] ou ArrayList<int []> para os valores das classes
@@ -181,6 +187,20 @@ public class DataSet implements Serializable {
         return fiber;
     }
 
+    public DataSet [] Fibers() {
+    	DataSet [] fib = new DataSet [domains[domains.length-1]];  //getClassDomain()
+    	for (int i=0; i < fib.length; i++) {
+    		fib[i]= new DataSet();
+    		fib[i].matrixc = iniciacount(domains.length-1, domains.length-1); //NrVariables(
+    	}
+    	for (int [] v: dataList) {
+    		fib[v[v.length-1]].Add(v);
+    	}
+    	return fib;
+    }
+    
+    
+    
     /**
      * inicia a MatrixCount com as dimensões corretas de acordo com os domínios das características
      */
@@ -191,15 +211,15 @@ public class DataSet implements Serializable {
             	//itnj=0
                 if (itni == itnj) {
                 	 // para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
-                    ma[itni][itnj] = new double[1][domains[itnj] + 1];
-                    for (int it=0; it < domains[itnj] + 1; it++) {
+                    ma[itni][itnj] = new double[1][domains[itnj]]; //alt
+                    for (int it=0; it < domains[itnj]; it++) { //alt
                     	ma [itni][itnj][0][it]=-1;
                     }
                 } else {
-                    ma[itni][itnj] = new double[domains[itni] + 1][domains[itnj] + 1];
-                    ma[itnj][itni] = new double[domains[itnj] + 1][domains[itni] + 1];
-                    for (int i=0; i < domains[itni] + 1; i++) {
-                    	for (int j=0; j < domains[itnj] + 1; j++) {
+                    ma[itni][itnj] = new double[domains[itni]][domains[itnj]]; //alt
+                    ma[itnj][itni] = new double[domains[itnj]][domains[itni]]; //alt
+                    for (int i=0; i < domains[itni]; i++) { //alt
+                    	for (int j=0; j < domains[itnj]; j++) { //alt
                     		ma [itni] [itnj] [i] [j]=-1;
                     		ma [itnj] [itni] [j] [i]=-1;
                     	}

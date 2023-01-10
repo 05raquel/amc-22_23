@@ -103,24 +103,24 @@ public class MRFT implements Serializable {
 			if (temPai) {
 				int [] var = {MRFTree[a],a}; 
 				int [] i = {MRFTree[a]};
-				for (int xi=0; xi <= d.getDomains()[MRFTree[a]]; xi++) {
-					for (int xj=0; xj <= d.getDomains()[a]; xj++) {
+				for (int xi=0; xi < d.getDomain(MRFTree[a]); xi++) { //alt
+					for (int xj=0; xj < d.getDomain(a); xj++) { //alt
 						int [] val = {xi,xj};
 						int [] ix = {xi};
 						if (isArestaEspecial) {
 							matrix[init][noe][xi][xj]= 
 									(d.Count(var, val) + 0.2)
 									/(d.getDataList().size() //não faltam PARENTESES!
-													+(0.2*(d.getDomains()[init]+1)
-															*(d.getDomains()[noe]+1))) ;
-							// domínio +1 porque o domínio é o maximo dos valores tomados - incluir o 0!
+													+(0.2*(d.getDomain(init)) //alt
+															*(d.getDomain(noe)))) ; //alt
+							
 						}
 						else {
 							//System.out.println("idxs: " + MRFTree[a] +", "+ a+", "+ xi +", "+ xj);
 							matrix [MRFTree[a]][a][xi][xj] = 
 									(d.Count(var, val) + 0.2) 
 									/ (d.Count(i,ix) 
-											+(0.2*(d.getDomains()[a]+1)));						
+											+(0.2*(d.getDomain(a))));	//alt				
 						}
 					}
 				}
@@ -141,8 +141,8 @@ public class MRFT implements Serializable {
 		for (int itni = 0; itni<ni; itni++) { // itni = iterada de ni
 			for (int itnj =itni+1; itnj<nj; itnj++) { //itnj = iterada de nj
 				// a diagonal não tem significado - só há potenciais de arestas
-				ma [itni][itnj] = new double [domains[itni]+1] [domains[itnj]+1];
-				ma [itnj][itni] = new double [domains[itnj]+1] [domains[itni]+1];
+				ma [itni][itnj] = new double [domains[itni]] [domains[itnj]]; //alt
+				ma [itnj][itni] = new double [domains[itnj]] [domains[itni]]; //alt
 				// para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
 			}
 		}

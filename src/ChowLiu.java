@@ -13,7 +13,7 @@ public class ChowLiu {
 		double m = d.getDataList().size();
 		for (int i = 0; i < graph.getdim(); i++) {
 			
-			for (int j=i+1; j< graph.getdim(); j++) {
+			for (int j=i+1; j < graph.getdim(); j++) {
 				// não ver j,i correspondente 
 				// j e i são sempre diferentes - a diagonal não tem significado
 				
@@ -21,8 +21,8 @@ public class ChowLiu {
 				int [] var = {i,j};
 				int [] vari = {i};
 				int [] varj= {j};
-				for (int xi=0; xi <= d.getDomains()[i]; xi++) {
-					for (int xj=0; xj <= d.getDomains()[j]; xj++) {
+				for (int xi=0; xi < d.getDomain(i); xi++) { //alt
+					for (int xj=0; xj < d.getDomain(j); xj++) { //alt
 						int [] val = {xi,xj};
 						int [] vali = {xi};
 						int [] valj= {xj};

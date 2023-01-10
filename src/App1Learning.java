@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 import java.util.Objects;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -247,14 +248,17 @@ public class App1Learning {
             // Learning Code
         	long startTime = System.nanoTime();
             fileName_var = fileName.getText();
-            int [] doms = d.getDomains(); //array com o max de cada caracteristica            
-            int domClasses = d.getClassDomain(); //nr de classes = domClasses + 1
-            System.out.println("Domínio total: "+doms);
-            double [] freq = new double [domClasses + 1]; //array com as diferentes classes, depois preenchemos com freq
-            MRFT [] arrayfibers = new MRFT [domClasses + 1];
+            int [] doms = d.getDomains(); //array com o número de valores de cada caracteristica            
+            int domClasses = d.getClassDomain(); //nr de classes = domClasses
+            System.out.println("Domínio total: "+Arrays.toString(doms));
+           
+            double [] freq = new double [domClasses]; //array com as diferentes classes, depois preenchemos com freq
+            MRFT [] arrayfibers = new MRFT [domClasses];
             
-            for (int i=0; i <= domClasses; i++) {
-                DataSet fiber = d.Fiber(i);
+            DataSet [] fibs = d.Fibers();
+            for (int i=0; i < domClasses; i++) {
+                //DataSet fiber = d.Fiber(i);
+            	DataSet fiber = fibs[i];
                 freq[i]= (double) fiber.Samplelength() / (double) samplelength;
                 arrayfibers[i] = new MRFT(fiber, ChowLiu.Chow_liu(fiber), doms);
             }

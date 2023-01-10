@@ -102,8 +102,8 @@ public class Classifier implements Serializable {
 				soma+= prob[i];
 			}
 		double [] probfinal = new double [prob.length];
-			for (int i=0; i<prob.length; i++) {
-				probfinal[i]= prob[i]/soma;
+			for (int i=0; i < prob.length; i++) {
+				probfinal[i] = prob[i]/soma;
 			}
 		return probfinal;
 	}

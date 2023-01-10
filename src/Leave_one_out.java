@@ -38,10 +38,10 @@ public class Leave_one_out {
  
 	       int [] doms = trainingset.getDomains(); 
 	       int domClasses = doms[trainingset.getDataListArraySize() -1]; 
-	       double [] freq = new double [domClasses + 1]; 
-	       MRFT [] arrayfibers = new MRFT [domClasses + 1];
+	       double [] freq = new double [domClasses]; //alt
+	       MRFT [] arrayfibers = new MRFT [domClasses]; //alt
 	       
-	       for (int j=0; j <= domClasses; j++) {
+	       for (int j=0; j < domClasses; j++) { //alt
 	           DataSet fiber = trainingset.Fiber(j);
 	           freq[j]= (double) fiber.getDataList().size() / (double) trainingset.getDataList().size();
 	           arrayfibers[j] = new MRFT(fiber, ChowLiu.Chow_liu(fiber), doms);

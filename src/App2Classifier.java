@@ -279,8 +279,10 @@ public class App2Classifier {
                 classefinal.setVisible(true);
                 scroll.setVisible(true);
                 
+                double [] probNorm = Classifier.NormProb(classification.getProbstotal());
+                 
                 for (int i = 0; i < classifier.getNrClasses(); i++) {         	
-                	normprobs.setText(normprobs.getText()+"\n Prob (C=" + i+ "): " + d.format(Classifier.NormProb(classification.getProbstotal())[i]*100)+" %");
+                	normprobs.setText(normprobs.getText()+"\n Prob (C=" + i+ "): " + d.format(probNorm[i]*100)+" %");
                 	normprobs.setVisible(true);
                 }
                 long endTime   = System.nanoTime();
