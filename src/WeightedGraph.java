@@ -1,12 +1,11 @@
 import java.util.*;
 
-public class WeightedGraph {   //não direcionado
-	
-	private int dim;
+public class WeightedGraph {  
+	private int dim;                  //nr de nós = nr de caracteristicas
 	private double [][] adjMatrix; 
 	
 	//CONSTRUTOR
-	public WeightedGraph (int size) {  //este size tem de ser size do domain -1 (para não incluir a classe)
+	public WeightedGraph (int size) {  
 		super();
 		this.dim = size;
 		this.adjMatrix = new double [size][size];
@@ -23,27 +22,25 @@ public class WeightedGraph {   //não direcionado
 		return dim;
 	}
 	
-	//grafo.MST()
 	
 	/** MST - árvore de extensão de peso maximal  */
 	public boolean [][] MST() {
-		boolean [][] MSTree = new boolean [dim][dim];
+		boolean [][] MSTree = new boolean [dim][dim];          //true or false consoante tem aresta ou não
 		
 		LinkedList<Integer> Nodes = new LinkedList<Integer>(); //Lista dos nós (j's)
 		
-		int nnos = adjMatrix.length;
-		int z=0;
+		int nnos = dim;
+		int init=0;
 		boolean flaginit= false;
-		for (; z< nnos && !flaginit; z++) {
-			for (int c=z+1; c<nnos && !flaginit; c++) {
-				if (adjMatrix[z][c] !=0) {
+		for (; init< nnos && !flaginit; init++) {
+			for (int c=init+1; c<nnos && !flaginit; c++) { //verificar os filhos 
+				if (adjMatrix[init][c] !=0) {
 					flaginit=true;
-					z=z-1;
+					init=init-1;                           //porque o init ainda incrementa mais 1
 				}
 			}
 		}
-		int init=z;
-		
+	
 		Nodes.add(init); // nó inicial: init
 		
 		boolean encontreiArestaParaFora = true;
