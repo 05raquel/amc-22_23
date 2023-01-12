@@ -279,7 +279,7 @@ public class App2Classifier {
         
             try {
             	long startTime = System.nanoTime();
-            	Classifier.Res classification = classifier.Classify(x);
+            	Classifier.Res classification = classifier.Classify(x); //guardar o resultado da funcção classify no formato Res
             	normprobs.setText("");
             	error_label.setVisible(false);
             	error_label_int.setVisible(false);
@@ -289,7 +289,7 @@ public class App2Classifier {
                 classefinal.setVisible(true);
                 scroll.setVisible(true);
                 
-                double [] probNorm = Classifier.NormProb(classification.getProbstotal());
+                double [] probNorm = Classifier.NormProb(classification.getProbstotal()); //array de probabilidades normalizadas de todas classes
                  
                 for (int i = 0; i < classifier.getNrClasses(); i++) {         	
                 	normprobs.setText(normprobs.getText()+"\n Prob (C=" + i+ "): " + d.format(probNorm[i]*100)+" %");

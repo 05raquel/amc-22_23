@@ -246,7 +246,7 @@ public class App1Learning {
             if(fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 file = fc.getSelectedFile();
                 try {
-                    d = new DataSet(""+file);
+                    d = new DataSet(""+file); //construtor a partir do csv file
                     fileName_var = file.getName().substring(0,file.getName().indexOf("."))+".clf";
                     samplelength = d.Samplelength();
                     nrvar = d.NrVariables();
@@ -271,22 +271,20 @@ public class App1Learning {
             fileName_var = fileName.getText();
             int [] doms = d.getDomains(); //array com o número de valores de cada caracteristica            
             int domClasses = d.getClassDomain(); //nr de classes = domClasses
-            System.out.println("Domínio total: "+Arrays.toString(doms));
            
             double [] freq = new double [domClasses]; //array com as diferentes classes, depois preenchemos com freq
-            MRFT [] arrayfibers = new MRFT [domClasses];
+            MRFT [] arrayMRFTfibers = new MRFT [domClasses];
             
-            DataSet [] fibs = d.Fibers();
+            DataSet [] fibs = d.Fibers();             //dividir dataset em fibers
             for (int i=0; i < domClasses; i++) {
-                //DataSet fiber = d.Fiber(i);
             	DataSet fiber = fibs[i];
-                freq[i]= (double) fiber.Samplelength() / (double) samplelength;
-                arrayfibers[i] = new MRFT(fiber, ChowLiu.Chow_liu(fiber), doms);
+                freq[i]= (double) fiber.Samplelength() / (double) samplelength;  //frequencia =nr de vetores dessa classe/nr de vetores total
+                arrayMRFTfibers[i] = new MRFT(fiber, ChowLiu.Chow_liu(fiber), doms);
             }
 
-            Classifier classificador = new Classifier(arrayfibers, freq, nrvar);
+            Classifier classificador = new Classifier(arrayMRFTfibers, freq, nrvar);
             try {
-                ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName_var));
+                ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName_var));  //guardar no disco
                 os.writeObject(classificador);
                 os.close();
 
@@ -303,7 +301,7 @@ public class App1Learning {
 
         });
         
-        back2.addActionListener(e -> {  //ao clicar no botão de retroceder vai fazer isto
+        back2.addActionListener(e -> {  
             int goback = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?\nAll data will be lost", "", JOptionPane.YES_NO_OPTION);
             if(goback == JOptionPane.YES_OPTION){
             	d = new DataSet(); change31();  // mudar para a janela inicial
@@ -311,10 +309,7 @@ public class App1Learning {
         });
 	}
 
-    
-	/**
-	 * Launch the application.
-	 */
+	/**Launch the application */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

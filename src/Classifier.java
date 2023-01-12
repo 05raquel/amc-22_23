@@ -3,15 +3,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class Classifier implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private MRFT [] arrayMRFTs;
-	private double [] frequencias;
+	private MRFT [] arrayMRFTs;      // array de MRFTs, um para cada valor da classe
+	private double [] frequencias;   // array com as frequencias das classes -> Pr (C=c)
 	private int nvar;
-	//array de MRFTs, um para cada valor da classe
-	// array com as frequencias das classes -> Pr (C=c)
 	
 	//CONSTRUTOR
 	public Classifier(MRFT [] MRFTs, double[] valores, int nvar) {
@@ -19,7 +18,6 @@ public class Classifier implements Serializable {
 		this.arrayMRFTs = MRFTs;
 		this.frequencias = valores; 
 		this.nvar = nvar;
-		//frequências calculadas no algoritmo final do classificador com base no dataset
 	}
 	
 	
@@ -33,44 +31,44 @@ public class Classifier implements Serializable {
 		return frequencias.length;
 	}
 	
-	/** Retorna o número de variáveis (características)*/
+	/** Retorna o número de características*/
 	public int getNrVariables() {
 		return  nvar;
 	}
 	
 	//CLASSIFY
 		
-	/** A função retorna um objeto com a classe mais provável e um array com a probabilidade de cada classe */
-	public Res Classify (int [] valoresx) {
-		if (valoresx.length!= nvar) { //vetor valoresx com o número de características correto
-			throw new IllegalArgumentException(); //argumento inválido
+	/** Retorna a classe mais provável e um array com a probabilidade de cada classe */
+	public Res Classify (int [] valoresx) {   
+		if (valoresx.length!= nvar) {             //vetor com dim invalidas
+			throw new IllegalArgumentException(); 
 		}
 		
 		// dados valores (x1,...,xn) das variáveis
-		// P = frequência x P MC (vetor)
+		
 		
 		double [] probstotal = new double [frequencias.length];
-		double [] maxprob = {-1,-1}; //{classe,valor de prob)
+		int bestclass = -1;
+		double maxprob = -1;
+		
 		for (int i=0; i < frequencias.length; i++) {
-			probstotal[i] = frequencias[i]*arrayMRFTs[i].Prob(valoresx); //i é a classe
-			System.out.println("classe:" + i);
-			if (probstotal[i]> maxprob[1]) {
-				maxprob[0]=i;
-				maxprob[1]=probstotal[i];
+			probstotal[i] = frequencias[i]*arrayMRFTs[i].Prob(valoresx); // P[i] = frequência[i] x P Mi (vetor)
+			System.out.println("classe:" + i);                           // Classe = i
+			if (probstotal[i]> maxprob) {
+				bestclass=i;
+				maxprob=probstotal[i];
 			}	
 		}
-//		probstotal.IndexOf(probstotal,(max(probstotal)));
-//		indexOf (max(probstotal), probstotal))
-		System.out.println("Probs das classes"+Arrays.toString(probstotal));
-		return new Res((int)maxprob[0], probstotal);  //valor da classe mais provável
-		//return new Res (indexOf()
+		//System.out.println("Probs das classes"+Arrays.toString(probstotal));
+		return new Res(bestclass, probstotal);  //valor da classe mais provável
 	}
 	
-	/**Classe Resultados*/
-	public static final class Res {
-		// final - não pode ser alterado assim que é definido
+	/**Classe Resultados -> para retornar 2 tipos de dados no classify*/
+	
+	public static final class Res {  // final - não pode ser alterado assim que é definido
 		final double [] probstotal;
 		final int bestClass;
+		
 		public Res(int bestClass, double[] probstotal) {
 			this.probstotal = probstotal;
 			this.bestClass = bestClass;
@@ -99,13 +97,13 @@ public class Classifier implements Serializable {
 	/** Recebe o vetor de probabilidades das classes e retorna-o normalizado*/
 	public static double[] NormProb(double [] prob) {
 		double soma=0;
-			for (int i=0; i < prob.length; i++) {
-				soma+= prob[i];
-			}
+		for (int i=0; i < prob.length; i++) { //prob.length = nr de classes
+			soma+= prob[i];
+		}
 		double [] probfinal = new double [prob.length];
-			for (int i=0; i < prob.length; i++) {
-				probfinal[i] = prob[i]/soma;
-			}
+		for (int i=0; i < prob.length; i++) {
+			probfinal[i] = prob[i]/soma;
+		}
 		return probfinal;
 	}
 }

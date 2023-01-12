@@ -13,175 +13,115 @@ import java.util.TreeSet;
 public class MRFT implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	//Markov Random Field Tree
-
-	private int [] MRFTree; 
-	private double [][][][] potentialMatrix;
+	private int [] MRFTree;                   //array com pais do nó com o nr da posição (índice do pai de cada nó)
+	private double [][][][] potentialMatrix;  //matriz de matrizes com phis
 	
-	//CONSTRUTOR de MRFT
 	
-	// coloca os phi ij (xi,xj) em cada aresta que podem ser vistos como uma matriz
-	
-	public MRFT(DataSet d, boolean [][] tree, int [] domains) {
-		//tendo em conta o dataset e a MST
+	/**CONSTRUTOR de MRFT:coloca os phi ij (xi,xj) em cada aresta que podem ser vistos como uma matriz */
+	public MRFT(DataSet d, boolean [][] tree, int [] domains) {  
 		super();	
 		
-		int nnos = tree.length;
+		int nnos = d.NrVariables();
 		int [] MRFTree = new int [nnos]; //MRFTree array com o tamanho do nr de nós 
-		//(MRFTree: índice do pai de cada nó)
 		
-		//Utilizando a informação da MST, define-se o nó init - não pode ser independente
 		boolean flaginit= false;
 		int init=0; 
-//		for (; init< nnos && !flaginit; init++) {
-			int noe=init+1;
-			for (; noe<nnos && !flaginit; noe++) {
-				if (tree[init][noe]) { //se existir pelo menos uma aresta
-					flaginit=true;
-//					init=init-1;
-					noe=noe-1;
-				}
+		int noe=init+1;                        //noe = nó especial                   
+		for (; noe<nnos && !flaginit; noe++) {
+			if (tree[init][noe]) {             //se existir uma aresta
+				flaginit=true;
+				noe=noe-1;
 			}
-//		}
-		//init 
-		//noe - nó especial
-		System.out.println("init: " + init); 
-		System.out.println("noe: "+noe);
-			
-		// aresta especial é do init para o noe - dá a direção das outras arestas
+		}
+
+		// aresta especial é do init (raiz tree) para o noe
 		
 		LinkedList<Integer> nospreenchidos = new LinkedList<Integer>(); //LinkedList para ser dinâmico (nós que têm pai)
 		nospreenchidos.add(init); //acrescenta o nó init à lista de nós preenchidos 
+		MRFTree[init]=-1; 
 		  
-		for (int i = 0; i < nnos; i++) {
-			if (i==init) {
-				MRFTree[i]=-1;     // o primeiro nó (init) não tem pai logo é -1
-			}
-			else {
-				MRFTree[i]=-2;     //para as restantes entradas não iniciadas coloca-se -2
-			}
-		}
+		//PERCORRER EM LARGURA
+		//Começar num nó
+		//visitar os filhos (tirando os já visitados anteriormente)
+		//Repetir para cada filho
 		
-		//bfs
-		// começar num nó
-		// visitar os filhos (tirando os já visitados anteriormente)
-		// repetir para cada filho
 		Set<Integer> visitados = new TreeSet<>(); 
 		Queue<Integer> fila = new LinkedList<>();
+		
 		fila.add(init);
 		
 		while (!fila.isEmpty()) {
-			int curr = fila.remove(); // fazer coisas com o atual
-			if (!visitados.contains(curr)) { //se ainda não tivermos executado esse atual
-				List<Integer> vizinhos = offspring(tree, curr); // lista de descendentes do nó atual
-				for (int vizinho : vizinhos) { 
-					if (!nospreenchidos.contains(vizinho)) {
-						MRFTree[vizinho] = curr;
-						nospreenchidos.add(vizinho);
+			int atual = fila.remove();         // fazer coisas com o atual
+			if (!visitados.contains(atual)) {  // se ainda não tivermos executado esse atual
+				List<Integer> filhos = offspring(tree, atual); // lista de descendentes do nó atual
+				for (int filho : filhos) { 
+					if (!nospreenchidos.contains(filho)) {  //se ainda não tivermos esse no preenchido
+						MRFTree[filho] = atual;             //definimos o seu pai e adicionamos aos nos preenchidos
+						nospreenchidos.add(filho);
 					}
 				}
-				visitados.add(curr);
-				fila.addAll(vizinhos);
+				visitados.add(atual);          //adicionar o atual aos pais visitados
+				fila.addAll(filhos);           //adicionar à fila todos os filhos do no atual
 			}
 		}
-		System.out.println("MRF Tree: "+ Arrays.toString(MRFTree));
 		
-		this.MRFTree = MRFTree;  	//atualizar a matriz de potenciais
+		this.MRFTree = MRFTree;  	           //atualizar a MRFT
+		
 
-		//double [][][][] matrix = inicia(domains, nnos, nnos); 
-		double [][][][] matrix = new double [nnos][nnos][][]; 
+		double [][][][] matrix = new double [nnos][nnos][][];  //matriz de potenciais phis
 		for (int a = 1; a < nnos; a++) { 
-			matrix [MRFTree[a]][a] = new double [domains[MRFTree[a]]] [domains[a]]; 
-			// para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
-		}
+			matrix [MRFTree[a]][a] = new double [domains[MRFTree[a]]] [domains[a]]; //matriz na entrada (pai,filho) = matriz de tamanho dos dominios
 		
-		// i, j, xi valores que i toma, xj valores que j toma
+		// i, j, xi (valores que i toma), xj (valores que j toma)
+		// a = filho ; MRFTree[a] = pai de a
+			
 		// preencher as matrizes para as arestas da MRFTree 
-		// MRFTree[a] = pai = i
-		// a = j
-		
-		for (int a=1; a < nnos;a++) { 
-			//0
 			boolean isArestaEspecial = (a==noe && MRFTree[a]==init);
-//			boolean temPai = MRFTree[a]>=0;
-//			if (temPai) {
-				int [] var = {MRFTree[a],a}; 
-				int [] i = {MRFTree[a]};
-				for (int xi=0; xi < d.getDomain(MRFTree[a]); xi++) { //alt
-					for (int xj=0; xj < d.getDomain(a); xj++) { //alt
-						int [] val = {xi,xj};
-						int [] ix = {xi};
-						if (isArestaEspecial) {
+			int [] var = {MRFTree[a],a}; 
+			int [] i = {MRFTree[a]};
+			for (int xi=0; xi < d.getDomain(MRFTree[a]); xi++) { //for's para preencher todas as combinações de vals possiveis
+				for (int xj=0; xj < d.getDomain(a); xj++) {      
+					int [] val = {xi,xj};
+					int [] ix = {xi};
+					
+					//cálculo de phis diferente para aresta especial
+					if (isArestaEspecial) {
 							matrix[init][noe][xi][xj]= 
 									(d.Count(var, val) + 0.2)
-									/(d.Samplelength() //não faltam PARENTESES!
-													+(0.2*(d.getDomain(init)) //alt
-															*(d.getDomain(noe)))) ; //alt
-							
-						}
-						else {
-							//System.out.println("idxs: " + MRFTree[a] +", "+ a+", "+ xi +", "+ xj);
+									/(d.Samplelength()+(0.2*(d.getDomain(init))*(d.getDomain(noe)))) ;
+					}
+					else {
 							matrix [MRFTree[a]][a][xi][xj] = 
 									(d.Count(var, val) + 0.2) 
-									/ (d.Count(i,ix) 
-											+(0.2*(d.getDomain(a))));	//alt				
-						}
+									/ (d.Count(i,ix)+(0.2*(d.getDomain(a))));			
 					}
 				}
-			//}
-		}
-		this.potentialMatrix = matrix;
-		System.out.println("potential matrix: "+Arrays.deepToString(matrix));
-	}
-	
-	/** inicia a potentialMatrix com as dimensões corretas de acordo com os domínios das características */
-	public double [][][][] inicia (int [] domains, int ni, int nj){
-		double [][][][] ma = new double [ni][nj][][]; 
-		
-		for (int itni = 0; itni<ni; itni++) { // itni = iterada de ni
-			for (int itnj =itni+1; itnj<nj; itnj++) { //itnj = iterada de nj
-				// a diagonal não tem significado - só há potenciais de arestas
-				ma [itni][itnj] = new double [domains[itni]] [domains[itnj]]; //alt
-				ma [itnj][itni] = new double [domains[itnj]] [domains[itni]]; //alt
-				// para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
 			}
-		}		
-		return ma;
+		}
+		this.potentialMatrix = matrix; //atualiza o atributo matriz de potenciais
 	}
-	
+		
 	/** devolve a lista de descendentes do nó tendo em conta a tree*/
-	public List<Integer> offspring(boolean[][] tree2, int no) {
+	public List<Integer> offspring(boolean[][] tree, int no) {
 		List<Integer> offs = new ArrayList<>();
-		for (int i=0; i<tree2.length; i++) {
-			if (tree2[no][i]) offs.add(i); //aresta do nó para o i
+		for (int i=0; i<tree.length; i++) {
+			if (tree[no][i])
+				offs.add(i); //aresta do nó para o i
 		}
 		return offs;
-	}
-	
-	public int getsizeMRFTree() {
-			return MRFTree.length;
 	}
 	
 	//PROB
 	
 	public double Prob (int [] vetor) {
-		// Pr Mc ( vetor ) = produtório arestas potenciais phi i j
+		// Pr Mc (vetor) = produtório potenciais phi nas arestas i(pai-mrft[j]) -> j(filho) [val de i , val j]
 		double prob = 1;
-		//produto (para cada aresta i, j - MRFTree) potencial (xi,xj)
-		
-		// MRFTree[j] = pai de j = i
-		// aresta i --> j 
 		
 		for (int j=1; j < MRFTree.length; j++) { // começa no 1 porque o 0 não tem pai
-			//0
-//			boolean temPai = MRFTree[j]>=0;
-			//System.out.println("j: "+j);
-//			if (temPai) {
-				//System.out.println("potential matrix: " + potentialMatrix [MRFTree[j]] [j] [vetor[MRFTree[j]]][vetor[j]]);
 				prob = prob * potentialMatrix [MRFTree[j]] [j] [vetor[MRFTree[j]]][vetor[j]];
-//			}
+
 		}	
-		System.out.println("Probabilidade Mc "+prob);
+		//System.out.println("Probabilidade Mc "+prob);
 		return prob;
 	}
 	

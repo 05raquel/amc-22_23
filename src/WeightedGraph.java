@@ -24,23 +24,13 @@ public class WeightedGraph {
 	
 	
 	/** MST - árvore de extensão de peso maximal  */
-	public boolean [][] MST() {
-		boolean [][] MSTree = new boolean [dim][dim];          //true or false consoante tem aresta ou não
+	public boolean [][] MST() {                      
+		boolean [][] MSTree = new boolean [dim][dim];
 		
 		LinkedList<Integer> Nodes = new LinkedList<Integer>(); //Lista dos nós (j's)
 		
-		//int nnos = dim;
 		int init=0;
-//		boolean flaginit= false;
-//		for (; init< nnos && !flaginit; init++) {
-//			for (int c=init+1; c<nnos && !flaginit; c++) { //verificar os filhos 
-//				if (adjMatrix[init][c] !=0) {
-//					flaginit=true;
-//					init=init-1;                           //porque o init ainda incrementa mais 1
-//				}
-//			}
-//		}
-	
+
 		Nodes.add(init); // nó inicial: init
 		
 		boolean encontreiArestaParaFora = true;
@@ -49,16 +39,14 @@ public class WeightedGraph {
 			double max = -1;  // vetor max: (i, j, peso)
 			int imax=-1;
 			int jmax=-1;
-			encontreiArestaParaFora = false;
+			encontreiArestaParaFora = false;       
 			
 			for (int i : Nodes) { 
 								
 				for (int j = 0; j<dim; j++) {  //ver as arestas
 				
 					if (adjMatrix[i][j] > max && !Nodes.contains(j)) {   //atualizar o max para o valor 
-						// Nodes não contem para não criar ciclos
-						//Adicionar a aresta máxima naquele momento
-						imax = i;
+						imax = i;								         // No encontrado não pode estar já na lista
 						jmax = j;
 						max = adjMatrix[i][j];
 						encontreiArestaParaFora = true;
@@ -67,25 +55,10 @@ public class WeightedGraph {
 			}
 			if (encontreiArestaParaFora) {
 				Nodes.add(jmax);
-				MSTree[imax][jmax] = true;  //existe esta aresta na MST
+				MSTree[imax][jmax] = true; 
 				MSTree[jmax][imax] = true;
-				//System.out.println("max(i,j,w)="+imax+","+jmax+","+max);
 			}
 		}
-		//System.out.println(Nodes);
-		System.out.println("MST: "+Arrays.deepToString(MSTree));
-		return MSTree; 
-	}
-	
-	public String printBonito2 ()	{
-		String out = "";
-		for (int i = 0; i < adjMatrix.length; i++) {
-			for (int j = 0; j < adjMatrix.length; j++) {
-				out += (adjMatrix[i][j]) + "  ";
-			}
-			out += "\n";
-		}
-		return out;
-	}		
-	
+		return MSTree; //true or false consoante tem aresta ou não
+	}	
 }
