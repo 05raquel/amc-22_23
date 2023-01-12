@@ -19,10 +19,6 @@ public class WeightedGraph {   //não direcionado
 		adjMatrix[no2][no1]=peso;
 	}
 	
-	public double [][] getMatrix (){
-		return adjMatrix;
-	} // Retorna uma copia da matriz que, se alterada, não afeta a "original"
-	
 	public int getdim() {
 		return dim;
 	}
@@ -53,7 +49,7 @@ public class WeightedGraph {   //não direcionado
 		boolean encontreiArestaParaFora = true;
 		while (encontreiArestaParaFora) {
 		
-			double max = 0;  // vetor max: (i, j, peso)
+			double max = -1;  // vetor max: (i, j, peso)
 			int imax=-1;
 			int jmax=-1;
 			encontreiArestaParaFora = false;

@@ -11,6 +11,7 @@ public class DataSet implements Serializable {
 
     private ArrayList<int[]> dataList;
     private int[] domains;
+    private int arraysize;
     double [][][][] matrixc;
 
     //atributo array list de inteiros - lista de vetores dinâmica
@@ -18,6 +19,7 @@ public class DataSet implements Serializable {
     public DataSet() {
         this.dataList = new ArrayList<int[]>();
         this.domains = null;
+        this.arraysize=0;
     }
 
     /** Construtor de DataSet a partir de um ficheiro csv*/
@@ -25,6 +27,7 @@ public class DataSet implements Serializable {
         // inicializar os atributos
         this.dataList = new ArrayList<int[]>();
         this.domains = null;
+        this.arraysize = 0;
 
         String line;
         BufferedReader br;
@@ -90,7 +93,7 @@ public class DataSet implements Serializable {
 
     /**obtém o tamanho dos vetores no DataSet - número de características + classificação */
     public int getDataListArraySize() {
-        return domains.length;
+        return arraysize; 
     }
        //ainda inclui a última coluna com as classes. só retiramos essa coluna na altura de formar os grafos das fibras.
        //Aqui ainda dá jeito para identificar com -1 as diferentes classes
@@ -101,7 +104,7 @@ public class DataSet implements Serializable {
     }
 
     public int getClassDomain() {
-    	return domains[domains.length-1];
+    	return domains[arraysize-1];
     }
     //COUNT
 
@@ -157,7 +160,9 @@ public class DataSet implements Serializable {
 
         // se for o primeiro vetor:
         if (domains == null) {
-            domains = new int[v.length];
+        	int size = v.length;
+            domains = new int[size];
+            arraysize = size;
         }
         
         //atualizar maximos dos elementos para cada característica
@@ -176,31 +181,30 @@ public class DataSet implements Serializable {
     public DataSet Fiber(int value) {
         //ArrayList <int []> fiber = new ArrayList<int []>();
         DataSet fiber = new DataSet();
-        int Length = dataList.get(0).length;
+        int Length = arraysize;
 
         for (int[] array : dataList) {
             if (array[Length - 1] == value) {
                 fiber.Add(array); 
             }
         }
-        fiber.matrixc = iniciacount(domains.length-1, domains.length-1);
+        fiber.matrixc = iniciacount(arraysize-1, arraysize-1);
         return fiber;
     }
 
     public DataSet [] Fibers() {
-    	DataSet [] fib = new DataSet [domains[domains.length-1]];  //getClassDomain()
+    	DataSet [] fib = new DataSet [domains[arraysize-1]];  //getClassDomain()
     	for (int i=0; i < fib.length; i++) {
     		fib[i]= new DataSet();
-    		fib[i].matrixc = iniciacount(domains.length-1, domains.length-1); //NrVariables(
+    		fib[i].matrixc = iniciacount(arraysize-1, arraysize-1); //NrVariables(
     	}
+    	
     	for (int [] v: dataList) {
-    		fib[v[v.length-1]].Add(v);
+    		fib[v[arraysize-1]].Add(v);
     	}
     	return fib;
     }
-    
-    
-    
+       
     /**
      * inicia a MatrixCount com as dimensões corretas de acordo com os domínios das características
      */

@@ -20,10 +20,6 @@ public class Classifier implements Serializable {
 		//frequências calculadas no algoritmo final do classificador com base no dataset
 	}
 	
-	/** Retorna o conjunto das MRFTs de todas as classes*/
-	public MRFT[] getMRFTs () {
-		return arrayMRFTs;
-	}
 	
 	/** Retorna o conjunto das frequências*/
 	public double[] getfreqs() {
@@ -59,10 +55,13 @@ public class Classifier implements Serializable {
 			if (probstotal[i]> maxprob[1]) {
 				maxprob[0]=i;
 				maxprob[1]=probstotal[i];
-			}
+			}	
 		}
+//		probstotal.IndexOf(probstotal,(max(probstotal)));
+//		indexOf (max(probstotal), probstotal))
 		System.out.println("Probs das classes"+Arrays.toString(probstotal));
 		return new Res((int)maxprob[0], probstotal);  //valor da classe mais provável
+		//return new Res (indexOf()
 	}
 	
 	/**Classe Resultados*/

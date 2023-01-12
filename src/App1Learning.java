@@ -24,7 +24,6 @@ import javax.swing.SwingConstants;
 
 public class App1Learning {
 	
-	
 	/**
 	 * Create the application.
 	 */

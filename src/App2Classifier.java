@@ -54,6 +54,7 @@ public class App2Classifier {
     private JLabel predictedClass;
     private JTextArea normprobs;
     private JScrollPane scroll;
+    private JLabel error_label_int;
  
     private Classifier classifier;
     
@@ -179,6 +180,16 @@ public class App2Classifier {
 		frame.getContentPane().add(scroll);
 		scroll.setVisible(false);
 		
+		error_label_int = new JLabel();
+        error_label_int.setBorder(new LineBorder(Color.white));
+        error_label_int.setBackground(Color.white);
+        error_label_int.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        error_label_int.setHorizontalAlignment(SwingConstants.CENTER);
+        error_label_int.setBounds(261, 378, 210, 20);
+        error_label_int.setText(null);
+        error_label_int.setVisible(false);
+        frame.getContentPane().add(error_label_int);
+		
         
 	}
 
@@ -211,8 +222,7 @@ public class App2Classifier {
         normprobs.setText("");
     	normprobs.setVisible(false);
     	scroll.setVisible(false);
-        
-
+    	error_label_int.setVisible(false);
         
     }
 
@@ -224,8 +234,8 @@ public class App2Classifier {
             try {
                 intValues[i] = Integer.parseInt(strValues[i]);
             } catch (NumberFormatException nfe) {
-                error_label.setText("Please use integers as variables ");
-                error_label.setVisible(true);
+                error_label_int.setText("Please use integers as variables ");
+                error_label_int.setVisible(true);
             }
         }
         return intValues;
@@ -273,6 +283,7 @@ public class App2Classifier {
             	Classifier.Res classification = classifier.Classify(x);
             	normprobs.setText("");
             	error_label.setVisible(false);
+            	error_label_int.setVisible(false);
             	predictedClass.setText("Predicted class: ");
                 predictedClass.setVisible(true);
                 classefinal.setText(""+classification.getBestClass());
