@@ -88,7 +88,12 @@ public class MRFT implements Serializable {
 		
 		this.MRFTree = MRFTree;  	//atualizar a matriz de potenciais
 
-		double [][][][] matrix = inicia(domains, nnos, nnos); 
+		//double [][][][] matrix = inicia(domains, nnos, nnos); 
+		double [][][][] matrix = new double [nnos][nnos][][]; 
+		for (int a = 1; a < nnos; a++) { 
+			matrix [MRFTree[a]][a] = new double [domains[MRFTree[a]]] [domains[a]]; 
+			// para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
+		}
 		
 		// i, j, xi valores que i toma, xj valores que j toma
 		// preencher as matrizes para as arestas da MRFTree 
@@ -133,20 +138,14 @@ public class MRFT implements Serializable {
 	public double [][][][] inicia (int [] domains, int ni, int nj){
 		double [][][][] ma = new double [ni][nj][][]; 
 		
-//		for (int itni = 0; itni<ni; itni++) { // itni = iterada de ni
-//			for (int itnj =itni+1; itnj<nj; itnj++) { //itnj = iterada de nj
-//				// a diagonal não tem significado - só há potenciais de arestas
-//				ma [itni][itnj] = new double [domains[itni]] [domains[itnj]]; //alt
-//				ma [itnj][itni] = new double [domains[itnj]] [domains[itni]]; //alt
-//				// para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
-//			}
-//		}
-//		for (int a = 0; a < nnos; a++) { // itni = iterada de ni
-//				// a diagonal não tem significado - só há potenciais de arestas
-//				ma [MRFTree[a]][a] = new double [domains[MRFTree[a]]] [domains[a]; 
-//				// para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
-//		}
-		
+		for (int itni = 0; itni<ni; itni++) { // itni = iterada de ni
+			for (int itnj =itni+1; itnj<nj; itnj++) { //itnj = iterada de nj
+				// a diagonal não tem significado - só há potenciais de arestas
+				ma [itni][itnj] = new double [domains[itni]] [domains[itnj]]; //alt
+				ma [itnj][itni] = new double [domains[itnj]] [domains[itni]]; //alt
+				// para cada matriz interior, define-se o seu tamanho - domínio de itni e itnj
+			}
+		}		
 		return ma;
 	}
 	
