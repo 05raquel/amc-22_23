@@ -42,6 +42,7 @@ public class App1Learning {
     private JButton Select;
     private File file;
     private JButton back;
+    private JButton back2;
     private JLabel Names;
     private JLabel Title;
     private JButton Save;
@@ -137,7 +138,6 @@ public class App1Learning {
         nrvariaveis.setVisible(false);
         
         back = new JButton(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("Resources/BackButton.png"))));
-	    
 		back.setBorder(null);
 	    back.setVisible(false);
 	    back.setBounds(10, 10, 36, 36);
@@ -161,11 +161,16 @@ public class App1Learning {
         DONEpic.setVisible(false);
         
         savedfilepath = new JLabel("");
-        savedfilepath.setBounds(150, 2, 500, 20);
+        savedfilepath.setBounds(150, 1, 500, 20);
         savedfilepath.setHorizontalAlignment(SwingConstants.CENTER);
         frame.getContentPane().add(savedfilepath);
         savedfilepath.setVisible(false);
         
+        back2 = new JButton (new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("Resources/BackButton.png"))));
+        back2.setBorder(null);
+	    back2.setVisible(false);
+	    back2.setBounds(10, 10, 36, 36);
+	    frame.getContentPane().add(back2);
 	}
 	
     private void change12() {
@@ -200,6 +205,7 @@ public class App1Learning {
         ISTLogo1.setVisible(false); //TODO: mudar a imagem para o tal emoji
         savedfilepath.setText("File '"+fileName_var+"' saved in "+ path);
         savedfilepath.setVisible(true);
+        back2.setVisible(true);
     }
 	
     private void change21() {
@@ -213,6 +219,21 @@ public class App1Learning {
         Save.setVisible(false);
     }
     
+    private void change31() {
+        error_label.setText("");
+        back2.setVisible(false);
+        Title.setVisible(false);
+        error_label.setVisible(false);
+        ISTLogo1.setVisible(true); 
+        Select.setVisible(true);
+        DONEpic.setVisible(false);
+        Title.setVisible(true);
+        AMC.setVisible(true);
+        savedfilepath.setVisible(false);
+        
+
+    }
+        
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -279,6 +300,13 @@ public class App1Learning {
     		long totalTime = endTime - startTime;
     		System.out.println(totalTime);
 
+        });
+        
+        back2.addActionListener(e -> {  //ao clicar no botão de retroceder vai fazer isto
+            int goback = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?\nAll data will be lost", "", JOptionPane.YES_NO_OPTION);
+            if(goback == JOptionPane.YES_OPTION){
+            	d = new DataSet(); change31();  // mudar para a janela inicial
+            }
         });
 	}
 
