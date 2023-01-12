@@ -37,6 +37,7 @@ public class App1Learning {
     private DataSet d;
     private String fileName_var;
     private int samplelength;
+    private int nrvar;
     
 	private JFrame frame;
     private JButton Select;
@@ -183,8 +184,7 @@ public class App1Learning {
         sample_len.setText("Sample length: "+ samplelength);
         //mais abstrato d.getDataList().size()); 
         sample_len.setVisible(true);
-        nrvariaveis.setText("Number of variables: " + d.NrVariables() );
-        //(d.getDataListArraySize() -1)) - NrVariables()
+        nrvariaveis.setText("Number of variables: " + nrvar);
         nrvariaveis.setVisible(true);
         Save.setVisible(true);
     }
@@ -249,6 +249,7 @@ public class App1Learning {
                     d = new DataSet(""+file);
                     fileName_var = file.getName().substring(0,file.getName().indexOf("."))+".clf";
                     samplelength = d.Samplelength();
+                    nrvar = d.NrVariables();
                     change12();
                 } catch (Exception e1) {
                     error_label.setText("The dataset could not be imported");
@@ -283,7 +284,7 @@ public class App1Learning {
                 arrayfibers[i] = new MRFT(fiber, ChowLiu.Chow_liu(fiber), doms);
             }
 
-            Classifier classificador = new Classifier(arrayfibers, freq);
+            Classifier classificador = new Classifier(arrayfibers, freq, nrvar);
             try {
                 ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName_var));
                 os.writeObject(classificador);

@@ -29,17 +29,17 @@ public class WeightedGraph {
 		
 		LinkedList<Integer> Nodes = new LinkedList<Integer>(); //Lista dos nós (j's)
 		
-		int nnos = dim;
+		//int nnos = dim;
 		int init=0;
-		boolean flaginit= false;
-		for (; init< nnos && !flaginit; init++) {
-			for (int c=init+1; c<nnos && !flaginit; c++) { //verificar os filhos 
-				if (adjMatrix[init][c] !=0) {
-					flaginit=true;
-					init=init-1;                           //porque o init ainda incrementa mais 1
-				}
-			}
-		}
+//		boolean flaginit= false;
+//		for (; init< nnos && !flaginit; init++) {
+//			for (int c=init+1; c<nnos && !flaginit; c++) { //verificar os filhos 
+//				if (adjMatrix[init][c] !=0) {
+//					flaginit=true;
+//					init=init-1;                           //porque o init ainda incrementa mais 1
+//				}
+//			}
+//		}
 	
 		Nodes.add(init); // nó inicial: init
 		

@@ -197,7 +197,7 @@ public class DataSet implements Serializable { //permite guardar no disco
                 } else {
                     ma[i][j] = new double[domains[i]][domains[j]]; 
                     ma[j][i] = new double[domains[j]][domains[i]]; 
-                    for (int a=0; a < domains[a]; a++) { 
+                    for (int a=0; a < domains[i]; a++) { 
                     	for (int b=0; b < domains[j]; b++) { 
                     		ma [i] [j] [a] [b]=-1;
                     		ma [j] [i] [b] [a]=-1;

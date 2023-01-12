@@ -256,7 +256,6 @@ public class App2Classifier {
                     classifier = Classifier.openclf(file.getName());
                     error_label.setText("");
                     nrvariaveis.setText("Number of variables(n): "+ classifier.getNrVariables());
-                    		//getMRFTs()[0].getnvar()); 
                     change12();
                     
                 } catch (Exception e1) {

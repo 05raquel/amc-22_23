@@ -11,7 +11,7 @@ import java.util.List;
 public class Leave_one_out {
 
    public static void main (String[] args) {
-	   String Samples = "datasets/soybean-large.csv";
+	   String Samples = "src/datasets/diabetes.csv";
 	   
 	   long startTime = System.nanoTime();
 
@@ -41,13 +41,14 @@ public class Leave_one_out {
 	       double [] freq = new double [domClasses]; //alt
 	       MRFT [] arrayfibers = new MRFT [domClasses]; //alt
 	       
+	       DataSet [] fib = trainingset.Fibers();
 	       for (int j=0; j < domClasses; j++) { //alt
-	           DataSet fiber = trainingset.Fiber(j);
+	           DataSet fiber = fib [j];
 	           freq[j]= (double) fiber.getDataList().size() / (double) trainingset.getDataList().size();
 	           arrayfibers[j] = new MRFT(fiber, ChowLiu.Chow_liu(fiber), doms);
 	       }
 	
-	       Classifier classificador = new Classifier(arrayfibers, freq);
+	       Classifier classificador = new Classifier(arrayfibers, freq,trainingset.NrVariables());
        
 	       int [] testfinal = new int[test.length-1];
 	       

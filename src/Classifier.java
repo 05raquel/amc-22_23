@@ -9,14 +9,16 @@ public class Classifier implements Serializable {
 	
 	private MRFT [] arrayMRFTs;
 	private double [] frequencias;
+	private int nvar;
 	//array de MRFTs, um para cada valor da classe
 	// array com as frequencias das classes -> Pr (C=c)
 	
 	//CONSTRUTOR
-	public Classifier(MRFT [] MRFTs, double[] valores) {
+	public Classifier(MRFT [] MRFTs, double[] valores, int nvar) {
 		super();
 		this.arrayMRFTs = MRFTs;
 		this.frequencias = valores; 
+		this.nvar = nvar;
 		//frequências calculadas no algoritmo final do classificador com base no dataset
 	}
 	
@@ -33,14 +35,14 @@ public class Classifier implements Serializable {
 	
 	/** Retorna o número de variáveis (características)*/
 	public int getNrVariables() {
-		return  arrayMRFTs[0].getnvar();
+		return  nvar;
 	}
 	
 	//CLASSIFY
 		
 	/** A função retorna um objeto com a classe mais provável e um array com a probabilidade de cada classe */
 	public Res Classify (int [] valoresx) {
-		if (valoresx.length!= arrayMRFTs[0].getnvar()) { //vetor valoresx com o número de características correto
+		if (valoresx.length!= nvar) { //vetor valoresx com o número de características correto
 			throw new IllegalArgumentException(); //argumento inválido
 		}
 		

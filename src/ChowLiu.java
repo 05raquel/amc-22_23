@@ -5,12 +5,12 @@ public class ChowLiu {
 	// Algoritmo Chow Liu
 
 	public static boolean [][] Chow_liu (DataSet d){
-		WeightedGraph graph = new WeightedGraph (d.getDataListArraySize() -1);
+		WeightedGraph graph = new WeightedGraph (d.NrVariables());
 		//pois não queremos a classificação
 		
 		System.out.println("Doms: "+Arrays.toString(d.getDomains()));
 		
-		double m = d.getDataList().size();
+		double m = d.Samplelength ();
 		for (int i = 0; i < graph.getdim(); i++) {
 			
 			for (int j=i+1; j < graph.getdim(); j++) {
