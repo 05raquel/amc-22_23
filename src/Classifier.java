@@ -40,12 +40,9 @@ public class Classifier implements Serializable {
 		
 	/** Retorna a classe mais provável e um array com a probabilidade de cada classe */
 	public Res Classify (int [] valoresx) {   
-		if (valoresx.length!= nvar) {             //vetor com dim invalidas
+		if (valoresx.length!= nvar) {             //vetor com dim inválidas
 			throw new IllegalArgumentException(); 
 		}
-		
-		// dados valores (x1,...,xn) das variáveis
-		
 		
 		double [] probstotal = new double [frequencias.length];
 		int bestclass = -1;
@@ -59,7 +56,6 @@ public class Classifier implements Serializable {
 				maxprob=probstotal[i];
 			}	
 		}
-		//System.out.println("Probs das classes"+Arrays.toString(probstotal));
 		return new Res(bestclass, probstotal);  //valor da classe mais provável
 	}
 	
@@ -84,15 +80,6 @@ public class Classifier implements Serializable {
 		}
 	}
 	
-	/** Abrir o ficheiro clf e devolver o objeto classifier correspondente*/
-	public static Classifier openclf(String filename) throws IOException, ClassNotFoundException {
-		FileInputStream f = new FileInputStream(filename);
-		ObjectInputStream o = new ObjectInputStream(f);
-		Classifier classifier =  (Classifier) o.readObject();
-		o.close();
-		f.close();
-		return classifier;
-	}
 	
 	/** Recebe o vetor de probabilidades das classes e retorna-o normalizado*/
 	public static double[] NormProb(double [] prob) {
@@ -106,4 +93,16 @@ public class Classifier implements Serializable {
 		}
 		return probfinal;
 	}
+	
+	/** Abrir o ficheiro clf e devolver o objeto classifier correspondente*/
+	public static Classifier openclf(String filename) throws IOException, ClassNotFoundException {
+		FileInputStream f = new FileInputStream(filename);
+		ObjectInputStream o = new ObjectInputStream(f);
+		Classifier classifier =  (Classifier) o.readObject();
+		o.close();
+		f.close();
+		return classifier;
+	}
+	
+
 }
