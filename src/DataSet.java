@@ -136,6 +136,26 @@ public class DataSet implements Serializable { //permite guardar no disco
             if (Arrays.equals(arr, val)) c++; //contar quantos vetores têm os valores val
         }
         
+//        if (compara==1) {
+//        	for (int [] vetor: dataList) {
+//        		if (vetor[var[0]]==val[0]) {
+//        			c++;
+//        		}
+//        	}
+//        	matrixc[var[0]][var[0]][0][val[0]]=c;
+//        }
+//		else if (compara==2) {
+//			for (int [] vetor: dataList) {
+//				if (vetor[var[0]]==val[0] & vetor[var[1]]==val[1]) {
+//					c++;
+//				}
+//			}
+//			matrixc[var[0]][var[1]][val[0]][val[1]]=c;
+//			matrixc[var[1]][var[0]][val[1]][val[0]]=c;
+//		}
+//		return c;
+//		
+		
 		if (compara==1) matrixc[var[0]][var[0]][0][val[0]]=c;
 		else if (compara==2) {
 				matrixc[var[0]][var[1]][val[0]][val[1]]=c;
