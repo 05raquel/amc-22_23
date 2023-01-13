@@ -182,7 +182,6 @@ public class App1Learning {
         fileName.setText(fileName_var);
         fileName.setVisible(true);
         sample_len.setText("Sample length: "+ samplelength);
-        //mais abstrato d.getDataList().size()); 
         sample_len.setVisible(true);
         nrvariaveis.setText("Number of variables: " + nrvar);
         nrvariaveis.setVisible(true);
@@ -202,7 +201,7 @@ public class App1Learning {
         nrvariaveis.setVisible(false);
         AMC.setVisible(false);
         error_label.setVisible(false);
-        ISTLogo1.setVisible(false); //TODO: mudar a imagem para o tal emoji
+        ISTLogo1.setVisible(false); 
         savedfilepath.setText("File '"+fileName_var+"' saved in "+ path);
         savedfilepath.setVisible(true);
         back2.setVisible(true);

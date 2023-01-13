@@ -48,7 +48,7 @@ public class App2Classifier {
     private JButton classify;
     private JTextField variaveis;
     private JLabel nrvariaveis;
-    private JTextArea txtrVariables;
+    private JLabel txtrVariables;
     private JLabel error_label;
     private JLabel classefinal;
     private JLabel predictedClass;
@@ -110,13 +110,7 @@ public class App2Classifier {
         frame.getContentPane().add(error_label);
         
 //Window 2
-	    
-        /*
-        ISTLogo2 = new JLabel(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("./Resources/ISTLogo.png"))));
-        ISTLogo2.setBounds(590, 10, 161, 141);
-        frame.getContentPane().add(ISTLogo2);
-        */
-        
+	            
 		back = new JButton(new ImageIcon(Objects.requireNonNull(App1Learning.class.getResource("Resources/BackButton.png"))));
 	    back.setBorder(null);
 	    back.setVisible(false);
@@ -140,7 +134,7 @@ public class App2Classifier {
         frame.getContentPane().add(variaveis);
         
         
-        txtrVariables = new JTextArea();
+        txtrVariables = new JLabel("");
         txtrVariables.setText("Variables (var1, var2, ..., var n):");
         txtrVariables.setBounds(32, 294, 285, 22);
         frame.getContentPane().add(txtrVariables);
@@ -304,6 +298,8 @@ public class App2Classifier {
                 error_label.setText("Could not classify");
                 error_label.setVisible(true);
                 classefinal.setVisible(false);
+                predictedClass.setVisible(false);
+                normprobs.setText(" ");
                 e1.printStackTrace();
                 
             }
