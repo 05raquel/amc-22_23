@@ -24,8 +24,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-//import Classifier.Res;
-
 
 
 public class App2Classifier {
@@ -300,6 +298,7 @@ public class App2Classifier {
                 classefinal.setVisible(false);
                 predictedClass.setVisible(false);
                 normprobs.setText(" ");
+                scroll.setVisible(false);
                 e1.printStackTrace();
                 
             }

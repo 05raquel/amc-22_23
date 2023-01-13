@@ -127,41 +127,41 @@ public class DataSet implements Serializable { //permite guardar no disco
        
 //Quando a matrix ainda não está preenchida, preenchemos
         double c = 0;                                          //contador
-        int arr[] = new int[var.length];                       //cria novo array com o tamanho do número de variáveis a procurar
-        for (int[] vetorObs : dataList) {
-            //obter valores das variáveis vars necessários no vetorObs
-            for (int j = 0; j < var.length; j++) {
-                arr[j] = vetorObs[var[j]];  // preencher o array com os valores do vetorObs do datalist
-            }
-            if (Arrays.equals(arr, val)) c++; //contar quantos vetores têm os valores val
-        }
-        
-//        if (compara==1) {
-//        	for (int [] vetor: dataList) {
-//        		if (vetor[var[0]]==val[0]) {
-//        			c++;
-//        		}
-//        	}
-//        	matrixc[var[0]][var[0]][0][val[0]]=c;
+//        int arr[] = new int[var.length];                       //cria novo array com o tamanho do número de variáveis a procurar
+//        for (int[] vetorObs : dataList) {
+//            //obter valores das variáveis vars necessários no vetorObs
+//            for (int j = 0; j < var.length; j++) {
+//                arr[j] = vetorObs[var[j]];  // preencher o array com os valores do vetorObs do datalist
+//            }
+//            if (Arrays.equals(arr, val)) c++; //contar quantos vetores têm os valores val
 //        }
-//		else if (compara==2) {
-//			for (int [] vetor: dataList) {
-//				if (vetor[var[0]]==val[0] & vetor[var[1]]==val[1]) {
-//					c++;
-//				}
-//			}
-//			matrixc[var[0]][var[1]][val[0]][val[1]]=c;
-//			matrixc[var[1]][var[0]][val[1]][val[0]]=c;
-//		}
-//		return c;
-//		
-		
-		if (compara==1) matrixc[var[0]][var[0]][0][val[0]]=c;
+//        
+        if (compara==1) {
+        	for (int [] vetor: dataList) {
+        		if (vetor[var[0]]==val[0]) {
+        			c++;
+        		}
+        	}
+        	matrixc[var[0]][var[0]][0][val[0]]=c;
+        }
 		else if (compara==2) {
-				matrixc[var[0]][var[1]][val[0]][val[1]]=c;
-				matrixc[var[1]][var[0]][val[1]][val[0]]=c;
+			for (int [] vetor: dataList) {
+				if (vetor[var[0]]==val[0] & vetor[var[1]]==val[1]) {
+					c++;
+				}
+			}
+			matrixc[var[0]][var[1]][val[0]][val[1]]=c;
+			matrixc[var[1]][var[0]][val[1]][val[0]]=c;
 		}
 		return c;
+		
+		
+//		if (compara==1) matrixc[var[0]][var[0]][0][val[0]]=c;
+//		else if (compara==2) {
+//				matrixc[var[0]][var[1]][val[0]][val[1]]=c;
+//				matrixc[var[1]][var[0]][val[1]][val[0]]=c;
+//		}
+//		return c;
     }
 
     //ADD
